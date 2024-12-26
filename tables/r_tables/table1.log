@@ -1,0 +1,3613 @@
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.9.28)  28 SEP 2024 20:34
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**table1.tex
+(./table1.tex
+LaTeX2e <2024-06-01> patch level 2
+L3 programming layer <2024-09-10>
+
+! LaTeX Error: Environment table undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3 \begin{table}
+                 [ht]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3 \begin{table}[
+                  ht]
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ ("5B) in font nullfont!
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no ] ("5D) in font nullfont!
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.6 \caption
+            {Summary Statistics by Country and Sex}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no S ("53) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no S ("53) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+Missing character: There is no S ("53) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no x ("78) in font nullfont!
+! Undefined control sequence.
+l.8 \begingroup\small
+                     
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Environment tabularx undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.9 \begin{tabularx}
+                    {\textwidth}{|p{2cm}|X|X|X|X|X|X|X|X|}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   }
+l.9 \begin{tabularx}{\textwidth}
+                                {|p{2cm}|X|X|X|X|X|X|X|X|}
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   }
+l.9 \begin{tabularx}{\textwidth}
+                                {|p{2cm}|X|X|X|X|X|X|X|X|}
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no X ("58) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no X ("58) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no X ("58) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no X ("58) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no X ("58) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no X ("58) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no X ("58) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+Missing character: There is no X ("58) in font nullfont!
+Missing character: There is no | ("7C) in font nullfont!
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.10   \hline
+             
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 3--10
+ [] 
+ []
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.11  &
+        variable & cuba & dominican republic & puerto rico & el salvador & g...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11  & v
+         ariable & cuba & dominican republic & puerto rico & el salvador & g...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+! Misplaced alignment tab character &.
+l.11  & variable &
+                   cuba & dominican republic & puerto rico & el salvador & g...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+! Misplaced alignment tab character &.
+l.11  & variable & cuba &
+                          dominican republic & puerto rico & el salvador & g...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no d ("64) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+! Misplaced alignment tab character &.
+l.11  & variable & cuba & dominican republic &
+                                               puerto rico & el salvador & g...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+! Misplaced alignment tab character &.
+l.11 ... cuba & dominican republic & puerto rico &
+                                                   el salvador & guatemala &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+! Misplaced alignment tab character &.
+l.11 ...can republic & puerto rico & el salvador &
+                                                   guatemala & honduras & me...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+! Misplaced alignment tab character &.
+l.11 ... & puerto rico & el salvador & guatemala &
+                                                   honduras & mexico & colom...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+! Misplaced alignment tab character &.
+l.11 ...ico & el salvador & guatemala & honduras &
+                                                   mexico & colombia \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no x ("78) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+! Misplaced alignment tab character &.
+l.11 ...salvador & guatemala & honduras & mexico &
+                                                   colombia \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.12   \hline
+             
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.13 1
+       & Average Age & 75.35 & 72.96 & 73.97 & 72.63 & 72.36 & 72.61 & 73.07...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 1 &
+         Average Age & 75.35 & 72.96 & 73.97 & 72.63 & 72.36 & 72.61 & 73.07...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 1 & Average Age &
+                       75.35 & 72.96 & 73.97 & 72.63 & 72.36 & 72.61 & 73.07...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 1 & Average Age & 75.35 &
+                               72.96 & 73.97 & 72.63 & 72.36 & 72.61 & 73.07...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 1 & Average Age & 75.35 & 72.96 &
+                                       73.97 & 72.63 & 72.36 & 72.61 & 73.07...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 1 & Average Age & 75.35 & 72.96 & 73.97 &
+                                               72.63 & 72.36 & 72.61 & 73.07...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 ...rage Age & 75.35 & 72.96 & 73.97 & 72.63 &
+                                                   72.36 & 72.61 & 73.07 & 7...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 ... & 75.35 & 72.96 & 73.97 & 72.63 & 72.36 &
+                                                   72.61 & 73.07 & 73.2 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 ... & 72.96 & 73.97 & 72.63 & 72.36 & 72.61 &
+                                                   73.07 & 73.2 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.13 ... & 73.97 & 72.63 & 72.36 & 72.61 & 73.07 &
+                                                   73.2 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.14   2
+         & Percent Married/Cohabiting & 0.34 & 0.31 & 0.33 & 0.34 & 0.38 & 0...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.14   2 &
+           Percent Married/Cohabiting & 0.34 & 0.31 & 0.33 & 0.34 & 0.38 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no M ("4D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+Missing character: There is no / ("2F) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+! Misplaced alignment tab character &.
+l.14   2 & Percent Married/Cohabiting &
+                                        0.34 & 0.31 & 0.33 & 0.34 & 0.38 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.14   2 & Percent Married/Cohabiting & 0.34 &
+                                               0.31 & 0.33 & 0.34 & 0.38 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.14 ...Percent Married/Cohabiting & 0.34 & 0.31 &
+                                                   0.33 & 0.34 & 0.38 & 0.35...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.14 ... Married/Cohabiting & 0.34 & 0.31 & 0.33 &
+                                                   0.34 & 0.38 & 0.35 & 0.45...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.14 ...d/Cohabiting & 0.34 & 0.31 & 0.33 & 0.34 &
+                                                   0.38 & 0.35 & 0.45 & 0.38 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.14 ...iting & 0.34 & 0.31 & 0.33 & 0.34 & 0.38 &
+                                                   0.35 & 0.45 & 0.38 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.14 ... 0.34 & 0.31 & 0.33 & 0.34 & 0.38 & 0.35 &
+                                                   0.45 & 0.38 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.14 ... 0.31 & 0.33 & 0.34 & 0.38 & 0.35 & 0.45 &
+                                                   0.38 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15   3
+         & Percent English Speakers & 0.71 & 0.6 & 0.89 & 0.68 & 0.79 & 0.75...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.15   3 &
+           Percent English Speakers & 0.71 & 0.6 & 0.89 & 0.68 & 0.79 & 0.75...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no E ("45) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no S ("53) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no k ("6B) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+! Misplaced alignment tab character &.
+l.15   3 & Percent English Speakers &
+                                      0.71 & 0.6 & 0.89 & 0.68 & 0.79 & 0.75...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.15   3 & Percent English Speakers & 0.71 &
+                                             0.6 & 0.89 & 0.68 & 0.79 & 0.75...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.15   3 & Percent English Speakers & 0.71 & 0.6 &
+                                                   0.89 & 0.68 & 0.79 & 0.75...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.15 ...ent English Speakers & 0.71 & 0.6 & 0.89 &
+                                                   0.68 & 0.79 & 0.75 & 0.65...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.15 ...lish Speakers & 0.71 & 0.6 & 0.89 & 0.68 &
+                                                   0.79 & 0.75 & 0.65 & 0.83 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.15 ...eakers & 0.71 & 0.6 & 0.89 & 0.68 & 0.79 &
+                                                   0.75 & 0.65 & 0.83 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.15 ...& 0.71 & 0.6 & 0.89 & 0.68 & 0.79 & 0.75 &
+                                                   0.65 & 0.83 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.15 ...& 0.6 & 0.89 & 0.68 & 0.79 & 0.75 & 0.65 &
+                                                   0.83 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.16   4
+         & Percent Citizen & 0.84 & 0.7 & - & 0.66 & 0.69 & 0.67 & 0.57 & 0....
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.16   4 &
+           Percent Citizen & 0.84 & 0.7 & - & 0.66 & 0.69 & 0.67 & 0.57 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no z ("7A) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+! Misplaced alignment tab character &.
+l.16   4 & Percent Citizen &
+                             0.84 & 0.7 & - & 0.66 & 0.69 & 0.67 & 0.57 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.16   4 & Percent Citizen & 0.84 &
+                                    0.7 & - & 0.66 & 0.69 & 0.67 & 0.57 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.16   4 & Percent Citizen & 0.84 & 0.7 &
+                                          - & 0.66 & 0.69 & 0.67 & 0.57 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no - ("2D) in font nullfont!
+! Misplaced alignment tab character &.
+l.16   4 & Percent Citizen & 0.84 & 0.7 & - &
+                                              0.66 & 0.69 & 0.67 & 0.57 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.16 ... Percent Citizen & 0.84 & 0.7 & - & 0.66 &
+                                                   0.69 & 0.67 & 0.57 & 0.77 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.16 ...t Citizen & 0.84 & 0.7 & - & 0.66 & 0.69 &
+                                                   0.67 & 0.57 & 0.77 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.16 ...en & 0.84 & 0.7 & - & 0.66 & 0.69 & 0.67 &
+                                                   0.57 & 0.77 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.16 ...84 & 0.7 & - & 0.66 & 0.69 & 0.67 & 0.57 &
+                                                   0.77 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.17   5
+         & Mean Age at Immigration & 35.63 & 37.38 & - & 36 & 33.13 & 36.48 ...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.17   5 &
+           Mean Age at Immigration & 35.63 & 37.38 & - & 36 & 33.13 & 36.48 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no M ("4D) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no I ("49) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+! Misplaced alignment tab character &.
+l.17   5 & Mean Age at Immigration &
+                                     35.63 & 37.38 & - & 36 & 33.13 & 36.48 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.17   5 & Mean Age at Immigration & 35.63 &
+                                             37.38 & - & 36 & 33.13 & 36.48 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.17 ... Mean Age at Immigration & 35.63 & 37.38 &
+                                                   - & 36 & 33.13 & 36.48 & ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no - ("2D) in font nullfont!
+! Misplaced alignment tab character &.
+l.17 ...n Age at Immigration & 35.63 & 37.38 & - &
+                                                   36 & 33.13 & 36.48 & 31.8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.17 ... at Immigration & 35.63 & 37.38 & - & 36 &
+                                                   33.13 & 36.48 & 31.8 & 35...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.17 ...gration & 35.63 & 37.38 & - & 36 & 33.13 &
+                                                   36.48 & 31.8 & 35.38 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.17 ...& 35.63 & 37.38 & - & 36 & 33.13 & 36.48 &
+                                                   31.8 & 35.38 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.17 ... & 37.38 & - & 36 & 33.13 & 36.48 & 31.8 &
+                                                   35.38 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.18   6
+         & Average Years in US & 39.76 & 35.53 & - & 36.63 & 39.26 & 36.17 &...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.18   6 &
+           Average Years in US & 39.76 & 35.53 & - & 36.63 & 39.26 & 36.17 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no Y ("59) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no U ("55) in font nullfont!
+Missing character: There is no S ("53) in font nullfont!
+! Misplaced alignment tab character &.
+l.18   6 & Average Years in US &
+                                 39.76 & 35.53 & - & 36.63 & 39.26 & 36.17 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.18   6 & Average Years in US & 39.76 &
+                                         35.53 & - & 36.63 & 39.26 & 36.17 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.18   6 & Average Years in US & 39.76 & 35.53 &
+                                                 - & 36.63 & 39.26 & 36.17 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no - ("2D) in font nullfont!
+! Misplaced alignment tab character &.
+l.18 ... Average Years in US & 39.76 & 35.53 & - &
+                                                   36.63 & 39.26 & 36.17 & 4...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.18 ... Years in US & 39.76 & 35.53 & - & 36.63 &
+                                                   39.26 & 36.17 & 41.27 & 3...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.18 ...n US & 39.76 & 35.53 & - & 36.63 & 39.26 &
+                                                   36.17 & 41.27 & 37.83 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.18 ...9.76 & 35.53 & - & 36.63 & 39.26 & 36.17 &
+                                                   41.27 & 37.83 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.18 ...5.53 & - & 36.63 & 39.26 & 36.17 & 41.27 &
+                                                   37.83 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.19   7
+         & Percent Less than Primary Completed & 0.11 & 0.31 & 0.15 & 0.38 &...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.19   7 &
+           Percent Less than Primary Completed & 0.11 & 0.31 & 0.15 & 0.38 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no L ("4C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+! Misplaced alignment tab character &.
+l.19   7 & Percent Less than Primary Completed &
+                                                 0.11 & 0.31 & 0.15 & 0.38 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.19 ...rcent Less than Primary Completed & 0.11 &
+                                                   0.31 & 0.15 & 0.38 & 0.3 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.19 ...ess than Primary Completed & 0.11 & 0.31 &
+                                                   0.15 & 0.38 & 0.3 & 0.23 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.19 ...n Primary Completed & 0.11 & 0.31 & 0.15 &
+                                                   0.38 & 0.3 & 0.23 & 0.4 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.19 ...ry Completed & 0.11 & 0.31 & 0.15 & 0.38 &
+                                                   0.3 & 0.23 & 0.4 & 0.13 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.19 ...pleted & 0.11 & 0.31 & 0.15 & 0.38 & 0.3 &
+                                                   0.23 & 0.4 & 0.13 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.19 ...& 0.11 & 0.31 & 0.15 & 0.38 & 0.3 & 0.23 &
+                                                   0.4 & 0.13 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.19 ... & 0.31 & 0.15 & 0.38 & 0.3 & 0.23 & 0.4 &
+                                                   0.13 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.20   8
+         & Percent Primary Completed & 0.21 & 0.29 & 0.25 & 0.27 & 0.23 & 0....
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.20   8 &
+           Percent Primary Completed & 0.21 & 0.29 & 0.25 & 0.27 & 0.23 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+! Misplaced alignment tab character &.
+l.20   8 & Percent Primary Completed &
+                                       0.21 & 0.29 & 0.25 & 0.27 & 0.23 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.20   8 & Percent Primary Completed & 0.21 &
+                                              0.29 & 0.25 & 0.27 & 0.23 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.20 ... Percent Primary Completed & 0.21 & 0.29 &
+                                                   0.25 & 0.27 & 0.23 & 0.21...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.20 ...t Primary Completed & 0.21 & 0.29 & 0.25 &
+                                                   0.27 & 0.23 & 0.21 & 0.3 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.20 ...ry Completed & 0.21 & 0.29 & 0.25 & 0.27 &
+                                                   0.23 & 0.21 & 0.3 & 0.12 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.20 ...leted & 0.21 & 0.29 & 0.25 & 0.27 & 0.23 &
+                                                   0.21 & 0.3 & 0.12 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.20 ... 0.21 & 0.29 & 0.25 & 0.27 & 0.23 & 0.21 &
+                                                   0.3 & 0.12 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.20 ...& 0.29 & 0.25 & 0.27 & 0.23 & 0.21 & 0.3 &
+                                                   0.12 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.21   9
+         & Percent Secondary Completed & 0.5 & 0.33 & 0.48 & 0.31 & 0.38 & 0...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.21   9 &
+           Percent Secondary Completed & 0.5 & 0.33 & 0.48 & 0.31 & 0.38 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no S ("53) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+! Misplaced alignment tab character &.
+l.21   9 & Percent Secondary Completed &
+                                         0.5 & 0.33 & 0.48 & 0.31 & 0.38 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.21   9 & Percent Secondary Completed & 0.5 &
+                                               0.33 & 0.48 & 0.31 & 0.38 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.21 ...Percent Secondary Completed & 0.5 & 0.33 &
+                                                   0.48 & 0.31 & 0.38 & 0.45...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.21 ... Secondary Completed & 0.5 & 0.33 & 0.48 &
+                                                   0.31 & 0.38 & 0.45 & 0.27...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.21 ...ary Completed & 0.5 & 0.33 & 0.48 & 0.31 &
+                                                   0.38 & 0.45 & 0.27 & 0.59 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.21 ...pleted & 0.5 & 0.33 & 0.48 & 0.31 & 0.38 &
+                                                   0.45 & 0.27 & 0.59 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.21 ...& 0.5 & 0.33 & 0.48 & 0.31 & 0.38 & 0.45 &
+                                                   0.27 & 0.59 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.21 ... 0.33 & 0.48 & 0.31 & 0.38 & 0.45 & 0.27 &
+                                                   0.59 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.22   1
+        0 & Percent University Completed & 0.19 & 0.07 & 0.12 & 0.05 & 0.08 ...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+! Misplaced alignment tab character &.
+l.22   10 &
+            Percent University Completed & 0.19 & 0.07 & 0.12 & 0.05 & 0.08 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no U ("55) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+! Misplaced alignment tab character &.
+l.22   10 & Percent University Completed &
+                                           0.19 & 0.07 & 0.12 & 0.05 & 0.08 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.22   10 & Percent University Completed & 0.19 &
+                                                  0.07 & 0.12 & 0.05 & 0.08 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.22 ...rcent University Completed & 0.19 & 0.07 &
+                                                   0.12 & 0.05 & 0.08 & 0.11...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.22 ...niversity Completed & 0.19 & 0.07 & 0.12 &
+                                                   0.05 & 0.08 & 0.11 & 0.04...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.22 ...ty Completed & 0.19 & 0.07 & 0.12 & 0.05 &
+                                                   0.08 & 0.11 & 0.04 & 0.16 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.22 ...leted & 0.19 & 0.07 & 0.12 & 0.05 & 0.08 &
+                                                   0.11 & 0.04 & 0.16 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.22 ... 0.19 & 0.07 & 0.12 & 0.05 & 0.08 & 0.11 &
+                                                   0.04 & 0.16 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.22 ... 0.07 & 0.12 & 0.05 & 0.08 & 0.11 & 0.04 &
+                                                   0.16 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.23   1
+        1 & Average Age & 74.6 & 72.24 & 73.36 & 71.23 & 70.78 & 71.5 & 72.3...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.23   11 &
+            Average Age & 74.6 & 72.24 & 73.36 & 71.23 & 70.78 & 71.5 & 72.3...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+! Misplaced alignment tab character &.
+l.23   11 & Average Age &
+                          74.6 & 72.24 & 73.36 & 71.23 & 70.78 & 71.5 & 72.3...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.23   11 & Average Age & 74.6 &
+                                 72.24 & 73.36 & 71.23 & 70.78 & 71.5 & 72.3...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.23   11 & Average Age & 74.6 & 72.24 &
+                                         73.36 & 71.23 & 70.78 & 71.5 & 72.3...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.23   11 & Average Age & 74.6 & 72.24 & 73.36 &
+                                                 71.23 & 70.78 & 71.5 & 72.3...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.23 ...erage Age & 74.6 & 72.24 & 73.36 & 71.23 &
+                                                   70.78 & 71.5 & 72.32 & 72...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.23 ...e & 74.6 & 72.24 & 73.36 & 71.23 & 70.78 &
+                                                   71.5 & 72.32 & 72.98 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.23 ...6 & 72.24 & 73.36 & 71.23 & 70.78 & 71.5 &
+                                                   72.32 & 72.98 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.23 ...4 & 73.36 & 71.23 & 70.78 & 71.5 & 72.32 &
+                                                   72.98 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.24   1
+        2 & Percent Married/Cohabiting & 0.63 & 0.66 & 0.61 & 0.67 & 0.65 & ...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.24   12 &
+            Percent Married/Cohabiting & 0.63 & 0.66 & 0.61 & 0.67 & 0.65 & ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no M ("4D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+Missing character: There is no / ("2F) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+! Misplaced alignment tab character &.
+l.24   12 & Percent Married/Cohabiting &
+                                         0.63 & 0.66 & 0.61 & 0.67 & 0.65 & ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.24   12 & Percent Married/Cohabiting & 0.63 &
+                                                0.66 & 0.61 & 0.67 & 0.65 & ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.24 ...Percent Married/Cohabiting & 0.63 & 0.66 &
+                                                   0.61 & 0.67 & 0.65 & 0.69...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.24 ... Married/Cohabiting & 0.63 & 0.66 & 0.61 &
+                                                   0.67 & 0.65 & 0.69 & 0.73...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.24 ...d/Cohabiting & 0.63 & 0.66 & 0.61 & 0.67 &
+                                                   0.65 & 0.69 & 0.73 & 0.72 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.24 ...iting & 0.63 & 0.66 & 0.61 & 0.67 & 0.65 &
+                                                   0.69 & 0.73 & 0.72 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.24 ... 0.63 & 0.66 & 0.61 & 0.67 & 0.65 & 0.69 &
+                                                   0.73 & 0.72 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.24 ... 0.66 & 0.61 & 0.67 & 0.65 & 0.69 & 0.73 &
+                                                   0.72 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.25   1
+        3 & Percent English Speakers & 0.78 & 0.7 & 0.94 & 0.78 & 0.87 & 0.8...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.25   13 &
+            Percent English Speakers & 0.78 & 0.7 & 0.94 & 0.78 & 0.87 & 0.8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no E ("45) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no S ("53) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no k ("6B) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+! Misplaced alignment tab character &.
+l.25   13 & Percent English Speakers &
+                                       0.78 & 0.7 & 0.94 & 0.78 & 0.87 & 0.8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.25   13 & Percent English Speakers & 0.78 &
+                                              0.7 & 0.94 & 0.78 & 0.87 & 0.8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.25 ... & Percent English Speakers & 0.78 & 0.7 &
+                                                   0.94 & 0.78 & 0.87 & 0.83...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.25 ...ent English Speakers & 0.78 & 0.7 & 0.94 &
+                                                   0.78 & 0.87 & 0.83 & 0.74...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.25 ...lish Speakers & 0.78 & 0.7 & 0.94 & 0.78 &
+                                                   0.87 & 0.83 & 0.74 & 0.88 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.25 ...eakers & 0.78 & 0.7 & 0.94 & 0.78 & 0.87 &
+                                                   0.83 & 0.74 & 0.88 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.25 ...& 0.78 & 0.7 & 0.94 & 0.78 & 0.87 & 0.83 &
+                                                   0.74 & 0.88 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.25 ...& 0.7 & 0.94 & 0.78 & 0.87 & 0.83 & 0.74 &
+                                                   0.88 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.26   1
+        4 & Percent Citizen & 0.79 & 0.67 & - & 0.65 & 0.66 & 0.6 & 0.55 & 0...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.26   14 &
+            Percent Citizen & 0.79 & 0.67 & - & 0.65 & 0.66 & 0.6 & 0.55 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no z ("7A) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+! Misplaced alignment tab character &.
+l.26   14 & Percent Citizen &
+                              0.79 & 0.67 & - & 0.65 & 0.66 & 0.6 & 0.55 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.26   14 & Percent Citizen & 0.79 &
+                                     0.67 & - & 0.65 & 0.66 & 0.6 & 0.55 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.26   14 & Percent Citizen & 0.79 & 0.67 &
+                                            - & 0.65 & 0.66 & 0.6 & 0.55 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no - ("2D) in font nullfont!
+! Misplaced alignment tab character &.
+l.26   14 & Percent Citizen & 0.79 & 0.67 & - &
+                                                0.65 & 0.66 & 0.6 & 0.55 & 0...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.26 ...Percent Citizen & 0.79 & 0.67 & - & 0.65 &
+                                                   0.66 & 0.6 & 0.55 & 0.75 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.26 ... Citizen & 0.79 & 0.67 & - & 0.65 & 0.66 &
+                                                   0.6 & 0.55 & 0.75 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.26 ...en & 0.79 & 0.67 & - & 0.65 & 0.66 & 0.6 &
+                                                   0.55 & 0.75 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.26 ...79 & 0.67 & - & 0.65 & 0.66 & 0.6 & 0.55 &
+                                                   0.75 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.27   1
+        5 & Mean Age at Immigration & 34.42 & 36.35 & - & 34.07 & 32.05 & 34...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.27   15 &
+            Mean Age at Immigration & 34.42 & 36.35 & - & 34.07 & 32.05 & 34...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no M ("4D) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no I ("49) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+! Misplaced alignment tab character &.
+l.27   15 & Mean Age at Immigration &
+                                      34.42 & 36.35 & - & 34.07 & 32.05 & 34...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.27   15 & Mean Age at Immigration & 34.42 &
+                                              36.35 & - & 34.07 & 32.05 & 34...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.27 ... Mean Age at Immigration & 34.42 & 36.35 &
+                                                   - & 34.07 & 32.05 & 34.42...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no - ("2D) in font nullfont!
+! Misplaced alignment tab character &.
+l.27 ...n Age at Immigration & 34.42 & 36.35 & - &
+                                                   34.07 & 32.05 & 34.42 & 2...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.27 ... Immigration & 34.42 & 36.35 & - & 34.07 &
+                                                   32.05 & 34.42 & 29.1 & 34...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.27 ...tion & 34.42 & 36.35 & - & 34.07 & 32.05 &
+                                                   34.42 & 29.1 & 34.47 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.27 ...4.42 & 36.35 & - & 34.07 & 32.05 & 34.42 &
+                                                   29.1 & 34.47 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.27 ...36.35 & - & 34.07 & 32.05 & 34.42 & 29.1 &
+                                                   34.47 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.28   1
+        6 & Average Years in US & 40.19 & 35.89 & - & 37.2 & 38.75 & 37.16 &...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.28   16 &
+            Average Years in US & 40.19 & 35.89 & - & 37.2 & 38.75 & 37.16 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no Y ("59) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no U ("55) in font nullfont!
+Missing character: There is no S ("53) in font nullfont!
+! Misplaced alignment tab character &.
+l.28   16 & Average Years in US &
+                                  40.19 & 35.89 & - & 37.2 & 38.75 & 37.16 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.28   16 & Average Years in US & 40.19 &
+                                          35.89 & - & 37.2 & 38.75 & 37.16 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.28   16 & Average Years in US & 40.19 & 35.89 &
+                                                  - & 37.2 & 38.75 & 37.16 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no - ("2D) in font nullfont!
+! Misplaced alignment tab character &.
+l.28 ... Average Years in US & 40.19 & 35.89 & - &
+                                                   37.2 & 38.75 & 37.16 & 43...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.28 ...e Years in US & 40.19 & 35.89 & - & 37.2 &
+                                                   38.75 & 37.16 & 43.23 & 3...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.28 ...in US & 40.19 & 35.89 & - & 37.2 & 38.75 &
+                                                   37.16 & 43.23 & 38.55 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.28 ...40.19 & 35.89 & - & 37.2 & 38.75 & 37.16 &
+                                                   43.23 & 38.55 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.28 ...35.89 & - & 37.2 & 38.75 & 37.16 & 43.23 &
+                                                   38.55 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.29   1
+        7 & Percent Less than Primary Completed & 0.11 & 0.28 & 0.15 & 0.29 ...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.29   17 &
+            Percent Less than Primary Completed & 0.11 & 0.28 & 0.15 & 0.29 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no L ("4C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+! Misplaced alignment tab character &.
+l.29   17 & Percent Less than Primary Completed &
+                                                  0.11 & 0.28 & 0.15 & 0.29 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.29 ...rcent Less than Primary Completed & 0.11 &
+                                                   0.28 & 0.15 & 0.29 & 0.25...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.29 ...ess than Primary Completed & 0.11 & 0.28 &
+                                                   0.15 & 0.29 & 0.25 & 0.2 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.29 ...n Primary Completed & 0.11 & 0.28 & 0.15 &
+                                                   0.29 & 0.25 & 0.2 & 0.39 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.29 ...ry Completed & 0.11 & 0.28 & 0.15 & 0.29 &
+                                                   0.25 & 0.2 & 0.39 & 0.12 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.29 ...leted & 0.11 & 0.28 & 0.15 & 0.29 & 0.25 &
+                                                   0.2 & 0.39 & 0.12 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.29 ...& 0.11 & 0.28 & 0.15 & 0.29 & 0.25 & 0.2 &
+                                                   0.39 & 0.12 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.29 ...& 0.28 & 0.15 & 0.29 & 0.25 & 0.2 & 0.39 &
+                                                   0.12 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.30   1
+        8 & Percent Primary Completed & 0.2 & 0.28 & 0.26 & 0.28 & 0.25 & 0....
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.30   18 &
+            Percent Primary Completed & 0.2 & 0.28 & 0.26 & 0.28 & 0.25 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+! Misplaced alignment tab character &.
+l.30   18 & Percent Primary Completed &
+                                        0.2 & 0.28 & 0.26 & 0.28 & 0.25 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.30   18 & Percent Primary Completed & 0.2 &
+                                              0.28 & 0.26 & 0.28 & 0.25 & 0....
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.30 ...& Percent Primary Completed & 0.2 & 0.28 &
+                                                   0.26 & 0.28 & 0.25 & 0.24...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.30 ...nt Primary Completed & 0.2 & 0.28 & 0.26 &
+                                                   0.28 & 0.25 & 0.24 & 0.29...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.30 ...ary Completed & 0.2 & 0.28 & 0.26 & 0.28 &
+                                                   0.25 & 0.24 & 0.29 & 0.09 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.30 ...pleted & 0.2 & 0.28 & 0.26 & 0.28 & 0.25 &
+                                                   0.24 & 0.29 & 0.09 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.30 ...& 0.2 & 0.28 & 0.26 & 0.28 & 0.25 & 0.24 &
+                                                   0.29 & 0.09 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.30 ... 0.28 & 0.26 & 0.28 & 0.25 & 0.24 & 0.29 &
+                                                   0.09 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.31   1
+        9 & Percent Secondary Completed & 0.48 & 0.35 & 0.48 & 0.33 & 0.37 &...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.31   19 &
+            Percent Secondary Completed & 0.48 & 0.35 & 0.48 & 0.33 & 0.37 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no S ("53) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+! Misplaced alignment tab character &.
+l.31   19 & Percent Secondary Completed &
+                                          0.48 & 0.35 & 0.48 & 0.33 & 0.37 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.31   19 & Percent Secondary Completed & 0.48 &
+                                                 0.35 & 0.48 & 0.33 & 0.37 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+! Misplaced alignment tab character &.
+l.31 ...ercent Secondary Completed & 0.48 & 0.35 &
+                                                   0.48 & 0.33 & 0.37 & 0.42...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 8 ("38) in font nullfont!
+! Misplaced alignment tab character &.
+l.31 ...Secondary Completed & 0.48 & 0.35 & 0.48 &
+                                                   0.33 & 0.37 & 0.42 & 0.26...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+! Misplaced alignment tab character &.
+l.31 ...ry Completed & 0.48 & 0.35 & 0.48 & 0.33 &
+                                                   0.37 & 0.42 & 0.26 & 0.55 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no 7 ("37) in font nullfont!
+! Misplaced alignment tab character &.
+l.31 ...leted & 0.48 & 0.35 & 0.48 & 0.33 & 0.37 &
+                                                   0.42 & 0.26 & 0.55 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.31 ... 0.48 & 0.35 & 0.48 & 0.33 & 0.37 & 0.42 &
+                                                   0.26 & 0.55 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.31 ... 0.35 & 0.48 & 0.33 & 0.37 & 0.42 & 0.26 &
+                                                   0.55 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.32   2
+        0 & Percent University Completed & 0.22 & 0.09 & 0.11 & 0.1 & 0.12 &...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+! Misplaced alignment tab character &.
+l.32   20 &
+            Percent University Completed & 0.22 & 0.09 & 0.11 & 0.1 & 0.12 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no P ("50) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no U ("55) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no C ("43) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no d ("64) in font nullfont!
+! Misplaced alignment tab character &.
+l.32   20 & Percent University Completed &
+                                           0.22 & 0.09 & 0.11 & 0.1 & 0.12 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.32   20 & Percent University Completed & 0.22 &
+                                                  0.09 & 0.11 & 0.1 & 0.12 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 9 ("39) in font nullfont!
+! Misplaced alignment tab character &.
+l.32 ...rcent University Completed & 0.22 & 0.09 &
+                                                   0.11 & 0.1 & 0.12 & 0.14 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.32 ...niversity Completed & 0.22 & 0.09 & 0.11 &
+                                                   0.1 & 0.12 & 0.14 & 0.06 ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+! Misplaced alignment tab character &.
+l.32 ...ity Completed & 0.22 & 0.09 & 0.11 & 0.1 &
+                                                   0.12 & 0.14 & 0.06 & 0.24 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+! Misplaced alignment tab character &.
+l.32 ...pleted & 0.22 & 0.09 & 0.11 & 0.1 & 0.12 &
+                                                   0.14 & 0.06 & 0.24 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced alignment tab character &.
+l.32 ...& 0.22 & 0.09 & 0.11 & 0.1 & 0.12 & 0.14 &
+                                                   0.06 & 0.24 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+! Misplaced alignment tab character &.
+l.32 ...& 0.09 & 0.11 & 0.1 & 0.12 & 0.14 & 0.06 &
+                                                   0.24 \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no 4 ("34) in font nullfont!
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.33    \hline
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced \crcr.
+\endtabular ->\crcr 
+                    \egroup \egroup $\egroup 
+l.34 \end{tabular}
+                  
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Extra }, or forgotten \endgroup.
+\endtabular ->\crcr \egroup 
+                            \egroup $\egroup 
+l.34 \end{tabular}
+                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten \endgroup.
+\endtabular ->\crcr \egroup \egroup 
+                                    $\egroup 
+l.34 \end{tabular}
+                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.34 \end{tabular}
+                  
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 34.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 34.
+! Extra }, or forgotten $.
+<recently read> \egroup 
+                        
+l.34 \end{tabular}
+                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+! LaTeX Error: \begin{document} ended by \end{tabular}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.34 \end{tabular}
+                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.34 \end{tabular}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+! LaTeX Error: \begin{document} ended by \end{table}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.36 \end{table}
+                
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+)
+! Emergency stop.
+<*> table1.tex
+              
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 20 strings out of 476234
+ 402 string characters out of 5785958
+ 377887 words of memory out of 5000000
+ 22679 multiletter control sequences out of 15000+600000
+ 558069 words of font info for 36 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 19i,1n,20p,159b,107s stack positions out of 10000i,1000n,20000p,200000b,200000s
+No pages of output.

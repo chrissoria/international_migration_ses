@@ -1,0 +1,646 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\usepackage{pdflscape}
+\usepackage{caption}
+\usepackage{booktabs}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Sociodemographic Comparison of Caribbean Hispanic Older Adult Immigrants in the U.S. and Origin Countries},
+  pdfauthor={William H. Dow; Chris Soria; Henry T. Dow},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Sociodemographic Comparison of Caribbean Hispanic Older Adult
+Immigrants in the U.S. and Origin Countries}
+\author{William H. Dow \and Chris Soria \and Henry T. Dow}
+\date{2024-12-26}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Caribbean and adjacent Latin American countries are key sources of
+Hispanic immigrants to the U.S. There has been rapid growth in the older
+adult Hispanic populations both among immigrants in the U.S. and in
+their home countries of emigration. This paper supports hypothesis
+generation for international comparative Hispanic aging studies by
+comparing older adult sociodemographic characteristics of U.S.
+immigrants versus those in sending countries. The analysis also provides
+context for the global family of health and retirement studies in the
+region including the ongoing Caribbean American Dementia and Aging Study
+(CADAS) which is collecting harmonized data on healthy aging in Puerto
+Rico, Dominican Republic, and Cuba. We analyze census microdata from
+these countries along with other major Hispanic Caribbean-adjacent
+sending countries including Mexico, Colombia, El Salvador, Guatemala,
+and Honduras. We compare older adults in these sending countries to
+country-specific immigrant samples in the U.S. American Community
+Survey, focusing on socioeconomic differences such as education, as well
+as marital status and co-residence patterns related to caregiver
+availability. We also examine differences by citizenship and immigration
+age to further explore immigrant selectivity patterns. The highly varied
+experiences of these cohorts will help inform future comparative
+research on Hispanic healthy aging.
+\end{abstract}
+
+
+\setstretch{1.2}
+\subsection{Introduction and Background}\label{sec-intro}
+
+Caribbean and adjacent Central and South American countries are key
+sources of Hispanic immigrants to the United Sates (Passel 2024). In
+2022, people of Mexican origin made up nearly 60\% of the U.S. Hispanic
+population, totaling about 37.4 million. Puerto Ricans were the next
+largest group at 5.9 million, with an additional 3.2 million living on
+the island. Salvadorans, Cubans, Dominicans, Guatemalans, Colombians,
+and Hondurans each have populations exceeding 1 million in the United
+States (Noe-Bustamante 2023).
+
+These immigrant populations include a rapidly growing subgroup who are
+aged 65 and above, among whom there is wide variation in socioeconomic
+and caregiving resources. In this paper we explore sociodemographic
+variation of U.S. older adult immigrants by country and cohort of
+emigration, and compare these U.S. immigrants to the corresponding
+cohorts of older adults in their home countries of emigration.
+
+The paper is designed to support hypothesis generation for international
+comparative Hispanic aging studies. This includes providing background
+context for the global family of health and retirement studies in the
+region such as the ongoing Caribbean American Dementia and Aging Study
+(CADAS) which is collecting harmonized data on healthy aging in Puerto
+Rico, Dominican Republic, and Cuba (Llibre-Guerra et al. 2021). We
+analyze census microdata from these countries along with other major
+Hispanic Caribbean-adjacent sending countries including Mexico,
+Colombia, El Salvador, Guatemala, and Honduras. We compare older adults
+in these sending countries to country-specific immigrant samples in the
+U.S. American Community Survey, focusing on socioeconomic differences
+such as education, as well as marital status and co-residence patterns
+related to caregiver availability. We also examine differences by
+citizenship and immigration age to further explore immigrant selectivity
+patterns. The highly varied experiences of these cohorts will help
+inform future comparative research on Hispanic healthy aging.
+
+\subsection{Literature Review}\label{sec-lit}
+
+International migration patterns are shaped by a complex interplay of
+factors, labor market demands, educational opportunities, and political
+and economic instability (McAuliffe, Bauloz, and Kitimbo 2024). In North
+America specifically, Massey et al.~argue that a primary driver of
+migration is social networks, where migrants often seek to reunite with
+family members, a motivation that leads to self-perpetuating cycle of
+migration flows (Massey et al. 1994). Latin American countries exemplify
+these diverse migration drivers, with specific political agreements
+further influencing movement patterns.
+
+Puerto Rico's unique status since 1898, for example, has facilitated
+legal entry to the U.S. mainland for its residents. Similarly, the Cuban
+Adjustment Act of 1966 granted Cuban natives or citizens who had settled
+in the United States for at least one year the ability to apply for
+lawful permanent residency3. This policy led to significant waves of
+Cuban migration, notably the 1980 Mariel boatlift, which brought
+approximately 125,000 Cubans to Florida4. The subsequent ``wet foot, dry
+foot'' policy, implemented in 1995, further shaped Cuban migration until
+its termination in 2017 by the Obama administration5.
+
+Research consistently demonstrates that fluctuations in Puerto Rico's
+economy, coupled with changes in labor demand on the mainland, are
+primary drivers of migration flows (Capielo Rosario et al. 2023).
+
+Older populations have their own reasons for staying or moving, although
+migration is primarily a young man's game.
+
+\subsection{Data and Methods}\label{sec-methods}
+
+Census data for this study were obtained from IPUMS International
+(Ruggles et al. 2024). The current analysis draws on the latest
+harmonized census data available in IPUMS for Colombia (2005), Cuba
+(2012), the Dominican Republic (2010), El Salvador (2007), Guatemala
+(2002), Honduras (2001), Mexico (2020), Puerto Rico (2010), and the
+United States (2020). The study focused on individuals aged 65 to 89, as
+some datasets, such as Puerto Rico's, top-coded ages at 89. To ensure
+comparability, we standardized means in the international censuses based
+on the U.S. sex-specific age distribution. We also applied weights
+provided by IPUMS to make the samples nationally representative.
+
+Table 1 presents means of sociodemographics of all 65-89 year-olds from
+each country's census. The variables included are age, percent
+married/cohabiting, and highest educational level obtained (using
+internationally standardized categorizations of less than primary,
+primary, secondary, and university). Table 2 displays means for each
+country's counterparts who have emigrated to the U.S. In addition to the
+variables in Table 1, it includes percent English speakers, percent
+naturalized citizens, mean age at immigration, and mean years in the
+U.S. based on the American Community Survey data. Table 3 shows the same
+variables as in Table 2, drawn from the American Community, but
+categorized by race/ethnicity and nativity status.
+
+\subsection{Preliminary Results}\label{preliminary-results}
+
+\subsubsection{Hispanic older adults in their native
+countries}\label{hispanic-older-adults-in-their-native-countries}
+
+Table 1 shows sex-specific sociodemographic characteristics among older
+adults aged 65 to 89, comparing across current country of residence in
+the Hispanic Caribbean and adjacent countries. Rates of current
+marriage/cohabitation are substantially higher among men than women;
+among women, they vary significantly across countries, ranging from 38\%
+in the Dominican Republic to 48\% in the U.S. Regarding education, there
+are even larger differences between neighboring countries. E.g., among
+women in this age group, 76\% of Dominicans have less than primary
+education compared with 31\% of Cubans and Puerto Ricans; the highest
+rate is Honduras at 86\% and lowest is the U.S. at 4\%. There are
+similarly large differences among men . \#\#\# Hispanic older adults as
+migrants in the U.S.
+
+Table 2 presents sociodemographics of migrants from these countries
+living in the U.S. The youngest groups are men from El Salvador (71.23),
+Guatemala (70.78), and Honduras (71.5), who are about two years younger
+than their counterparts in their native. The oldest group consists of
+Cuban women (73.35), who are slightly younger than U.S. women overall
+(73.75), while Cuban men (74.6) are older than the U.S. average for men
+(73.13). These differences reflect a combination of differential
+mortality rates and varying immigration patterns by birth cohort.
+Marital/cohabitation status is also affected by these factors as well as
+potentially by different cultural influences on partnership; for many
+countries rates are somewhat lower among immigrants in the U.S. For
+example, the age-adjusted married/cohabiting rate among women in Cuba is
+43\%, compared to 31\% for Cuban-born women immigrants in the U.S.
+
+Many of these migrant groups have low rates of reporting that they speak
+English, with women generally less likely to speak English than men. The
+lowest English speaking rates are among migrants from the Dominican
+Republic, where only 60\% of female and 70\% of male migrants speak
+English, and Mexico, with 65\% of female and 74\% of males speaking
+English. In contrast, migrants from Cuba (71\% of females and 78\% of
+males), Colombia (83\% of females and 88\% of males), and Guatemala
+(79\% of females and 87\% of males) have higher English speaking rates.
+
+In terms of citizenship, females are slightly more likely to become
+naturalized U.S. citizens than men. Typically, men emigrate to the U.S.
+at a younger age, about two years earlier on average. For example,
+females from Honduras arrive at an average age of 36.48, while males
+arrive at 34.42, often resulting in longer U.S. residency for
+men---Honduran men report an average of 37.16 years compared to women's
+36.17 years. However, Guatemala is an exception; despite migrating at a
+younger age (32.05), Guatemalan men have spent fewer years in the U.S.
+(38.75) compared to women (39.26).
+
+Men are more likely to have a college degree across all groups:
+Guatemalan men (12\%) compared to women (8\%), Honduran men (14\%)
+versus women (11\%), and Salvadoran men (10\%) against women (5\%). The
+largest gender gap is among Colombian migrants, with 24\% of men holding
+a college degree compared to 16\% of women. The least educated groups
+are Mexican migrants (6\% of men and 4\% of women with college degrees)
+and those from the Dominican Republic (9\% for men and 7\% for women).
+These relative gender patterns are similar to their counterparts living
+in their native countries (Table 1), however overall the U.S. migrants
+have markedly higher education than those still living in their
+countries of birth.
+
+\subsubsection{Race/ethnicity and nativity in
+U.S.}\label{raceethnicity-and-nativity-in-u.s.}
+
+Table 3 is similar to table 2, but now looks by racial category (Black,
+White, and Other racial identities), Hispanic, and native-born category.
+Average ages across these groups are quite similar. Both Hispanic
+migrant and native Blacks are much less likely to be married or
+cohabitating, with rates of 28\% and 27\%, respectively. In contrast,
+individuals identifying as White, whether Hispanic migrant or native,
+are more likely to be married or cohabitating. Black migrants are
+slightly more likely to speak English but are less likely to become
+naturalized citizens. They also tend to immigrate at an older age and
+spend fewer years in the U.S., while Whites and those of other Hispanic
+races have similar immigration patterns. White Hispanic migrants have
+slightly longer U.S. residency. Interestingly, the college degree gap
+between Black and White migrants is nonexistent; both groups are equally
+likely to earn a degree. This contrasts with non-Hispanic US native
+populations, where only 17\% of Black men hold a college degree compared
+to 36\% of White men. Hispanic migrants identifying as a race other than
+White or Black are the least likely to have a college degree and most
+likely to have less than primary education, with 33\% of women and 32\%
+of men in this category having less than a primary education.
+
+\subsection{Discussion}\label{discussion}
+
+This study will provide a comprehensive sociodemographic comparison of
+older adult Hispanic populations both in their countries of origin and
+as immigrants in the United States. The analysis so far reveals
+significant variations in education levels marital status and migration
+patterns across different Hispanic subgroups. These findings have
+important implications for understanding the diverse experiences of
+Hispanic older adults and for informing policies related to healthy
+aging and caregiving. The ongoing analysis (to be reported in the full
+paper) is expanding this analysis to further examine patterns by
+immigration cohort, also using multivariate regression to better parse
+mechanisms underlying the observed differences.
+
+\begin{landscape}
+
+\begin{table}[ht]
+\centering
+\caption{Sociodemographics by Country and Sex: Hispanics in Caribbean and Adjacent Countries}
+\begingroup\small
+\begin{tabular}{l|l|lllllllll}
+  \hline
+Gender & Demographics & Colombia & Cuba & Dominican Republic & El Salvador & Guatemala & Honduras & Mexico & Puerto Rico & United States \\ 
+  \hline
+Women & Age & 73.65 & 73.74 & 73.62 & 73.67 & 73.49 & 73.56 & 73.66 & 73.81 & 73.73 \\ 
+   & Married/Cohabiting & 0.34 & 0.43 & 0.35 & 0.34 & 0.47 & 0.4 & 0.42 & 0.39 & 0.48 \\ 
+   & Less than Primary & 0.6 & 0.31 & 0.75 & 0.83 & 0.84 & 0.87 & 0.51 & 0.3 & 0.04 \\ 
+   & Primary & 0.29 & 0.5 & 0.16 & 0.11 & 0.11 & 0.09 & 0.35 & 0.26 & 0.09 \\ 
+   & Secondary & 0.06 & 0.15 & 0.06 & 0.04 & 0.04 & 0.04 & 0.09 & 0.33 & 0.62 \\ 
+   & University & 0.02 & 0.05 & 0.03 & 0.01 & 0.01 & - & 0.05 & 0.11 & 0.25 \\ 
+   & Unknown & 0.03 & - & - & - & - & - & - & - & - \\ 
+  Men & Age & 73.03 & 73.13 & 72.99 & 73.08 & 72.92 & 72.94 & 73.04 & 73.13 & 73.11 \\ 
+   & Married/Cohabiting & 0.66 & 0.67 & 0.67 & 0.71 & 0.79 & 0.72 & 0.73 & 0.67 & 0.7 \\ 
+   & Less than Primary & 0.6 & 0.23 & 0.71 & 0.77 & 0.81 & 0.85 & 0.45 & 0.24 & 0.03 \\ 
+   & Primary & 0.26 & 0.5 & 0.19 & 0.15 & 0.13 & 0.1 & 0.35 & 0.29 & 0.08 \\ 
+   & Secondary & 0.06 & 0.2 & 0.06 & 0.05 & 0.03 & 0.04 & 0.09 & 0.35 & 0.55 \\ 
+   & University & 0.04 & 0.07 & 0.04 & 0.03 & 0.02 & 0.01 & 0.11 & 0.13 & 0.33 \\ 
+   & Unknown & 0.04 & - & - & - & - & - & - & - & - \\ 
+\hline
+\end{tabular}
+\endgroup
+\end{table}
+
+\newpage
+
+\begin{table}[ht]
+\centering
+\caption{Sociodemographics of Hispanics in the U.S. by Birth Country and Sex (2020 Census)} 
+\begingroup\small
+\begin{tabular}{l|l|lllllllll}
+  \hline
+Gender & Demographics & Colombia & Cuba & Dominican Republic & El Salvador & Guatemala & Honduras & Mexico & Puerto Rico & United States \\ 
+  \hline
+Women & Age & 73.2 & 75.35 & 72.96 & 72.63 & 72.36 & 72.61 & 73.07 & 73.97 & 73.75 \\ 
+   & Married/Cohabiting & 0.38 & 0.34 & 0.31 & 0.34 & 0.38 & 0.35 & 0.45 & 0.33 & 0.48 \\ 
+   & English Speakers & 0.83 & 0.71 & 0.6 & 0.68 & 0.79 & 0.75 & 0.65 & 0.89 & 1 \\ 
+   & Citizen & 0.77 & 0.84 & 0.7 & 0.66 & 0.69 & 0.67 & 0.57 & - & - \\ 
+   & Age at Immigration & 35.38 & 35.63 & 37.38 & 36 & 33.13 & 36.48 & 31.8 & - & - \\ 
+   & Years in US & 37.83 & 39.76 & 35.53 & 36.63 & 39.26 & 36.17 & 41.27 & - & - \\ 
+   & Less than Primary Completed & 0.13 & 0.11 & 0.31 & 0.38 & 0.3 & 0.23 & 0.4 & 0.15 & 0.01 \\ 
+   & Primary Completed & 0.12 & 0.21 & 0.29 & 0.27 & 0.23 & 0.21 & 0.3 & 0.25 & 0.08 \\ 
+   & Secondary Completed & 0.59 & 0.5 & 0.33 & 0.31 & 0.38 & 0.45 & 0.27 & 0.48 & 0.66 \\ 
+   & University Completed & 0.16 & 0.19 & 0.07 & 0.05 & 0.08 & 0.11 & 0.04 & 0.12 & 0.26 \\ 
+   & N & 3339 & 8817 & 3500 & 3035 & 1507 & 943 & 27393 & 9814 & 1392747 \\ 
+  Men & Age & 72.98 & 74.6 & 72.24 & 71.23 & 70.78 & 71.5 & 72.32 & 73.36 & 73.13 \\ 
+   & Married/Cohabiting & 0.72 & 0.63 & 0.66 & 0.67 & 0.65 & 0.69 & 0.73 & 0.61 & 0.7 \\ 
+   & English Speakers & 0.88 & 0.78 & 0.7 & 0.78 & 0.87 & 0.83 & 0.74 & 0.94 & 1 \\ 
+   & Citizen & 0.75 & 0.79 & 0.67 & 0.65 & 0.66 & 0.6 & 0.55 & - & - \\ 
+   & Age at Immigration & 34.47 & 34.42 & 36.35 & 34.07 & 32.05 & 34.42 & 29.1 & - & - \\ 
+   & Years in US & 38.55 & 40.19 & 35.89 & 37.2 & 38.75 & 37.16 & 43.23 & - & - \\ 
+   & Less than Primary Completed & 0.12 & 0.11 & 0.28 & 0.29 & 0.25 & 0.2 & 0.39 & 0.15 & 0.01 \\ 
+   & Primary Completed & 0.09 & 0.2 & 0.28 & 0.28 & 0.25 & 0.24 & 0.29 & 0.26 & 0.07 \\ 
+   & Secondary Completed & 0.55 & 0.48 & 0.35 & 0.33 & 0.37 & 0.42 & 0.26 & 0.48 & 0.57 \\ 
+   & University Completed & 0.24 & 0.22 & 0.09 & 0.1 & 0.12 & 0.14 & 0.06 & 0.11 & 0.34 \\ 
+   & N & 2049 & 6729 & 2255 & 1848 & 1118 & 528 & 23228 & 7137 & 1188861 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Sociodemographics of U.S. Older Adults by Race/Ethnicity and Nativity} 
+\begingroup\small
+\begin{tabular}{l|l|p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}}
+  \hline
+Gender & Demographics & Hispanic Black Foreign & Hispanic White Foreign & Hispanic Other Foreign & Non-Hispanic Black Native & Non-Hispanic White Native & Non-Hispanic Other Native & All Native Hispanic \\ 
+  \hline
+Women & Age & 73.74 & 73.75 & 73.14 & 73.19 & 73.87 & 72.96 & 73.17 \\ 
+   & Married/Cohabiting & 0.28 & 0.4 & 0.38 & 0.27 & 0.51 & 0.42 & 0.41 \\ 
+   & English Speakers & 0.75 & 0.72 & 0.7 & - & - & 0.99 & 0.99 \\ 
+   & Citizen & 0.51 & 0.55 & 0.53 & - & - & - & - \\ 
+   & Age at Immigration & 37.29 & 33.49 & 33.79 & - & - & - & - \\ 
+   & Years in US & 36.58 & 40.17 & 39.23 & - & - & - & - \\ 
+   & Less than Primary Completed & 0.24 & 0.26 & 0.33 & 0.03 & 0.01 & 0.03 & 0.08 \\ 
+   & Primary Completed & 0.25 & 0.26 & 0.27 & 0.15 & 0.06 & 0.09 & 0.17 \\ 
+   & Secondary Completed & 0.41 & 0.38 & 0.34 & 0.64 & 0.66 & 0.6 & 0.62 \\ 
+   & University Completed & 0.1 & 0.1 & 0.07 & 0.18 & 0.27 & 0.27 & 0.13 \\ 
+  Men & Age & 72.85 & 73.01 & 72.36 & 72.37 & 73.25 & 72.59 & 72.5 \\ 
+   & Married/Cohabiting & 0.55 & 0.69 & 0.68 & 0.52 & 0.72 & 0.63 & 0.61 \\ 
+   & English Speakers & 0.8 & 0.79 & 0.78 & - & - & - & 0.99 \\ 
+   & Citizen & 0.49 & 0.53 & 0.51 & - & - & - & - \\ 
+   & Age at Immigration & 34.78 & 31.13 & 31.42 & - & - & - & - \\ 
+   & Years in US & 37.95 & 41.8 & 40.79 & - & - & - & - \\ 
+   & Less than Primary Completed & 0.22 & 0.26 & 0.32 & 0.04 & 0.01 & 0.03 & 0.07 \\ 
+   & Primary Completed & 0.26 & 0.25 & 0.27 & 0.16 & 0.06 & 0.08 & 0.15 \\ 
+   & Secondary Completed & 0.4 & 0.37 & 0.33 & 0.63 & 0.57 & 0.57 & 0.6 \\ 
+   & University Completed & 0.11 & 0.12 & 0.08 & 0.17 & 0.36 & 0.32 & 0.18 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+
+\begin{table}[ht]
+\centering
+\caption{Summary Statistics by Country and Sex For Hispanics in Their Native Countries  (Ty's new table 1)} 
+\begin{tabular}{l|l|llllll}
+  \hline
+Gender & Demographics & Mexico\_2010 & Mexico\_2020 & PR\_2010 & PR\_2020 & US\_2010 & US\_2020 \\ 
+  \hline
+Women & Age & 73.63 & 73.66 & 73.81 & 73.78 & 73.76 & 73.73 \\ 
+   & Married/Cohabiting & 0.41 & 0.42 & 0.39 & 0.39 & 0.45 & 0.48 \\ 
+   & Less than Primary & 0.66 & 0.51 & 0.3 & 0.16 & 0.04 & 0.04 \\ 
+   & Primary & 0.26 & 0.35 & 0.26 & 0.23 & 0.15 & 0.09 \\ 
+   & Secondary & 0.06 & 0.09 & 0.33 & 0.43 & 0.63 & 0.62 \\ 
+   & University & 0.02 & 0.05 & 0.11 & 0.18 & 0.17 & 0.25 \\ 
+   & Unknown & - & - & - & - & - & - \\ 
+  Men & Age & 73.04 & 73.04 & 73.13 & 73.14 & 73.11 & 73.11 \\ 
+   & Married/Cohabiting & 0.73 & 0.73 & 0.67 & 0.63 & 0.72 & 0.7 \\ 
+   & Less than Primary & 0.62 & 0.45 & 0.24 & 0.16 & 0.04 & 0.03 \\ 
+   & Primary & 0.26 & 0.35 & 0.29 & 0.25 & 0.14 & 0.08 \\ 
+   & Secondary & 0.06 & 0.09 & 0.35 & 0.41 & 0.54 & 0.55 \\ 
+   & University & 0.06 & 0.11 & 0.13 & 0.17 & 0.28 & 0.33 \\ 
+   & Unknown & - & - & - & - & - & - \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\end{landscape}
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+The authors wish to acknowledge the statistical offices that provided
+the underlying data making this research possible: National
+Administrative Department of Statistics, Colombia; Office of National
+Statistics, Cuba; National Statistics Office, Dominican Republic;
+Department of Statistics and Censuses, El Salvador; National Institute
+of Statistics, Guatemala; National Institute of Statistics, Honduras;
+National Institute of Statistics, Geography, and Informatics, Mexico;
+U.S. Bureau of the Census, Puerto Rico; and Bureau of the Census, United
+States.
+
+\section{Appendix}
+
+\begin{landscape}
+\begin{table}[ht]
+\centering
+\caption{Sociodemographics of Hispanics in the U.S. by Birth Country and Sex (2010 Census)} 
+\begingroup\small
+\begin{tabular}{l|l|lllllllll}
+  \hline
+Gender & Demographics & Colombia & Cuba & Dominican Republic & El Salvador & Guatemala & Honduras & Mexico & Puerto Rico & United States \\ 
+  \hline
+Women & Age & 72.86 & 75.37 & 72.93 & 73.49 & 72.83 & 73.22 & 72.83 & 73.18 & 74.6 \\ 
+   & Married/Cohabiting & 0.33 & 0.34 & 0.29 & 0.28 & 0.31 & 0.25 & 0.42 & 0.33 & 0.44 \\ 
+   & English Speakers & 0.74 & 0.68 & 0.52 & 0.53 & 0.66 & 0.83 & 0.56 & 0.87 & 1 \\ 
+   & Citizen & 0.69 & 0.82 & 0.57 & 0.53 & 0.57 & 0.68 & 0.52 & - & - \\ 
+   & Age at Immigration & 32.38 & 29.65 & 34.2 & 34.42 & 32.67 & 30.54 & 27.67 & - & - \\ 
+   & Years in US & 40.46 & 45.69 & 38.67 & 39.09 & 40.16 & 42.67 & 45.17 & - & - \\ 
+   & Less than Primary Completed & 0.17 & 0.13 & 0.38 & 0.46 & 0.34 & 0.25 & 0.47 & 0.22 & 0.02 \\ 
+   & Primary Completed & 0.17 & 0.27 & 0.31 & 0.23 & 0.27 & 0.24 & 0.3 & 0.3 & 0.14 \\ 
+   & Secondary Completed & 0.53 & 0.46 & 0.25 & 0.28 & 0.32 & 0.39 & 0.2 & 0.41 & 0.66 \\ 
+   & University Completed & 0.13 & 0.15 & 0.05 & 0.03 & 0.07 & 0.11 & 0.03 & 0.07 & 0.17 \\ 
+   & N & 474 & 1729 & 471 & 349 & 167 & 128 & 3923 & 1425 & 229700 \\ 
+  Men & Age & 71.84 & 74.68 & 72.57 & 72.36 & 72.27 & 70.73 & 72.31 & 72.38 & 73.57 \\ 
+   & Married/Cohabiting & 0.75 & 0.65 & 0.68 & 0.74 & 0.74 & 0.65 & 0.73 & 0.61 & 0.71 \\ 
+   & English Speakers & 0.83 & 0.74 & 0.65 & 0.68 & 0.77 & 0.78 & 0.65 & 0.93 & 1 \\ 
+   & Citizen & 0.63 & 0.77 & 0.57 & 0.52 & 0.69 & 0.62 & 0.52 & - & - \\ 
+   & Age at Immigration & 30.35 & 28.62 & 32.36 & 34.11 & 29.25 & 33.17 & 25.51 & - & - \\ 
+   & Years in US & 41.5 & 46.04 & 40.27 & 38.25 & 42.94 & 37.51 & 46.82 & - & - \\ 
+   & Less than Primary Completed & 0.11 & 0.13 & 0.33 & 0.4 & 0.26 & 0.19 & 0.49 & 0.19 & 0.03 \\ 
+   & Primary Completed & 0.18 & 0.27 & 0.33 & 0.2 & 0.31 & 0.26 & 0.29 & 0.31 & 0.14 \\ 
+   & Secondary Completed & 0.49 & 0.44 & 0.24 & 0.28 & 0.31 & 0.41 & 0.18 & 0.4 & 0.56 \\ 
+   & University Completed & 0.22 & 0.16 & 0.1 & 0.11 & 0.12 & 0.13 & 0.04 & 0.09 & 0.28 \\ 
+   & N & 249 & 1291 & 280 & 168 & 95 & 53 & 3120 & 1054 & 183878 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+\end{landscape}
+
+\newpage
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-capielo_rosario_conceptualizing_2023}
+Capielo Rosario, Cristalís, Tristan Mattwig, Kyana D. Hamilton, and
+Brenton Wejrowski. 2023. {``Conceptualizing {Puerto} {Rican} Migration
+to the {United} {States}.''} \emph{Current Opinion in Psychology} 51
+(June): 101584. \url{https://doi.org/10.1016/j.copsyc.2023.101584}.
+
+\bibitem[\citeproctext]{ref-llibre-guerra_caribbean-american_2021}
+Llibre-Guerra, Jorge J, Jing Li, Amal Harrati, Ivonne Jiménez-Velazquez,
+Daisy M Acosta, Juan J Llibre-Rodriguez, Mao-Mei Liu, and William H Dow.
+2021. {``The {Caribbean}-{American} {Dementia} and {Aging} {Study}
+({CADAS}): {A} Multinational Initiative to Address Dementia in
+{Caribbean} Populations.''} \emph{Alzheimer's \& Dementia} 17 (S7):
+e053789. \url{https://doi.org/10.1002/alz.053789}.
+
+\bibitem[\citeproctext]{ref-massey_evaluation_1994}
+Massey, Douglas S., Joaquín Arango, Graeme Hugo, Ali Kouaouci, Adela
+Pellegrino, and J. Edward Taylor. 1994. {``An {Evaluation} of
+{International} {Migration} {Theory}: {The} {North} {American}
+{Case}.''} \emph{Population and Development Review} 20 (4): 699--751.
+\url{https://doi.org/10.2307/2137660}.
+
+\bibitem[\citeproctext]{ref-mcauliffe_who_2024}
+McAuliffe, Marie, Celine Bauloz, and Adrian Kitimbo. 2024. {``Who
+Migrates Internationally and Where Do They Go? {International}.''}
+International Organization for Migration.
+\url{https://worldmigrationreport.iom.int/what-we-do/world-migration-report-2024-chapter-4/who-migrates-internationally-and-where-do-they-go-international-migration-globally-between-1995-2020}.
+
+\bibitem[\citeproctext]{ref-noe-bustamante_key_2023}
+Noe-Bustamante, Mohamad Moslimani and Luis, Jeffrey S. Passel. 2023.
+{``Key Facts about {U}.{S}. {Latinos} for {National} {Hispanic}
+{Heritage} {Month}.''} \emph{Pew Research Center}.
+\url{https://www.pewresearch.org/short-reads/2023/09/22/key-facts-about-us-latinos-for-national-hispanic-heritage-month/}.
+
+\bibitem[\citeproctext]{ref-passel_what_2024}
+Passel, Mohamad Moslimani and Jeffrey S. 2024. {``What the Data Says
+about Immigrants in the {U}.{S}.''} \emph{Pew Research Center}.
+\url{https://www.pewresearch.org/short-reads/2024/09/27/key-findings-about-us-immigrants/}.
+
+\bibitem[\citeproctext]{ref-ruggles_ipums_2024}
+Ruggles, Streven, Lara Cleveland, Sula Sarkar, and Matthew Sobek. 2024.
+{``{IPUMS} {International}.''}
+https://doi.org/\url{https://doi.org/10.18128/D020.V7.5}.
+
+\end{CSLReferences}
+
+
+
+
+\end{document}
