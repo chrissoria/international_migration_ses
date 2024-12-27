@@ -40,13 +40,23 @@ The paper is designed to support hypothesis generation for international compara
 
 ## Literature Review {#sec-lit}
 
-International migration patterns are shaped by a complex interplay of factors, labor market demands, educational opportunities, and political and economic instability [@mcauliffe_who_2024]. In North America specifically, Massey et al. argue that a primary driver of migration is social networks, where migrants often seek to reunite with family members, a motivation that leads to self-perpetuating cycle of migration flows [@massey_evaluation_1994]. Latin American countries exemplify these diverse migration drivers, with specific political agreements further influencing movement patterns. 
+International migration patterns are shaped by a complex interplay of factors, including labor market demands, educational opportunities, and political and economic instability [@mcauliffe_who_2024]. In the North American context, Massey et al. posit that established social networks play a pivotal role in migration dynamics, with family reunification serving as a primary motivator [@silva_violence_2014]. This reunification imperative creates a self-perpetuating cycle of migration flows [@massey_evaluation_1994]. Demographic characteristics, particularly age, also significantly influence migration patterns. Younger individuals typically dominate migrant populations, as exemplified by Mexican migrants. While recent cohorts of Mexican migrants have shown a trend towards increased age compared to their predecessors, they still maintain a relatively youthful average age[@angel_aging_2017]. This age pattern shows that migration remains attractive to young people, even though the overall population in their home countries is getting older [@cite].
 
-Puerto Rico's unique status since 1898, for example, has facilitated legal entry to the U.S. mainland for its residents. Similarly, the Cuban Adjustment Act of 1966 granted Cuban natives or citizens who had settled in the United States for at least one year the ability to apply for lawful permanent residency3. This policy led to significant waves of Cuban migration, notably the 1980 Mariel boatlift, which brought approximately 125,000 Cubans to Florida4. The subsequent "wet foot, dry foot" policy, implemented in 1995, further shaped Cuban migration until its termination in 2017 by the Obama administration5.
+Other Latin American countries similarly exhibit diverse migration drivers and patterns, with specific political agreements further shaping these movements and creating unique migration landscapes across the region. Puerto Rico's special status as a U.S. territory since 1898, for instance, has facilitated legal entry to the U.S. mainland for its residents. Likewise, the Cuban Adjustment Act of 1966 and subsequent policies, such as the "wet foot, dry foot" policy (1995-2017), have significantly influenced Cuban migration to the United States [@duany_cuban_2017]. These examples illustrate how political arrangements can create exceptional migration corridors, potentially leading to what migration theorists term "migration systems" or "transnational social spaces."
 
-Research consistently demonstrates that fluctuations in Puerto Rico's economy, coupled with changes in labor demand on the mainland, are primary drivers of migration flows [@capielo_rosario_conceptualizing_2023].
+Economic factors underpin much of the migration from Latin America to the United States, exemplifying classic push-pull migration theory [@cite]. Economic insecurity in Latin American countries acts as a push factor [@capielo_rosario_conceptualizing_2023; @larotta_silva_determinantes_2019], while periods of US economic growth further amplify wage differentials between the two regions [@bahar_often_2024].  For instance, Colombian and Guatemalan workers in the U.S. earn \$288-\$299 for every $100 earned by their counterparts at home, while Nicaraguan migrants see an even larger differential [@clemens_place_2009]. However, these wage differentials are partially explained by positive selection, as migrants often possess characteristics associated with higher productivity and adaptability. This selection bias is further evidenced by research showing that immigrants tend to have longer life expectancies than native-born populations [@aldridge_global_2018].
 
-Older populations have their own reasons for staying or moving, although migration is primarily a young man's game. 
+Alongside economic factors, political instability has been a significant driver of forced migration from Latin American countries to the United States, aligning with theories of refugee and asylum migration [@cite]. Historical events underscore this trend. The Cuban Revolution of 1959, for instance, generated the largest refugee movement to the United States in history, resulting in approximately 1.4 million Cuban refugees [@duany_cuban_2017]^[This record was recently surpassed, where more Cubans have sought to enter the United States in 2021-23; @gonzalez_current_2024].  Similarly, the Salvadoran Civil War (1979-1992) led to the displacement of about 1 million people, many of whom subsequently migrated to the U.S., often through irregular channels [@cervantes_salvador_2018]. Guatemala and Honduras experienced similar trajectories of political instability, exacerbated by U.S. interventions in the mid-20th century [@jonas_centaurs_2018; @pine_working_2008]. These events led to substantial emigration waves, with Guatemalan immigrants in the U.S. increasing from 71,000 in 1980 to over 480,000 by 2000, and Honduran immigrants from 39,000 to 283,000 [@batalova_central_2021]. Recent data underscores this trend: in the first 11 months of 2023, over 50% of approximately 412,000 asylum applications to the Department of Homeland Security came from Venezuela, Cuba, Colombia, and Nicaragua [@noauthor_nationwide_2024].
+
+The extant literature on Latin American migration predominantly focuses on individuals who emigrate during periods of economic distress and political upheaval. However, there is a notable paucity of research examining those who opt to remain in their home countries under similar circumstances. This study addresses this gap by conducting a comparative analysis of older adults from Latin American countries who have migrated to the United States and their counterparts who have remained in their countries of origin. By examining the sociodemographic characteristics of these populations, this research aims to elucidate the selectivity of migration processes and their long-term implications. Such an approach not only contributes to a more comprehensive understanding of migration dynamics but also provides insights into the differential aging experiences of migrants and non-migrants from Latin American countries.
+
+Questions: 
+which countries send the most skilled workers, which have the most educated people?
+Differences in age, gender, and education levels among various national groups
+Geographic distribution and settlement patterns within the United States
+Healthcare access and outcomes
+Housing conditions
+Who are the people choose to stay, and why do they stay?
 
 ## Data and Methods {#sec-methods}
 
@@ -54,7 +64,13 @@ Census data for this study were obtained from IPUMS International [@ruggles_ipum
 
 Table 1 presents means of sociodemographics of all 65-89 year-olds from each country's census. The variables included are age, percent married/cohabiting, and highest educational level obtained (using internationally standardized categorizations of less than primary, primary, secondary, and university). Table 2 displays means for each country's counterparts who have emigrated to the U.S. In addition to the variables in Table 1, it includes percent English speakers, percent naturalized citizens, mean age at immigration, and mean years in the U.S. based on the American Community Survey data. Table 3 shows the same variables as in Table 2, drawn from the American Community, but categorized by race/ethnicity and nativity status.
 
-## Preliminary Results
+## Results and Comparative Analysis
+
+TODO:
+Identify which migrant groups moved to the US at the youngest ages comparatively
+Variations in migration motivations and experiences
+Disparities in socioeconomic outcomes and integration patterns
+Unique challenges faced by specific national groups
 
 ### Hispanic older adults in their native countries
 
@@ -77,6 +93,8 @@ Table 3 is similar to table 2, but now looks by racial category (Black, White, a
 ## Discussion
 
 This study will provide a comprehensive sociodemographic comparison of older adult Hispanic populations both in their countries of origin and as immigrants in the United States. The analysis so far reveals significant variations in education levels marital status and migration patterns across different Hispanic subgroups. These findings have important implications for understanding the diverse experiences of Hispanic older adults and for informing policies related to healthy aging and caregiving. The ongoing analysis (to be reported in the full paper) is expanding this analysis to further examine patterns by immigration cohort, also using multivariate regression to better parse mechanisms underlying the observed differences.
+
+The complexity of migration from Latin America to the United States is underscored by the region's evolving migration landscape, which has seen a dramatic increase in intraregional movement and return migration since 2010, challenging the traditional narrative of unidirectional flows to North America and Europe while still maintaining significant outward migration patterns [@tanco_dramatic_2023].
 
 
 \begin{landscape}
