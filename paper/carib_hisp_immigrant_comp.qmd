@@ -57,7 +57,7 @@ Census data for this study were obtained from IPUMS International [@ruggles_ipum
 
 Table 1 presents means of sociodemographics of all 65-89 year-olds from each country's census. The variables included are age, percent married/cohabiting, and highest educational level obtained (using internationally standardized categorizations of less than primary, primary, secondary, and university). Table 2 displays means for each country's counterparts who have emigrated to the U.S. In addition to the variables in Table 1, it includes percent English speakers, percent naturalized citizens, mean age at immigration, and mean years in the U.S. based on the American Community Survey data. Table 3 shows the same variables as in Table 2, drawn from the American Community, but categorized by race/ethnicity and nativity status.
 
-## Results and Comparative Analysis
+## Results and Comparative Analysis {#sec-results}
 
 TODO:
 Identify which migrant groups moved to the US at the youngest ages comparatively
@@ -91,7 +91,7 @@ Men are more likely to have a college degree across all groups: Guatemalan men (
 
 Table 3 is similar to table 2, but now looks by racial category (Black, White, and Other racial identities), Hispanic, and native-born category. Average ages across these groups are quite similar. Both Hispanic migrant and native Blacks are much less likely to be married or cohabitating, with rates of 28% and 27%, respectively. In contrast, individuals identifying as White, whether Hispanic migrant or native, are more likely to be married or cohabitating. Black migrants are slightly more likely to speak English but are less likely to become naturalized citizens. They also tend to immigrate at an older age and spend fewer years in the U.S., while Whites and those of other Hispanic races have similar immigration patterns. White Hispanic migrants have slightly longer U.S. residency. Interestingly, the college degree gap between Black and White migrants is nonexistent; both groups are equally likely to earn a degree. This contrasts with non-Hispanic US native populations, where only 17% of Black men hold a college degree compared to 36% of White men. Hispanic migrants identifying as a race other than White or Black are the least likely to have a college degree and most likely to have less than primary education, with 33% of women and 32% of men in this category having less than a primary education.
 
-## Discussion
+## Discussion {#sec-discussion}
 
 This study will provide a comprehensive sociodemographic comparison of older adult Hispanic populations both in their countries of origin and as immigrants in the United States. The analysis so far reveals significant variations in education levels marital status and migration patterns across different Hispanic subgroups. These findings have important implications for understanding the diverse experiences of Hispanic older adults and for informing policies related to healthy aging and caregiving. The ongoing analysis (to be reported in the full paper) is expanding this analysis to further examine patterns by immigration cohort, also using multivariate regression to better parse mechanisms underlying the observed differences.
 
@@ -227,10 +227,12 @@ Women & Age & 73.63 & 73.66 & 73.81 & 73.78 & 73.76 & 73.73 \\
 
 \end{landscape}
 
+\newpage
 \section*{Acknowledgments}
 \addcontentsline{toc}{section}{Acknowledgments}
 The authors wish to acknowledge the statistical offices that provided the underlying data making this research possible: National Administrative Department of Statistics, Colombia; Office of National Statistics, Cuba; National Statistics Office, Dominican Republic; Department of Statistics and Censuses, El Salvador; National Institute of Statistics, Guatemala; National Institute of Statistics, Honduras; National Institute of Statistics, Geography, and Informatics, Mexico; U.S. Bureau of the Census, Puerto Rico; and Bureau of the Census, United States.
 
+\newpage
 \section{Appendix}
 
 \begin{landscape}
@@ -273,3 +275,5 @@ Women & Age & 72.86 & 75.37 & 72.93 & 73.49 & 72.83 & 73.22 & 72.83 & 73.18 & 74
 \newpage
 
 # References
+
+[//]: # quarto render carib_hisp_immigrant_comp.qmd --to docx
