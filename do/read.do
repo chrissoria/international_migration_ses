@@ -10,6 +10,7 @@ keep if age > 59 & age < 90
 ***below I will create the age standardization variable***
 
 preserve
+
 decode sex, gen(sex_string)
 replace sex_string = lower(sex_string)
 levelsof sex_string, local(sexes)
@@ -34,7 +35,7 @@ foreach s of local sexes {
 }
 restore
 
-keep if (bplcountry == 23050 | bplcountry == 21080 | bplcountry == 21100 | bplcountry == 22030 | bplcountry == 22040 | bplcountry == 22050 | bplcountry == 22060 | bplcountry == 21180 | bplcountry == 24040)
+*keep if (bplcountry == 23050 | bplcountry == 21080 | bplcountry == 21100 | bplcountry == 22030 | bplcountry == 22040 | bplcountry == 22050 | bplcountry == 22060 | bplcountry == 21180 | bplcountry == 24040)
 
 gen age_groups = .
 replace age_groups = 1 if age <70
@@ -45,6 +46,10 @@ label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-88"
 label values age_groups age_group_labels
 label variable age_groups "Age Groups"
 
+gen age_60to69 = (age >= 60 & age < 70)
+gen age_70to79 = (age >= 70 & age < 80)
+gen age_80to89 = (age >= 80 & age < 90)
+
 gen year_of_immigration_groups = .
 replace year_of_immigration_groups = 1 if yrimm < 1965 & yrimm != 0
 replace year_of_immigration_groups = 2 if yrimm >= 1965 & yrimm < 1981 & yrimm != 0
@@ -54,6 +59,11 @@ replace year_of_immigration_groups = 4 if yrimm >= 2000 & yrimm != 0
 label define year_of_immigration_groups_l 1 "Before 1965" 2 "Between 1965 and 1980" 3 "Between 1980 and 1999" 4 "After 2000"
 label values year_of_immigration_groups year_of_immigration_groups_l
 label variable year_of_immigration_groups "Year of Immigration Cohort"
+
+gen yrimm_before1965 = (yrimm < 1965 & yrimm != 0)
+gen yrimm_1965to1980 = (yrimm >= 1965 & yrimm < 1981 & yrimm != 0)
+gen yrimm_1980to1999 = (yrimm >= 1980 & yrimm < 2000 & yrimm != 0)
+gen yrimm_2000plus = (yrimm >= 2000 & yrimm != 0)
 
 decode nativity, gen(nativity_string)
 decode race, gen(race_string)
@@ -119,6 +129,10 @@ label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "50 and above"
 label values age_at_immigration_groups age_immig_labels
 label variable age_at_immigration_groups "Age at Immigration Groups"
 
+gen age_at_immigration_under15 = (age_at_immigration < 15)
+gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)
+gen age_at_immigration_50plus = (age_at_immigration >= 50)
+
 gen is_citizen = (citizen == 3)
 
 gen male = (sex == 1)
@@ -144,6 +158,9 @@ replace country_string = "US" if country_string == "United States"
 drop if country_string == "Mexico"
 gen country_year = country_string + "_" + year_str
 
+gen hispanic_migrant_status = nativity_string + " " + hispan_string
+tab hispanic_migrant_status
+
 save data/US_2010_v100.dta, replace
 
 clear
@@ -151,13 +168,26 @@ clear
 */
 use data/ses_v2.dta
 
-*capture append using "C:\Users\Ty\Desktop\ses_international\data_in\ipumsi_00002_US_2010.dta"
+capture append using "C:\Users\Ty\Desktop\ses_international\data_in\ipumsi_00002_US_2010.dta"
 
-capture append using "/hdir/0/chrissoria/ses_international\data\ipumsi_00002_US_2010.dta"
+capture append using data/ipumsi_00002_US_2010.dta
 
 decode country, gen(country_string)
 
 keep if age > 59 & age < 90
+
+gen age_groups = .
+replace age_groups = 1 if age <70
+replace age_groups = 2 if age >69 & age <80
+replace age_groups = 3 if age >79 & age <90
+
+label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-88"
+label values age_groups age_group_labels
+label variable age_groups "Age Groups"
+
+gen age_60to69 = (age >= 60 & age < 70)
+gen age_70to79 = (age >= 70 & age < 80)
+gen age_80to89 = (age >= 80 & age < 90)
 
 gen male = (sex == 1)
 gen female = (sex == 2)

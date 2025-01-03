@@ -115,6 +115,10 @@ table2, featuring US migrants from the countries above
 create_table_for_sex <- function(sex_value) {
   us_df %>%
     filter(sex == sex_value) %>%
+    filter(bplcountry == "mexico" | 
+       bplcountry == "puerto rico" | 
+       bplcountry == "dominican republic" |
+       bplcountry == "cuba") %>% 
     group_by(bplcountry) %>%
     summarise(
       mean_age = weighted.mean(age, perwt, na.rm = TRUE),
@@ -144,12 +148,58 @@ create_table_for_sex <- function(sex_value) {
     ))
 }
 
+create_table_for_sex_migrants <- function(sex_value) {
+  us_df %>%
+    filter(sex == sex_value) %>%
+    group_by(hispanic_migrant_status) %>%
+    summarise(
+      mean_age = weighted.mean(age, perwt, na.rm = TRUE),
+      mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
+      mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
+      mean_is_citizen = weighted.mean(is_citizen, perwt, na.rm = TRUE),
+      mean_age_at_immigration = weighted.mean(age_at_immigration, perwt, na.rm = TRUE),
+      mean_years_in_us = weighted.mean(years_in_us, perwt, na.rm = TRUE),
+      mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
+      mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
+      mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
+      mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE)
+    ) %>%
+    pivot_longer(cols = -hispanic_migrant_status, names_to = "variable", values_to = "value") %>%
+    pivot_wider(names_from = hispanic_migrant_status, values_from = value) %>%
+    mutate(variable = recode(variable,
+      mean_age = "Age",
+      mean_married_cohab = "Married/Cohabiting",
+      mean_english_speaker = "English Speakers",
+      mean_is_citizen = "Citizen",
+      mean_age_at_immigration = "Age at Immigration",
+      mean_years_in_us = "Years in US",
+      mean_less_than_primary_completed = "Less than Primary Completed",
+      mean_primary_completed = "Primary Completed",
+      mean_secondary_completed = "Secondary Completed",
+      mean_university_completed = "University Completed"
+    )) %>% 
+    select(-variable)
+}
+
 table_sex_1 <- create_table_for_sex(1)
 table_sex_2 <- create_table_for_sex(2)
 
-combined_table <- bind_rows(
+table_sex_1_migrant_status <- create_table_for_sex_migrants(1)
+table_sex_2_migrant_status <- create_table_for_sex_migrants(2)
+
+combined_table1 <- bind_rows(
   table_sex_2, #females first
   table_sex_1 #males second
+)
+
+combined_table2 <- bind_rows(
+  table_sex_2_migrant_status, #females first
+  table_sex_1_migrant_status #males second
+)
+
+combined_table <- bind_cols(
+  combined_table1,
+  combined_table2
 )
 
 combined_table <- combined_table %>%
@@ -159,24 +209,18 @@ combined_table <- combined_table %>%
   mutate(across(everything(), ~ ifelse(. == "0", "-", .))) %>% 
   mutate(Gender = ifelse(row_number() == 1, "Women", 
                          ifelse(row_number() == 11, "Men", ""))) %>% 
-  select(Gender, variable, colombia, cuba, `dominican republic`, `el salvador`, guatemala, honduras, mexico, `puerto rico`, `united states`) %>% 
+  select(Gender, variable, `dominican republic`, mexico, `puerto rico`,`foreign-born hispanic`, `foreign-born not hispanic`, `native-born hispanic`, `native-born not hispanic`) %>% 
   rename(
-    Colombia = colombia,
-    Cuba = cuba,
     `Dominican Republic` = `dominican republic`,
-    `El Salvador` = `el salvador`,
-    Guatemala = guatemala,
-    Honduras = honduras,
     Mexico = mexico,
     `Puerto Rico` = `puerto rico`,
-    `United States` = `united states`,
     Demographics = variable
   ) 
 
 print(combined_table)
 
 table2_code <- xtable(combined_table, caption = "Summary Statistics by Country and Sex", 
-                      align = "ll|l|lllllllll")
+                      align = "ll|l|lllllll")
 
 
 sink("/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/table2.tex")
