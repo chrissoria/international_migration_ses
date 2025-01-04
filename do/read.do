@@ -168,7 +168,7 @@ clear
 */
 use data/ses_v2.dta
 
-capture append using "C:\Users\Ty\Desktop\ses_international\data_in\ipumsi_00002_US_2010.dta"
+capture append using "C:\Users\Ty\Desktop\ses_international\data\ipumsi_00002_US_2010.dta"
 
 capture append using data/ipumsi_00002_US_2010.dta
 
@@ -228,13 +228,13 @@ levelsof sex_string, local(sexes)
 
 preserve
 
-tempfile original_data_in
-save `original_data_in'
+tempfile original_data
+save `original_data'
 
 * Calculating weights for each country and sex in international sample
 foreach c of local countries {
     foreach s of local sexes {
-        use `original_data_in', clear
+        use `original_data', clear
         
         keep if country_year == "`c'" & sex_string == "`s'"
         
@@ -298,8 +298,17 @@ gen age_weight_ratio = (age_weight_us/age_weight_in)
 
 gen perwt_age_standardized = perwt * age_weight_ratio
 
-keep if (country_year == "Mexico_2010" | country_year == "Mexico_2020" | country_year == "PR_2010" | country_year == "PR_2020" | country_year == "US_2010" | country_year == "US_2020")
+save data/All_International.dta, replace
 
-save data/UsPrMe_10_20.dta, replace
+*keep if (country_year == "Mexico_2010" | country_year == "Mexico_2020" | country_year == "PR_2010" | country_year == "PR_2020" | country_year == "US_2010" | country_year == "US_2020")
+keep if country_year == "Cuba_2012" | country_year == "DR_2010" | country_year == "Mexico_2010" | country_year == "PR_2010" | country_year == "US_2010"
+
+gen country_year_bpl = "US 2010 PR-born" if bpl == 21180
+replace country_year_bpl = "US 2010 DR-born" if bpl == 21100
+replace country_year_bpl = "US 2010 Cuban-born" if bpl == 21080
+replace country_year_bpl = "US 2010 Mexican-born" if bpl == 22060
+replace country_year_bpl = country_year if country_year_bpl == "."
+
+save data/CuDrMePrUs_10_12.dta, replace
 
 clear all

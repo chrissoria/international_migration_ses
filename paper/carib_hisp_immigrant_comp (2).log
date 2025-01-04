@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2025.1.3)  3 JAN 2025 10:14
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2025.1.3)  3 JAN 2025 09:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -769,77 +769,77 @@ Overfull \hbox (99.22917pt too wide) in paragraph at lines 515--536
  []
 
 
-Overfull \hbox (252.9662pt too wide) in paragraph at lines 542--567
+Overfull \hbox (197.74919pt too wide) in paragraph at lines 542--566
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 []|\TU/lmr/m/n/9 Hispanic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 []|\TU/lmr/m/n/9 Hispanic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 \TU/lmr/m/n/9 White
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 []|\TU/lmr/m/n/9 Hispanic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 \TU/lmr/m/n/9 Other
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 []|\TU/lmr/m/n/9 Non-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 \TU/lmr/m/n/9 Hispanic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 []|\TU/lmr/m/n/9 Non-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 \TU/lmr/m/n/9 Hispanic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 \TU/lmr/m/n/9 White
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 []|\TU/lmr/m/n/9 Non-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 \TU/lmr/m/n/9 Hispanic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 \TU/lmr/m/n/9 Other
  []
 
 
-Overfull \hbox (9.8069pt too wide) in paragraph at lines 574--601
+Overfull \hbox (9.8069pt too wide) in paragraph at lines 572--599
  [][] 
  []
 
@@ -870,7 +870,7 @@ Runaway argument?
 Here is how much of TeX's memory you used:
  18726 strings out of 475888
  346855 string characters out of 5774786
- 929353 words of memory out of 5000000
+ 930353 words of memory out of 5000000
  41377 multiletter control sequences out of 15000+600000
  565473 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
