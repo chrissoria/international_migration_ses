@@ -242,7 +242,7 @@ print(table1_code, type = "latex",
 
 sink()
 ```
-table2, consolidated
+table2, consolidated genders
 ```{r}
 # create a group that has a weird age
 # move baseline vars up top
@@ -263,32 +263,37 @@ table2_consolidated <- us_df %>%
       mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE),
       mean_female = weighted.mean(female, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
-      mean_is_citizen = weighted.mean(is_citizen, perwt, na.rm = TRUE),
       mean_age_at_immigration_15 = weighted.mean(age_at_immigration_under15, perwt, na.rm = TRUE),
       mean_age_at_immigration_15to49 = weighted.mean(age_at_immigration_15to49, perwt, na.rm = TRUE),
       mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, perwt, na.rm = TRUE),
       mean_yrimm_before1965 = weighted.mean(yrimm_before1965, perwt, na.rm = TRUE),
       mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, perwt, na.rm = TRUE),
       mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, perwt, na.rm = TRUE),
-      mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE)
+      mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE),
+      mean_is_citizen = weighted.mean(is_citizen, perwt, na.rm = TRUE)
     ) %>%
     pivot_longer(cols = -bplcountry, names_to = "variable", values_to = "value") %>%
     pivot_wider(names_from = bplcountry, values_from = value) %>%
     mutate(variable = recode(variable,
-      mean_age_60_69 = "Age 60 - 69",
-      mean_age_70_79 = "Age 70 - 79",
-      mean_age_80_89 = "Age 80 - 69",
+      mean_age_60_69 = "60 - 69",
+      mean_age_70_79 = "70 - 79",
+      mean_age_80_89 = "80 - 89",
       mean_married_cohab = "Married/Cohabiting",
+      mean_female = "Proportion Female",
       mean_english_speaker = "English Speakers",
-      mean_is_citizen = "Citizen",
-      mean_age_at_immigration_15 = "Migrated Age < 15",
-      mean_age_at_immigration_15to49 = "Migrated Age Between 15 and 49",
-      mean_age_at_immigration_50plus = "Migrated Age > 50",
+      mean_is_citizen = "Proportion Citizen",
+      mean_age_at_immigration_15 = "Less than 15",
+      mean_age_at_immigration_15to49 = "15 - 49",
+      mean_age_at_immigration_50plus = "Greater than 50",
       mean_years_in_us = "Years in US",
-      mean_less_than_primary_completed = "Less than Primary Completed",
-      mean_primary_completed = "Primary Completed",
-      mean_secondary_completed = "Secondary Completed",
-      mean_university_completed = "University Completed"
+      mean_less_than_primary_completed = "Less than Primary",
+      mean_primary_completed = "Primary",
+      mean_secondary_completed = "Secondary",
+      mean_university_completed = "University",
+      mean_yrimm_before1965 = "Before 1965",
+      mean_yrimm_1965_1979 = "1965 - 1979",
+      mean_yrimm_1980_1999 = "1980 - 1999",
+      mean_yrimm_2000plus = "After 2000"
     ))
 
 table2_consolidated_migrant <- us_df %>%
@@ -304,30 +309,37 @@ table2_consolidated_migrant <- us_df %>%
       mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE),
       mean_female = weighted.mean(female, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
-      mean_is_citizen = weighted.mean(is_citizen, perwt, na.rm = TRUE),
       mean_age_at_immigration_15 = weighted.mean(age_at_immigration_under15, perwt, na.rm = TRUE),
       mean_age_at_immigration_15to49 = weighted.mean(age_at_immigration_15to49, perwt, na.rm = TRUE),
       mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, perwt, na.rm = TRUE),
       mean_yrimm_before1965 = weighted.mean(yrimm_before1965, perwt, na.rm = TRUE),
       mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, perwt, na.rm = TRUE),
       mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, perwt, na.rm = TRUE),
-      mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE)
+      mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE),
+      mean_is_citizen = weighted.mean(is_citizen, perwt, na.rm = TRUE)
     ) %>%
     pivot_longer(cols = -hispanic_migrant_status, names_to = "variable", values_to = "value") %>%
     pivot_wider(names_from = hispanic_migrant_status, values_from = value) %>%
     mutate(variable = recode(variable,
-      mean_age_60_69 = "Age 60 - 69",
-      mean_age_70_79 = "Age 70 - 79",
-      mean_age_80_89 = "Age 80 - 69",
+      mean_age_60_69 = "60 - 69",
+      mean_age_70_79 = "70 - 79",
+      mean_age_80_89 = "80 - 89",
       mean_married_cohab = "Married/Cohabiting",
+      mean_female = "Proportion Female",
       mean_english_speaker = "English Speakers",
-      mean_is_citizen = "Citizen",
-      mean_age_at_immigration = "Age at Immigration",
+      mean_is_citizen = "Proportion Citizen",
+      mean_age_at_immigration_15 = "Less than 15",
+      mean_age_at_immigration_15to49 = "15 - 49",
+      mean_age_at_immigration_50plus = "Greater than 50",
       mean_years_in_us = "Years in US",
-      mean_less_than_primary_completed = "Less than Primary Completed",
-      mean_primary_completed = "Primary Completed",
-      mean_secondary_completed = "Secondary Completed",
-      mean_university_completed = "University Completed"
+      mean_less_than_primary_completed = "Less than Primary",
+      mean_primary_completed = "Primary",
+      mean_secondary_completed = "Secondary",
+      mean_university_completed = "University",
+      mean_yrimm_before1965 = "Before 1965",
+      mean_yrimm_1965_1979 = "1965 - 1979",
+      mean_yrimm_1980_1999 = "1980 - 1999",
+      mean_yrimm_2000plus = "After 2000"
     )) %>% 
     select(-variable)
 
@@ -346,22 +358,45 @@ table2_consolidated <- table2_consolidated %>%
     `Dominican Republic` = `dominican republic`,
     Mexico = mexico,
     `Puerto Rico` = `puerto rico`,
-    Demographics = variable
-  ) 
+    Demographics = variable,
+    Cuba = cuba,
+    `Hispanic Immigrant` = `foreign-born hispanic`,
+    `Non-Hispanic Immigrant` = `foreign-born not hispanic`,
+    `Hispanic Native` = `native-born hispanic`,
+    `Non-Hispanic Native` = `native-born not hispanic`,
+  ) %>% 
+  add_row(Demographics = "Age", .before = 1) %>% 
+  add_row(Demographics = "Education Completed", .before = 6) %>% 
+  add_row(Demographics = "Age Migrated", .before = 13) %>% 
+  add_row(Demographics = "Migration Cohort", .before = 16)
 
 print(table2_consolidated)
 
-table2_cosolidated_code <- xtable(table2_consolidated, caption = "Sociodemographics of Hispanics in the U.S. by Birth Country (2020 Census)", 
-                      align = "ll|llllllll")
+table2_consolidated_code <- xtable(table2_consolidated, 
+                                   caption = "Sociodemographics of Hispanics in the U.S. by Birth Country (2020 Census)", 
+                                   align = "ll|cccccccc")
 
+latex_code <- capture.output(print(table2_consolidated_code, 
+                                   type = "latex", 
+                                   caption.placement = "top",
+                                   size = "\\small",
+                                   include.rownames = FALSE))
+# To replace align
+tabular_line_index <- grep("\\\\begin\\{tabular\\}", latex_code)
+latex_code[tabular_line_index] <- "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3cm}|cccccccc}"
 
-sink("/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/table2_consolidated.tex")
-print(table2_cosolidated_code, type = "latex", 
-      caption.placement = "top",
-      size = "\\small",
-      include.rownames = FALSE)
+# To align rows right
+rows_to_align_right <- c("60 - 69", "70 - 79", "80 - 89", "Less than Primary", "Primary", "Secondary", "University", "Less than 15", "15 - 49", "Greater than 50", "Before 1965", "1965 - 1979", "1980 - 1999", "After 2000")
+for (row in rows_to_align_right) {
+  row_index <- grep(paste0("^\\s*", row), latex_code)
+  if (length(row_index) > 0) {
+    latex_code[row_index] <- gsub("^(\\s*)(.*?)(&.*)", 
+                                  "\\1\\\\multicolumn{1}{>{\\\\raggedleft\\\\arraybackslash}p{3cm}|}{\\\\makebox[3cm][r]{\\2}}\\3", 
+                                  latex_code[row_index])
+  }
+}
 
-sink()
+writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/table2_consolidated.tex")
 ```
 
 

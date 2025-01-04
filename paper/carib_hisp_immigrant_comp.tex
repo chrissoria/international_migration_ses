@@ -131,6 +131,8 @@
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{geometry}
+\usepackage{array}
+\usepackage{calc}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -194,7 +196,7 @@
 \title{Sociodemographic Comparison of Caribbean Hispanic Older Adult
 Immigrants in the U.S. and Origin Countries}
 \author{William H. Dow \and Chris Soria \and Henry T. Dow}
-\date{2025-01-03}
+\date{2025-01-04}
 
 \begin{document}
 \maketitle
@@ -547,37 +549,42 @@ Women & Age 60 - 69 & 0.55 & 0.61 & 0.52 & 0.59 & 0.54 & 0.61 & 0.52 & 0.41 \\
 \end{threeparttable}
 \end{table}
 
-\begin{table}[ht] % table 2
+% table 2
+
+\begin{table}[ht]
 \centering
 \caption{Sociodemographics of Hispanics in the U.S. by Birth Country (2020 Census)} 
 \begingroup\small
-\begin{tabular}{l|llllllll}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3cm}|cccccccc}
   \hline
-Demographics & Dominican Republic & Mexico & Puerto Rico & cuba & foreign-born hispanic & foreign-born not hispanic & native-born hispanic & native-born not hispanic \\ 
+Demographics & Dominican Republic & Mexico & Puerto Rico & Cuba & Hispanic Immigrant & Non-Hispanic Immigrant & Hispanic Native & Non-Hispanic Native \\ 
   \hline
-Age 60 - 69 & 0.61 & 0.61 & 0.59 & 0.41 & 0.58 & 0.53 & 0.57 & 0.53 \\ 
-  Age 70 - 79 & 0.29 & 0.29 & 0.3 & 0.37 & 0.3 & 0.31 & 0.28 & 0.3 \\ 
-  Age 80 - 69 & 0.11 & 0.1 & 0.11 & 0.22 & 0.12 & 0.16 & 0.15 & 0.17 \\ 
+Age &  &  &  &  &  &  &  &  \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][l]{60 - 69 }}& 0.61 & 0.61 & 0.59 & 0.41 & 0.58 & 0.53 & 0.57 & 0.53 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{70 - 79 }}& 0.29 & 0.29 & 0.3 & 0.37 & 0.3 & 0.31 & 0.28 & 0.3 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{80 - 89 }}& 0.11 & 0.1 & 0.11 & 0.22 & 0.12 & 0.16 & 0.15 & 0.17 \\ 
   Married/Cohabiting & 0.45 & 0.61 & 0.47 & 0.5 & 0.54 & 0.62 & 0.56 & 0.59 \\ 
-  Less than Primary Completed & 0.3 & 0.43 & 0.17 & 0.11 & 0.28 & 0.1 & 0.11 & 0.02 \\ 
-  Primary Completed & 0.31 & 0.31 & 0.29 & 0.25 & 0.27 & 0.13 & 0.22 & 0.12 \\ 
-  Secondary Completed & 0.31 & 0.22 & 0.44 & 0.47 & 0.35 & 0.47 & 0.55 & 0.62 \\ 
-  University Completed & 0.08 & 0.04 & 0.1 & 0.16 & 0.1 & 0.3 & 0.12 & 0.25 \\ 
-  mean\_female & 0.61 & 0.53 & 0.57 & 0.56 & 0.56 & 0.57 & 0.55 & 0.54 \\ 
+  Education Completed &  &  &  &  &  &  &  &  \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{Less than Primary }}& 0.3 & 0.43 & 0.17 & 0.11 & 0.28 & 0.1 & 0.11 & 0.02 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{Primary }}& 0.31 & 0.31 & 0.29 & 0.25 & 0.27 & 0.13 & 0.22 & 0.12 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{Secondary }}& 0.31 & 0.22 & 0.44 & 0.47 & 0.35 & 0.47 & 0.55 & 0.62 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{University }}& 0.08 & 0.04 & 0.1 & 0.16 & 0.1 & 0.3 & 0.12 & 0.25 \\ 
+  Proportion Female & 0.61 & 0.53 & 0.57 & 0.56 & 0.56 & 0.57 & 0.55 & 0.54 \\ 
   English Speakers & 0.63 & 0.64 & 0.91 & 0.72 & 0.73 & 0.91 & 0.98 & 1 \\ 
-  Citizen & 0.58 & 0.5 & - & 0.76 & 0.5 & 0.73 & - & - \\ 
-  Migrated Age $<$ 15 & 0.18 & 0.31 & - & 0.21 & 0.22 & 0.27 & - & - \\ 
-  Migrated Age Between 15 and 49 & 0.65 & 0.58 & - & 0.66 & 0.53 & 0.58 & - & - \\ 
-  Migrated Age $>$ 50 & 0.17 & 0.11 & 1 & 0.13 & 0.25 & 0.16 & 1 & 1 \\ 
-  mean\_yrimm\_before1965 & 0.14 & 0.25 & 0.57 & 0.29 & 0.28 & 0.3 & - & - \\ 
-  mean\_yrimm\_1965\_1979 & 0.37 & 0.42 & 0.22 & 0.41 & 0.38 & 0.32 & - & - \\ 
-  mean\_yrimm\_1980\_1999 & 0.38 & 0.26 & 0.13 & 0.28 & 0.27 & 0.3 & - & - \\ 
-  mean\_yrimm\_2000plus & 0.16 & 0.11 & 0.09 & 0.13 & 0.12 & 0.11 & - & - \\ 
+  Age Migrated &  &  &  &  &  &  &  &  \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{Less than 15 }}& 0.18 & 0.31 & - & 0.21 & 0.22 & 0.27 & - & - \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{15 - 49 }}& 0.65 & 0.58 & - & 0.66 & 0.53 & 0.58 & - & - \\ 
+  Migration Cohort &  &  &  &  &  &  &  &  \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{Greater than 50 }}& 0.17 & 0.11 & 1 & 0.13 & 0.25 & 0.16 & 1 & 1 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{Before 1965 }}& 0.14 & 0.25 & 0.57 & 0.29 & 0.28 & 0.3 & - & - \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{1965 - 1979 }}& 0.37 & 0.42 & 0.22 & 0.41 & 0.38 & 0.32 & - & - \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{1980 - 1999 }}& 0.38 & 0.26 & 0.13 & 0.28 & 0.27 & 0.3 & - & - \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{After 2000 }}& 0.16 & 0.11 & 0.09 & 0.13 & 0.12 & 0.11 & - & - \\ 
+  Proportion Citizen & 0.58 & 0.5 & - & 0.76 & 0.5 & 0.73 & - & - \\ 
    \hline
 \end{tabular}
 \endgroup
 \end{table}
-
 
 
 \end{landscape}
