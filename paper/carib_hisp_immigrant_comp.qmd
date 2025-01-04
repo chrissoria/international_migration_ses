@@ -10,6 +10,10 @@ header-includes:
    - \usepackage{pdflscape}
    - \usepackage{caption}
    - \usepackage{booktabs}
+   - \usepackage{threeparttable}
+   - \usepackage{fancyhdr}
+   - \usepackage{lastpage}
+   - \usepackage{geometry}
         
 date: last-modified
 tbl-cap-location: top
@@ -99,37 +103,44 @@ That Mexican migrants have fewer years of formal education is a finding that oth
 
 The complexity of migration from Latin America to the United States is underscored by the region's evolving migration landscape, which has seen a dramatic increase in intra-regional movement and return migration since 2010, challenging the traditional narrative of unidirectional flows to North America and Europe while still maintaining significant outward migration patterns [@tanco_dramatic_2023]. Additionally, this paper does not capture return-migrants to Latin America. Lastly, this research considers migrant populations and host countries pre-pandemic, which is markedly different than post-pandemic patterns [@hanson_us_2023].
 
+\begin{landscape} 
+\newgeometry{layoutwidth=297mm, layoutheight=210mm, left=20mm, right=20mm, top=20mm, bottom=20mm, footskip=15mm}
 
-\begin{landscape}
-
-\begin{table}[ht]
+\begin{table}[ht] % table 1
 \centering
-\caption{Sociodemographics by Country and Sex: Hispanics in Caribbean and Adjacent Countries}
-\begingroup\small
-\begin{tabular}{l|l|lllllllll}
+\begin{threeparttable}
+\caption{Summary Statistics by Country and Sex For Hispanics in Their Native Countries} 
+\begin{tabular}{l|l|llllllll}
   \hline
-Gender & Demographics & Colombia & Cuba & Dominican Republic & El Salvador & Guatemala & Honduras & Mexico & Puerto Rico & United States \\ 
+Gender & Demographics & Mexicans & US Mexican-born & Puerto Ricans & US Puerto-Rican-born & Dominicans & US Dominican-born & Cubans & US Cuban-born \\ 
   \hline
-Women & Age & 73.65 & 73.74 & 73.62 & 73.67 & 73.49 & 73.56 & 73.66 & 73.81 & 73.73 \\ 
-   & Married/Cohabiting & 0.34 & 0.43 & 0.35 & 0.34 & 0.47 & 0.4 & 0.42 & 0.39 & 0.48 \\ 
-   & Less than Primary & 0.6 & 0.31 & 0.75 & 0.83 & 0.84 & 0.87 & 0.51 & 0.3 & 0.04 \\ 
-   & Primary & 0.29 & 0.5 & 0.16 & 0.11 & 0.11 & 0.09 & 0.35 & 0.26 & 0.09 \\ 
-   & Secondary & 0.06 & 0.15 & 0.06 & 0.04 & 0.04 & 0.04 & 0.09 & 0.33 & 0.62 \\ 
-   & University & 0.02 & 0.05 & 0.03 & 0.01 & 0.01 & - & 0.05 & 0.11 & 0.25 \\ 
-   & Unknown & 0.03 & - & - & - & - & - & - & - & - \\ 
-  Men & Age & 73.03 & 73.13 & 72.99 & 73.08 & 72.92 & 72.94 & 73.04 & 73.13 & 73.11 \\ 
-   & Married/Cohabiting & 0.66 & 0.67 & 0.67 & 0.71 & 0.79 & 0.72 & 0.73 & 0.67 & 0.7 \\ 
-   & Less than Primary & 0.6 & 0.23 & 0.71 & 0.77 & 0.81 & 0.85 & 0.45 & 0.24 & 0.03 \\ 
-   & Primary & 0.26 & 0.5 & 0.19 & 0.15 & 0.13 & 0.1 & 0.35 & 0.29 & 0.08 \\ 
-   & Secondary & 0.06 & 0.2 & 0.06 & 0.05 & 0.03 & 0.04 & 0.09 & 0.35 & 0.55 \\ 
-   & University & 0.04 & 0.07 & 0.04 & 0.03 & 0.02 & 0.01 & 0.11 & 0.13 & 0.33 \\ 
-   & Unknown & 0.04 & - & - & - & - & - & - & - & - \\ 
-\hline
+Women & Age 60 - 69 & 0.55 & 0.61 & 0.52 & 0.59 & 0.54 & 0.61 & 0.52 & 0.41 \\ 
+   & Age 70 - 79 & 0.32 & 0.29 & 0.33 & 0.3 & 0.32 & 0.29 & 0.33 & 0.37 \\ 
+   & Age 80 - 89 & 0.14 & 0.1 & 0.16 & 0.11 & 0.14 & 0.11 & 0.15 & 0.22 \\ 
+   & Married/Cohabiting & 0.45 & 0.61 & 0.42 & 0.47 & 0.39 & 0.45 & 0.46 & 0.5 \\ 
+   & Less than Primary & 0.62 & 0.43 & 0.26 & 0.17 & 0.72 & 0.3 & 0.27 & 0.11 \\ 
+   & Primary & 0.29 & 0.31 & 0.25 & 0.29 & 0.18 & 0.31 & 0.5 & 0.25 \\ 
+   & Secondary & 0.07 & 0.22 & 0.36 & 0.44 & 0.07 & 0.31 & 0.18 & 0.47 \\ 
+   & University & 0.03 & 0.04 & 0.13 & 0.1 & 0.03 & 0.08 & 0.06 & 0.16 \\ 
+   & count & 602085 & 10846 & 5106 & 3664 & 42339 & 1131 & 103944 & 3770 \\ 
+  Men & Age 60 - 69 & 0.56 & 0.61 & 0.55 & 0.59 & 0.56 & 0.61 & 0.54 & 0.41 \\ 
+   & Age 70 - 79 & 0.32 & 0.29 & 0.32 & 0.3 & 0.31 & 0.29 & 0.33 & 0.37 \\ 
+   & Age 80 - 89 & 0.12 & 0.1 & 0.13 & 0.11 & 0.13 & 0.11 & 0.14 & 0.22 \\ 
+   & Married/Cohabiting & 0.75 & 0.61 & 0.67 & 0.47 & 0.68 & 0.45 & 0.68 & 0.5 \\ 
+   & Less than Primary & 0.56 & 0.43 & 0.21 & 0.17 & 0.67 & 0.3 & 0.19 & 0.11 \\ 
+   & Primary & 0.29 & 0.31 & 0.27 & 0.29 & 0.21 & 0.31 & 0.48 & 0.25 \\ 
+   & Secondary & 0.07 & 0.22 & 0.38 & 0.44 & 0.07 & 0.31 & 0.24 & 0.47 \\ 
+   & University & 0.08 & 0.04 & 0.14 & 0.1 & 0.05 & 0.08 & 0.09 & 0.16 \\ 
+   & count & 553662 & 10846 & 3909 & 3664 & 40204 & 1131 & 93721 & 3770 \\ 
+   \hline
 \end{tabular}
-\endgroup
+\begin{tablenotes}
+\item[1] All Census data is from 2010 except for Cuba which is from 2012.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}[ht] % table 2
 \centering
 \caption{Sociodemographics of Hispanics in the U.S. by Birth Country (2020 Census)} 
 \begingroup\small
@@ -148,9 +159,9 @@ Age 60 - 69 & 0.61 & 0.61 & 0.59 & 0.41 & 0.58 & 0.53 & 0.57 & 0.53 \\
   mean\_female & 0.61 & 0.53 & 0.57 & 0.56 & 0.56 & 0.57 & 0.55 & 0.54 \\ 
   English Speakers & 0.63 & 0.64 & 0.91 & 0.72 & 0.73 & 0.91 & 0.98 & 1 \\ 
   Citizen & 0.58 & 0.5 & - & 0.76 & 0.5 & 0.73 & - & - \\ 
-  mean\_age\_at\_immigration\_15 & 0.18 & 0.31 & - & 0.21 & 0.22 & 0.27 & - & - \\ 
-  mean\_age\_at\_immigration\_15to49 & 0.65 & 0.58 & - & 0.66 & 0.53 & 0.58 & - & - \\ 
-  mean\_age\_at\_immigration\_50plus & 0.17 & 0.11 & 1 & 0.13 & 0.25 & 0.16 & 1 & 1 \\ 
+  Migrated Age $<$ 15 & 0.18 & 0.31 & - & 0.21 & 0.22 & 0.27 & - & - \\ 
+  Migrated Age Between 15 and 49 & 0.65 & 0.58 & - & 0.66 & 0.53 & 0.58 & - & - \\ 
+  Migrated Age $>$ 50 & 0.17 & 0.11 & 1 & 0.13 & 0.25 & 0.16 & 1 & 1 \\ 
   mean\_yrimm\_before1965 & 0.14 & 0.25 & 0.57 & 0.29 & 0.28 & 0.3 & - & - \\ 
   mean\_yrimm\_1965\_1979 & 0.37 & 0.42 & 0.22 & 0.41 & 0.38 & 0.32 & - & - \\ 
   mean\_yrimm\_1980\_1999 & 0.38 & 0.26 & 0.13 & 0.28 & 0.27 & 0.3 & - & - \\ 
@@ -161,64 +172,6 @@ Age 60 - 69 & 0.61 & 0.61 & 0.59 & 0.41 & 0.58 & 0.53 & 0.57 & 0.53 \\
 \end{table}
 
 
-\begin{table}[ht]
-\centering
-\caption{Sociodemographics of U.S. Older Adults by Race/Ethnicity and Nativity} 
-\begingroup\small
-\begin{tabular}{l|l|p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}}
-  \hline
-Gender & Demographics & Hispanic Black Foreign & Hispanic White Foreign & Hispanic Other Foreign & Non-Hispanic Black Native & Non-Hispanic White Native & Non-Hispanic Other Native & All Native Hispanic \\ 
-  \hline
-Women & Age & 73.74 & 73.75 & 73.14 & 73.19 & 73.87 & 72.96 & 73.17 \\ 
-   & Married/Cohabiting & 0.28 & 0.4 & 0.38 & 0.27 & 0.51 & 0.42 & 0.41 \\ 
-   & English Speakers & 0.75 & 0.72 & 0.7 & - & - & 0.99 & 0.99 \\ 
-   & Citizen & 0.51 & 0.55 & 0.53 & - & - & - & - \\ 
-   & Age at Immigration & 37.29 & 33.49 & 33.79 & - & - & - & - \\ 
-   & Years in US & 36.58 & 40.17 & 39.23 & - & - & - & - \\ 
-   & Less than Primary Completed & 0.24 & 0.26 & 0.33 & 0.03 & 0.01 & 0.03 & 0.08 \\ 
-   & Primary Completed & 0.25 & 0.26 & 0.27 & 0.15 & 0.06 & 0.09 & 0.17 \\ 
-   & Secondary Completed & 0.41 & 0.38 & 0.34 & 0.64 & 0.66 & 0.6 & 0.62 \\ 
-   & University Completed & 0.1 & 0.1 & 0.07 & 0.18 & 0.27 & 0.27 & 0.13 \\ 
-  Men & Age & 72.85 & 73.01 & 72.36 & 72.37 & 73.25 & 72.59 & 72.5 \\ 
-   & Married/Cohabiting & 0.55 & 0.69 & 0.68 & 0.52 & 0.72 & 0.63 & 0.61 \\ 
-   & English Speakers & 0.8 & 0.79 & 0.78 & - & - & - & 0.99 \\ 
-   & Citizen & 0.49 & 0.53 & 0.51 & - & - & - & - \\ 
-   & Age at Immigration & 34.78 & 31.13 & 31.42 & - & - & - & - \\ 
-   & Years in US & 37.95 & 41.8 & 40.79 & - & - & - & - \\ 
-   & Less than Primary Completed & 0.22 & 0.26 & 0.32 & 0.04 & 0.01 & 0.03 & 0.07 \\ 
-   & Primary Completed & 0.26 & 0.25 & 0.27 & 0.16 & 0.06 & 0.08 & 0.15 \\ 
-   & Secondary Completed & 0.4 & 0.37 & 0.33 & 0.63 & 0.57 & 0.57 & 0.6 \\ 
-   & University Completed & 0.11 & 0.12 & 0.08 & 0.17 & 0.36 & 0.32 & 0.18 \\ 
-   \hline
-\end{tabular}
-\endgroup
-\end{table}
-
-
-\begin{table}[ht]
-\centering
-\caption{Summary Statistics by Country and Sex For Hispanics in Their Native Countries  (Ty's new table 1)} 
-\begin{tabular}{l|l|llllll}
-  \hline
-Gender & Demographics & Mexico\_2010 & Mexico\_2020 & PR\_2010 & PR\_2020 & US\_2010 & US\_2020 \\ 
-  \hline
-Women & Age & 73.63 & 73.66 & 73.81 & 73.78 & 73.76 & 73.73 \\ 
-   & Married/Cohabiting & 0.41 & 0.42 & 0.39 & 0.39 & 0.45 & 0.48 \\ 
-   & Less than Primary & 0.66 & 0.51 & 0.3 & 0.16 & 0.04 & 0.04 \\ 
-   & Primary & 0.26 & 0.35 & 0.26 & 0.23 & 0.15 & 0.09 \\ 
-   & Secondary & 0.06 & 0.09 & 0.33 & 0.43 & 0.63 & 0.62 \\ 
-   & University & 0.02 & 0.05 & 0.11 & 0.18 & 0.17 & 0.25 \\ 
-   & Unknown & - & - & - & - & - & - \\ 
-  Men & Age & 73.04 & 73.04 & 73.13 & 73.14 & 73.11 & 73.11 \\ 
-   & Married/Cohabiting & 0.73 & 0.73 & 0.67 & 0.63 & 0.72 & 0.7 \\ 
-   & Less than Primary & 0.62 & 0.45 & 0.24 & 0.16 & 0.04 & 0.03 \\ 
-   & Primary & 0.26 & 0.35 & 0.29 & 0.25 & 0.14 & 0.08 \\ 
-   & Secondary & 0.06 & 0.09 & 0.35 & 0.41 & 0.54 & 0.55 \\ 
-   & University & 0.06 & 0.11 & 0.13 & 0.17 & 0.28 & 0.33 \\ 
-   & Unknown & - & - & - & - & - & - \\ 
-   \hline
-\end{tabular}
-\end{table}
 
 \end{landscape}
 
@@ -230,42 +183,6 @@ The authors wish to acknowledge the statistical offices that provided the underl
 \newpage
 \section{Appendix}
 
-\begin{landscape}
-\begin{table}[ht]
-\centering
-\caption{Sociodemographics of Hispanics in the U.S. by Birth Country and Sex (2010 Census 1% sample)} 
-\begingroup\small
-\begin{tabular}{l|l|lllllllll}
-  \hline
-Gender & Demographics & Colombia & Cuba & Dominican Republic & El Salvador & Guatemala & Honduras & Mexico & Puerto Rico & United States \\ 
-  \hline
-Women & Age & 72.86 & 75.37 & 72.93 & 73.49 & 72.83 & 73.22 & 72.83 & 73.18 & 74.6 \\ 
-   & Married/Cohabiting & 0.33 & 0.34 & 0.29 & 0.28 & 0.31 & 0.25 & 0.42 & 0.33 & 0.44 \\ 
-   & English Speakers & 0.74 & 0.68 & 0.52 & 0.53 & 0.66 & 0.83 & 0.56 & 0.87 & 1 \\ 
-   & Citizen & 0.69 & 0.82 & 0.57 & 0.53 & 0.57 & 0.68 & 0.52 & - & - \\ 
-   & Age at Immigration & 32.38 & 29.65 & 34.2 & 34.42 & 32.67 & 30.54 & 27.67 & - & - \\ 
-   & Years in US & 40.46 & 45.69 & 38.67 & 39.09 & 40.16 & 42.67 & 45.17 & - & - \\ 
-   & Less than Primary Completed & 0.17 & 0.13 & 0.38 & 0.46 & 0.34 & 0.25 & 0.47 & 0.22 & 0.02 \\ 
-   & Primary Completed & 0.17 & 0.27 & 0.31 & 0.23 & 0.27 & 0.24 & 0.3 & 0.3 & 0.14 \\ 
-   & Secondary Completed & 0.53 & 0.46 & 0.25 & 0.28 & 0.32 & 0.39 & 0.2 & 0.41 & 0.66 \\ 
-   & University Completed & 0.13 & 0.15 & 0.05 & 0.03 & 0.07 & 0.11 & 0.03 & 0.07 & 0.17 \\ 
-   & N & 474 & 1729 & 471 & 349 & 167 & 128 & 3923 & 1425 & 229700 \\ 
-  Men & Age & 71.84 & 74.68 & 72.57 & 72.36 & 72.27 & 70.73 & 72.31 & 72.38 & 73.57 \\ 
-   & Married/Cohabiting & 0.75 & 0.65 & 0.68 & 0.74 & 0.74 & 0.65 & 0.73 & 0.61 & 0.71 \\ 
-   & English Speakers & 0.83 & 0.74 & 0.65 & 0.68 & 0.77 & 0.78 & 0.65 & 0.93 & 1 \\ 
-   & Citizen & 0.63 & 0.77 & 0.57 & 0.52 & 0.69 & 0.62 & 0.52 & - & - \\ 
-   & Age at Immigration & 30.35 & 28.62 & 32.36 & 34.11 & 29.25 & 33.17 & 25.51 & - & - \\ 
-   & Years in US & 41.5 & 46.04 & 40.27 & 38.25 & 42.94 & 37.51 & 46.82 & - & - \\ 
-   & Less than Primary Completed & 0.11 & 0.13 & 0.33 & 0.4 & 0.26 & 0.19 & 0.49 & 0.19 & 0.03 \\ 
-   & Primary Completed & 0.18 & 0.27 & 0.33 & 0.2 & 0.31 & 0.26 & 0.29 & 0.31 & 0.14 \\ 
-   & Secondary Completed & 0.49 & 0.44 & 0.24 & 0.28 & 0.31 & 0.41 & 0.18 & 0.4 & 0.56 \\ 
-   & University Completed & 0.22 & 0.16 & 0.1 & 0.11 & 0.12 & 0.13 & 0.04 & 0.09 & 0.28 \\ 
-   & N & 249 & 1291 & 280 & 168 & 95 & 53 & 3120 & 1054 & 183878 \\ 
-   \hline
-\end{tabular}
-\endgroup
-\end{table}
-\end{landscape}
 
 \newpage
 
