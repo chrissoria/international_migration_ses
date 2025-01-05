@@ -161,6 +161,8 @@ gen country_year = country_string + "_" + year_str
 gen hispanic_migrant_status = nativity_string + " " + hispan_string
 tab hispanic_migrant_status
 
+gen hispanic_migrant_status_race = nativity_string + " " + race_string
+
 save data/US_2010_v100.dta, replace
 
 clear
