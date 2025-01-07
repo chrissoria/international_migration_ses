@@ -3,6 +3,163 @@ capture cd "C:\Users\Ty\Desktop\ses_international"
 
 clear all
 capture log close
+use data/usa_00004.dta
+
+keep if sample == 202003
+keep if age > 59 & age < 90
+
+gen age_groups = .
+replace age_groups = 1 if age <70
+replace age_groups = 2 if age >69 & age <80
+replace age_groups = 3 if age >79 & age <90
+
+label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-88"
+label values age_groups age_group_labels
+label variable age_groups "Age Groups"
+
+gen age_60to69 = (age >= 60 & age < 70)
+gen age_70to79 = (age >= 70 & age < 80)
+gen age_80to89 = (age >= 80 & age < 90)
+
+gen year_of_immigration_groups = .
+replace year_of_immigration_groups = 1 if yrimmig < 1965 & yrimmig != 0
+replace year_of_immigration_groups = 2 if yrimmig >= 1965 & yrimmig < 1981 & yrimmig != 0
+replace year_of_immigration_groups = 3 if yrimmig >= 1980 & yrimmig < 2000 & yrimmig != 0
+replace year_of_immigration_groups = 4 if yrimmig >= 2000 & yrimmig != 0
+
+label define year_of_immigration_groups_l 1 "Before 1965" 2 "Between 1965 and 1980" 3 "Between 1980 and 1999" 4 "After 2000"
+label values year_of_immigration_groups year_of_immigration_groups_l
+label variable year_of_immigration_groups "Year of Immigration Cohort"
+
+gen yrimm_before1965 = (yrimmig < 1965 & yrimmig != 0)
+gen yrimm_1965to1980 = (yrimmig >= 1965 & yrimmig < 1981 & yrimmig != 0)
+gen yrimm_1980to1999 = (yrimmig >= 1980 & yrimmig < 2000 & yrimmig != 0)
+gen yrimm_2000plus = (yrimmig >= 2000 & yrimmig != 0)
+
+decode bpl, gen(bpl_string)
+local states `" "Alabama" "Alaska" "Arizona" "Arkansas" "California" "Colorado" "Connecticut" "Delaware" "Florida" "Georgia" "Hawaii" "Idaho" "Illinois" "Indiana" "Iowa" "Kansas" "Kentucky" "Louisiana" "Maine" "Maryland" "Massachusetts" "Michigan" "Minnesota" "Mississippi" "Missouri" "Montana" "Nebraska" "Nevada" "New Hampshire" "New Jersey" "New Mexico" "New York" "North Carolina" "North Dakota" "Ohio" "Oklahoma" "Oregon" "Pennsylvania" "Rhode Island" "South Carolina" "South Dakota" "Tennessee" "Texas" "Utah" "Vermont" "Virginia" "Washington" "West Virginia" "Wisconsin" "Wyoming" "District of Columbia" "'
+gen contains_us_state = 0
+foreach state of local states {
+    replace contains_us_state = 1 if strpos(lower(bpl_string), lower("`state'")) > 0
+}
+
+decode bpld, gen(bplcountry)
+
+replace bplcountry = "United States" if contains_us_state == 1
+
+gen nativity_string = "."
+replace nativity_string = "foreign-born" if contains_us_state == 0
+replace nativity_string = "native-born" if contains_us_state == 1
+
+decode race, gen(race_string)
+replace race_string = "black" if race_string == "Black/African American"
+replace race_string = "white" if race_string == "White"
+
+decode hispan, gen(hispan_string)
+
+replace hispan_string = "hispanic" if hispan_string != "Not Hispanic"
+replace hispan_string = lower(hispan_string)
+
+replace race_string = "other" if race_string != "white" & race_string != "black"
+replace race_string = race_string + " " + hispan_string
+
+gen native_foreign_race = nativity_string + " " + race_string
+tab native_foreign_race
+
+gen race_native_category = .
+
+* Recode into six categories
+replace race_native_category = 1 if native_foreign_race == "foreign-born black hispanic"
+replace race_native_category = 2 if native_foreign_race == "foreign-born white hispanic"
+replace race_native_category = 3 if native_foreign_race == "foreign-born other hispanic"
+replace race_native_category = 4 if native_foreign_race == "native-born black not hispanic"
+replace race_native_category = 5 if native_foreign_race == "native-born white not hispanic"
+replace race_native_category = 6 if native_foreign_race == "native-born other not hispanic"
+
+replace race_native_category = 7 if inlist(native_foreign_race, "native-born black hispanic", "native-born white hispanic", "native-born other hispanic")
+
+label define category_labels 1 "Hispanic Black Foreign" ///
+                             2 "Hispanic White Foreign" ///
+                             3 "Hispanic Other Foreign" ///
+                             4 "Non-Hispanic Black Native" ///
+                             5 "Non-Hispanic White Native" ///
+                             6 "Non-Hispanic Other Native" ///
+                             7 "All Native Hispanic"
+
+label values race_native_category category_labels
+
+tab native_foreign_race
+tab race_native_category, miss
+
+gen married_cohab = (marst == 2) if marst != .
+
+gen years_in_us = yrsusa1
+
+gen age_at_immigration = age - years_in_us
+replace age_at_immigration = . if (nativity_string == "native-born")
+
+gen age_at_immigration_groups = .
+replace age_at_immigration_groups = 1 if age_at_immigration < 15
+replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 50
+replace age_at_immigration_groups = 3 if age_at_immigration >= 50
+
+
+label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "50 and above"
+label values age_at_immigration_groups age_immig_labels
+label variable age_at_immigration_groups "Age at Immigration Groups"
+
+gen age_at_immigration_under15 = (age_at_immigration < 15)
+gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)
+gen age_at_immigration_50plus = (age_at_immigration >= 50)
+
+gen is_naturalized_citizen = (citizen == 2)
+gen is_born_citizen = (citizen == 0)
+gen is_citizen = (citizen != 3)
+
+gen male = (sex == 1)
+gen female = (sex == 2)
+
+decode speakeng, gen(speakeng_string)
+
+gen english_speaker = 0
+replace english_speaker = 1 if speakeng_string != "Does not speak English"
+
+gen english_speaker_not_well = 0
+replace english_speaker_not_well = 1 if speakeng_string == "Yes, but not well"
+
+gen english_speaker_well = 0
+replace english_speaker_well = 1 if (english_speaker == 1 & english_speaker_not_well == 0)
+
+decode educd, gen(edattain_string)
+
+generate less_than_primary_completed = 0
+replace less_than_primary_completed = 1 if inlist(edattain_string, "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Kindergarten", "No schooling completed", "Nursery school, preschool")
+
+generate primary_completed = 0
+replace primary_completed = 1 if inlist(edattain_string, "Grade 6", "Grade 7", "Grade 8")
+
+generate secondary_completed = 0
+replace secondary_completed = 1 if inlist(edattain_string, "Grade 9", "Grade 10", "Grade 11", "12th grade, no diploma", "GED or alternative credential", "Regular high school diploma", "1 or more years of college credit, no degree", "Some college, but less than 1 year")
+
+generate university_completed = 0
+replace university_completed = 1 if inlist(edattain_string, "Associate's degree, type not specified", "Bachelor's degree", "Master's degree", "Doctoral degree", "Professional degree beyond a bachelor's degree")
+
+
+decode year, gen(year_str)
+gen country_string = lower(bplcountry)
+
+replace country_string = "US" if country_string == "United States"
+
+gen country_year = country_string + "_" + year_str
+
+gen hispanic_migrant_status = nativity_string + " " + hispan_string
+tab hispanic_migrant_status
+
+gen hispanic_migrant_status_race = nativity_string + " " + race_string
+
+save data/US_2020_v100.dta, replace
+clear all
+
 use data/ipumsi_00002_US_2010.dta
 
 keep if age > 59 & age < 90
@@ -74,15 +231,6 @@ replace hispan_string = "hispanic" if hispan_string != "not hispanic"
 replace race_string = "other" if race_string != "white" & race_string != "black"
 replace race_string = race_string + " " + hispan_string
 
-/*we want these six categories
-1. hispanic black foreign
-2. hispanic white foreign (this category is least meaningful)
-3. hispanic other foreign
-4. non-hispanic black native
-5. non-hispanic white native
-6. non-hispanic other native
-*/
-
 gen native_foreign_race = nativity_string + " " + race_string
 tab native_foreign_race
 
@@ -113,11 +261,11 @@ tab race_native_category, miss
 
 gen married_cohab = (marst == 2) if marst != .
 
-gen years_in_us = 2020 - yrimm
-replace years_in_us = . if citizen == 2
+gen years_in_us = 2010 - yrimm
+*replace years_in_us = . if citizen == 2
 
 gen age_at_immigration = age - years_in_us
-replace age_at_immigration = . if citizen == 2
+*replace age_at_immigration = . if (citizen == 2 & bplcountry != 21180)
 
 gen age_at_immigration_groups = .
 replace age_at_immigration_groups = 1 if age_at_immigration < 15
@@ -133,7 +281,8 @@ gen age_at_immigration_under15 = (age_at_immigration < 15)
 gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)
 gen age_at_immigration_50plus = (age_at_immigration >= 50)
 
-gen is_citizen = (citizen == 3)
+gen is_naturalized_citizen = (citizen == 3)
+gen is_birth_citizen = (citizen == 2)
 
 gen male = (sex == 1)
 gen female = (sex == 2)
