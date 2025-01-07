@@ -60,6 +60,9 @@ decode hispan, gen(hispan_string)
 replace hispan_string = "hispanic" if hispan_string != "Not Hispanic"
 replace hispan_string = lower(hispan_string)
 
+*a weird thing in the data, dominicans are often classified as not hispanic. changing to hispanic. 
+replace hispan_string = "hispanic" if bpld == 26010
+
 replace race_string = "other" if race_string != "white" & race_string != "black"
 replace race_string = race_string + " " + hispan_string
 
@@ -68,30 +71,45 @@ tab native_foreign_race
 
 gen race_native_category = .
 
-* Recode into six categories
+* foreign hispanic
 replace race_native_category = 1 if native_foreign_race == "foreign-born black hispanic"
 replace race_native_category = 2 if native_foreign_race == "foreign-born white hispanic"
 replace race_native_category = 3 if native_foreign_race == "foreign-born other hispanic"
-replace race_native_category = 4 if native_foreign_race == "native-born black not hispanic"
-replace race_native_category = 5 if native_foreign_race == "native-born white not hispanic"
-replace race_native_category = 6 if native_foreign_race == "native-born other not hispanic"
 
-replace race_native_category = 7 if inlist(native_foreign_race, "native-born black hispanic", "native-born white hispanic", "native-born other hispanic")
+* foreign born not hispanic
+replace race_native_category = 4 if native_foreign_race == "foreign-born black not hispanic"
+replace race_native_category = 5 if native_foreign_race == "foreign-born white not hispanic"
+replace race_native_category = 6 if native_foreign_race == "foreign-born other not hispanic"
 
-label define category_labels 1 "Hispanic Black Foreign" ///
-                             2 "Hispanic White Foreign" ///
-                             3 "Hispanic Other Foreign" ///
-                             4 "Non-Hispanic Black Native" ///
-                             5 "Non-Hispanic White Native" ///
-                             6 "Non-Hispanic Other Native" ///
-                             7 "All Native Hispanic"
+*hispanic natives
+replace race_native_category = 7 if native_foreign_race == "native-born black hispanic"
+replace race_native_category = 8 if native_foreign_race == "native-born white hispanic"
+replace race_native_category = 9 if native_foreign_race == "native-born other hispanic"
+
+*non-hispanic natives
+replace race_native_category = 10 if native_foreign_race == "native-born black not hispanic"
+replace race_native_category = 11 if native_foreign_race == "native-born white not hispanic"
+replace race_native_category = 12 if native_foreign_race == "native-born other not hispanic"
+
+label define category_labels 1 "Foreign-Born Black Hispanic" ///
+                             2 "Foreign-Born White Hispanic" ///
+                             3 "Foreign-Born Other Hispanic" ///
+                             4 "Foreign-Born Black Non-Hispanic" ///
+                             5 "Foreign-Born White Non-Hispanic" ///
+                             6 "Foreign-Born Other Non-Hispanic" ///
+                             7 "Native-Born Black Hispanic" ///
+                             8 "Native-Born White Hispanic" ///
+                             9 "Native-Born Other Hispanic" ///
+                             10 "Native-Born Black Non-Hispanic" ///
+                             11 "Native-Born White Non-Hispanic" ///
+                             12 "Native-Born Other Non-Hispanic"
 
 label values race_native_category category_labels
 
 tab native_foreign_race
 tab race_native_category, miss
 
-gen married_cohab = (marst == 2) if marst != .
+gen married_cohab = (marst == 1) if marst != .
 
 gen years_in_us = yrsusa1
 
@@ -228,6 +246,9 @@ decode hispan, gen(hispan_string)
 
 replace hispan_string = "hispanic" if hispan_string != "not hispanic"
 
+*a weird thing in the data, dominicans are often classified as not hispanic. changing to hispanic. 
+replace hispan_string = "hispanic" if bpl == 26010
+
 replace race_string = "other" if race_string != "white" & race_string != "black"
 replace race_string = race_string + " " + hispan_string
 
@@ -236,23 +257,38 @@ tab native_foreign_race
 
 gen race_native_category = .
 
-* Recode into six categories
+* foreign hispanic
 replace race_native_category = 1 if native_foreign_race == "foreign-born black hispanic"
 replace race_native_category = 2 if native_foreign_race == "foreign-born white hispanic"
 replace race_native_category = 3 if native_foreign_race == "foreign-born other hispanic"
-replace race_native_category = 4 if native_foreign_race == "native-born black not hispanic"
-replace race_native_category = 5 if native_foreign_race == "native-born white not hispanic"
-replace race_native_category = 6 if native_foreign_race == "native-born other not hispanic"
 
-replace race_native_category = 7 if inlist(native_foreign_race, "native-born black hispanic", "native-born white hispanic", "native-born other hispanic")
+* foreign born not hispanic
+replace race_native_category = 4 if native_foreign_race == "foreign-born black not hispanic"
+replace race_native_category = 5 if native_foreign_race == "foreign-born white not hispanic"
+replace race_native_category = 6 if native_foreign_race == "foreign-born other not hispanic"
 
-label define category_labels 1 "Hispanic Black Foreign" ///
-                             2 "Hispanic White Foreign" ///
-                             3 "Hispanic Other Foreign" ///
-                             4 "Non-Hispanic Black Native" ///
-                             5 "Non-Hispanic White Native" ///
-                             6 "Non-Hispanic Other Native" ///
-                             7 "All Native Hispanic"
+*hispanic natives
+replace race_native_category = 7 if native_foreign_race == "native-born black hispanic"
+replace race_native_category = 8 if native_foreign_race == "native-born white hispanic"
+replace race_native_category = 9 if native_foreign_race == "native-born other hispanic"
+
+*non-hispanic natives
+replace race_native_category = 10 if native_foreign_race == "native-born black not hispanic"
+replace race_native_category = 11 if native_foreign_race == "native-born white not hispanic"
+replace race_native_category = 12 if native_foreign_race == "native-born other not hispanic"
+
+label define category_labels 1 "Foreign-Born Black Hispanic" ///
+                             2 "Foreign-Born White Hispanic" ///
+                             3 "Foreign-Born Other Hispanic" ///
+                             4 "Foreign-Born Black Non-Hispanic" ///
+                             5 "Foreign-Born White Non-Hispanic" ///
+                             6 "Foreign-Born Other Non-Hispanic" ///
+                             7 "Native-Born Black Hispanic" ///
+                             8 "Native-Born White Hispanic" ///
+                             9 "Native-Born Other Hispanic" ///
+                             10 "Native-Born Black Non-Hispanic" ///
+                             11 "Native-Born White Non-Hispanic" ///
+                             12 "Native-Born Other Non-Hispanic"
 
 label values race_native_category category_labels
 

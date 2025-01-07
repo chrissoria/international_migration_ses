@@ -246,8 +246,6 @@ sink()
 ```
 table2, consolidated genders
 ```{r}
-# create a group that has a weird age
-# move baseline vars up top
 table2_consolidated <- us_df_2020 %>%
     filter(country_string == "mexico" | 
        country_string == "puerto rico" | 
@@ -302,6 +300,8 @@ table2_consolidated <- us_df_2020 %>%
 print(table2_consolidated)
 
 table2_consolidated_migrant <- us_df_2020 %>%
+  filter(!country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
+  filter(hispanic_migrant_status != "native-born not hispanic") %>% 
     group_by(hispanic_migrant_status) %>%
     summarise(
       mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
@@ -351,27 +351,83 @@ table2_consolidated_migrant <- us_df_2020 %>%
 
 print(table2_consolidated_migrant)
 
+table2_consolidated_native_race <- us_df_2020 %>%
+  filter(race_native_category %in% c(10, 11, 12)) %>% 
+    group_by(race_native_category) %>%
+    summarise(
+      mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
+      mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
+      mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
+      mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
+      mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
+      mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
+      mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE),
+      mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
+      mean_age_at_immigration_15 = weighted.mean(age_at_immigration_under15, perwt, na.rm = TRUE),
+      mean_age_at_immigration_15to49 = weighted.mean(age_at_immigration_15to49, perwt, na.rm = TRUE),
+      mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, perwt, na.rm = TRUE),
+      mean_yrimm_before1965 = weighted.mean(yrimm_before1965, perwt, na.rm = TRUE),
+      mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, perwt, na.rm = TRUE),
+      mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, perwt, na.rm = TRUE),
+      mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE),
+      mean_is_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE),
+      mean_female = weighted.mean(female, perwt, na.rm = TRUE),
+      mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
+      N = n()
+    ) %>%
+    pivot_longer(cols = -race_native_category, names_to = "variable", values_to = "value") %>%
+    pivot_wider(names_from = race_native_category, values_from = value) %>%
+    mutate(variable = recode(variable,
+      mean_age_60_69 = "60 - 69",
+      mean_age_70_79 = "70 - 79",
+      mean_age_80_89 = "80 - 89",
+      mean_married_cohab = "Married/Cohabiting",
+      mean_female = "Female",
+      mean_english_speaker = "English Speakers",
+      mean_is_citizen = "Citizen",
+      mean_age_at_immigration_15 = "Less than 15",
+      mean_age_at_immigration_15to49 = "15 - 49",
+      mean_age_at_immigration_50plus = "Greater than 50",
+      mean_years_in_us = "Years in US",
+      mean_less_than_primary_completed = "Less than Primary",
+      mean_primary_completed = "Primary",
+      mean_secondary_completed = "Secondary",
+      mean_university_completed = "University",
+      mean_yrimm_before1965 = "Before 1965",
+      mean_yrimm_1965_1979 = "1965 - 1979",
+      mean_yrimm_1980_1999 = "1980 - 1999",
+      mean_yrimm_2000plus = "After 2000"
+    )) %>% 
+    select(-variable) %>% 
+  rename(`Black` = `10`,
+         `White` = `11`,
+         `Other` = `12`)
+
+print(table2_consolidated_native_race)
+
 table2_consolidated <- bind_cols(
   table2_consolidated,
-  table2_consolidated_migrant
+  table2_consolidated_migrant,
+  table2_consolidated_native_race
 )
+
+rm(table2_consolidated_migrant, table2_consolidated_native_race)
 
 table2_consolidated <- table2_consolidated %>%
   mutate(across(where(is.numeric), round, digits = 2)) %>% 
   mutate(across(everything(), ~ as.character(.))) %>%    
   mutate(across(everything(), ~ ifelse(. == "NaN", "-", .))) %>%   
   mutate(across(everything(), ~ ifelse(. == "0", "-", .))) %>% 
-  select(variable, mexico, `puerto rico`, `dominican republic`, cuba,`foreign-born hispanic`, `foreign-born not hispanic`, `native-born hispanic`, `native-born not hispanic`) %>% 
+  select(variable, mexico, `puerto rico`, `dominican republic`, cuba,`foreign-born hispanic`, `foreign-born not hispanic`, `native-born hispanic`, `Black`, `White`, `Other`) %>% 
   rename(
     `Dominican Republic` = `dominican republic`,
     Mexico = mexico,
     `Puerto Rico` = `puerto rico`,
     Demographics = variable,
     Cuba = cuba,
-    `Hispanic Immigrant` = `foreign-born hispanic`,
-    `Non-Hispanic Immigrant` = `foreign-born not hispanic`,
-    `Hispanic Native` = `native-born hispanic`,
-    `Non-Hispanic Native` = `native-born not hispanic`,
+    `Hispanic` = `foreign-born hispanic`,
+    `Non-Hispanic` = `foreign-born not hispanic`,
+    `Native Hispanic ` = `native-born hispanic`
   ) %>% 
   add_row(Demographics = "Age", .before = 1) %>% 
   add_row(Demographics = "Education Completed", .before = 5) %>% 
@@ -382,7 +438,7 @@ print(table2_consolidated)
 
 table2_consolidated_code <- xtable(table2_consolidated, 
                                    caption = "Sociodemographics of Hispanics in the U.S. by Birth Country (2020 Census)", 
-                                   align = "ll|cccccccc")
+                                   align = "ll|cccccccccc")
 
 latex_code <- capture.output(print(table2_consolidated_code, 
                                    type = "latex", 
@@ -428,13 +484,6 @@ adjust_latex_rows <- function(latex_code, adjustments) {
 latex_code <- adjust_latex_rows(latex_code, adjustments)
 
 writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/table2_consolidated.tex")
-
-doc <- read_docx()
-doc <- doc %>% 
-  body_add_par("LaTeX Table Export", style = "heading 1")
-doc <- doc %>% 
-  body_add_par(paste(latex_code, collapse = "\n"))
-print(doc, target = "latex_table_export.docx")
 ```
 
 
@@ -705,7 +754,6 @@ tabular_line_index <- grep("\\\\begin\\{tabular\\}", latex_code)
 latex_code[tabular_line_index] <- "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|cccccc}"
 
 # To align rows right
-# Define adjustments
 adjustments <- list(
   list(rows = c("60 - 69", "70 - 79", "80 - 89"), width = 1.5),
   list(rows = c("Less than Primary"), width = 3.2),
