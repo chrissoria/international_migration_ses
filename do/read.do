@@ -27,9 +27,11 @@ replace year_of_immigration_groups = 2 if yrimmig >= 1965 & yrimmig < 1981 & yri
 replace year_of_immigration_groups = 3 if yrimmig >= 1980 & yrimmig < 2000 & yrimmig != 0
 replace year_of_immigration_groups = 4 if yrimmig >= 2000 & yrimmig != 0
 
-label define year_of_immigration_groups_l 1 "Before 1965" 2 "Between 1965 and 1980" 3 "Between 1980 and 1999" 4 "After 2000"
+label define year_of_immigration_groups_l 1 "Before 1965" 2 "1965 - 1979" 3 "1980 - 1999" 4 "After 1999"
 label values year_of_immigration_groups year_of_immigration_groups_l
 label variable year_of_immigration_groups "Year of Immigration Cohort"
+
+decode year_of_immigration_groups, gen(year_of_immig_groups_string)
 
 gen yrimm_before1965 = (yrimmig < 1965 & yrimmig != 0)
 gen yrimm_1965to1980 = (yrimmig >= 1965 & yrimmig < 1981 & yrimmig != 0)
@@ -243,9 +245,11 @@ replace year_of_immigration_groups = 2 if yrimm >= 1965 & yrimm < 1981 & yrimm !
 replace year_of_immigration_groups = 3 if yrimm >= 1980 & yrimm < 2000 & yrimm != 0
 replace year_of_immigration_groups = 4 if yrimm >= 2000 & yrimm != 0
 
-label define year_of_immigration_groups_l 1 "Before 1965" 2 "Between 1965 and 1980" 3 "Between 1980 and 1999" 4 "After 2000"
+label define year_of_immigration_groups_l 1 "Before 1965" 2 "1965 - 1979" 3 "1980 - 1999" 4 "After 1999"
 label values year_of_immigration_groups year_of_immigration_groups_l
 label variable year_of_immigration_groups "Year of Immigration Cohort"
+
+decode year_of_immigration_groups, gen(year_of_immig_groups_string)
 
 gen yrimm_before1965 = (yrimm < 1965 & yrimm != 0)
 gen yrimm_1965to1980 = (yrimm >= 1965 & yrimm < 1981 & yrimm != 0)

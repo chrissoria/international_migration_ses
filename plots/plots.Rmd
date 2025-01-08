@@ -11,8 +11,9 @@ library(dplyr)
 library(purrr)
 library(patchwork)
 library(cowplot)
+library(tidyverse)
 ```
-
+# read in data
 ```{r setup, include=FALSE}
 target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/plots")
 current_dir <- normalizePath(getwd())
@@ -90,12 +91,88 @@ combined_plot <- combined_plot +
   plot_layout(guides = "collect") & 
   theme(legend.position = "bottom")
 
+print(combined_plot)
+
 ggsave(filename = paste0(out_dir,"education_panels.jpg"), plot = combined_plot, width = 15, height = 10, dpi = 300)
 ```
+## percent married in native and migrant pop
+```{r}
+countries <- c("Mexicans", "Puerto Ricans", "Dominicans", "Cubans", "US Mexican-born", "US Puerto-Rican-born", "US Dominican-born", "US Cuban-born")
+marital_status <- c("married", "not_married")
 
-## english speakers
+create_country_plot <- function(country) {
+  prop_married <- data.frame(
+    levels = marital_status,
+    proportion = c(as.numeric(table1[4, country]), 1 - as.numeric(table1[4, country])) / 1
+  )
+  
+  ggplot(prop_married, aes(x = "", y = proportion, fill = levels)) +
+    geom_bar(stat = "identity", width = 0.5) +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              position = position_stack(vjust = 0.5), size = 3) +
+    scale_y_continuous(labels = scales::percent) +
+    scale_fill_manual(name = "Marital Status",
+      values = c("married" = "lightblue", 
+                 "not_married" = "pink"),
+      labels = c("Married", "Not Married")) +
+    labs(title = country,
+         y = element_blank(),
+         x = NULL) +
+    theme_cowplot() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.ticks.y = element_blank(),
+          legend.position = "none",
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5))
+}
+
+plots <- map(countries, create_country_plot)
+
+combined_plot <- wrap_plots(plots, ncol = 4) +
+  plot_annotation(
+    title = "Marital Status by Country",
+    subtitle = "Based on table1",
+    theme = theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot <- combined_plot + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+print(combined_plot)
+
+ggsave(filename = paste0(out_dir,"marital_status_panels.jpg"), plot = combined_plot, width = 15, height = 10, dpi = 300)
+
+```
+
+## english speakers in migrant population
 ```{r}
 countries <- c("mexico", "puerto rico", "dominican republic", "cuba")
+
+result_list <- list()
+
+for (country in countries) {
+  prop_cohort_speaks_english_country <- us_df_2020 %>% 
+    filter(country_string == country) %>%
+    group_by(year_of_immig_groups_string) %>% 
+    summarise(
+      mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE)
+    )
+  
+  # Store the result in the list
+  result_list[[country]] <- prop_cohort_speaks_english_country$mean_english_speaker
+}
+
+prop_migration_cohort_speaks_english <- data.frame(
+  year_of_immigration_groups = prop_cohort_speaks_english_country$year_of_immig_groups_string,
+  do.call(cbind, result_list)
+) %>%
+  mutate(year_of_immigration_groups = factor(year_of_immigration_groups, 
+                                             levels = c("Before 1965", "1965 - 1979", "1980 - 1999", "After 1999")))
 
 prop_migration_cohort_speaks_english_long <- prop_migration_cohort_speaks_english %>%
   pivot_longer(cols = -year_of_immigration_groups, 
@@ -141,5 +218,79 @@ combined_plot_migration_cohort <- combined_plot +
 print(combined_plot_migration_cohort)
 
 ggsave(filename = paste0(out_dir,"migration_cohort_english_speaker_panels.jpg"), plot = combined_plot_migration_cohort, width = 12, height = 9, dpi = 300)
+```
+# education by cohort migration
+```{r}
+countries <- c("mexico", "puerto rico", "dominican republic", "cuba")
+result_list <- list()
+
+for (country in countries) {
+  prop_cohort_education_country <- us_df_2020 %>% 
+    filter(country_string == country) %>%
+    #filter(!is.na(year_of_immig_groups_string)) %>% 
+    group_by(year_of_immig_groups_string) %>% 
+    summarise(
+      secondary_or_above = weighted.mean(secondary_or_above, perwt, na.rm = TRUE)
+    )
+  
+  # Store the result in the list
+  result_list[[country]] <- prop_cohort_education_country$secondary_or_above
+}
+
+# Use the year_of_immigration_groups from the last iteration
+prop_migration_cohort_education <- data.frame(
+  year_of_immigration_groups = prop_cohort_education_country$year_of_immig_groups_string,
+  do.call(cbind, result_list)
+) %>%
+  mutate(year_of_immigration_groups = factor(year_of_immigration_groups, 
+                                             levels = c("Before 1965", "1965 - 1979", "1980 - 1999", "After 1999")))
+
+prop_migration_cohort_education_long <- prop_migration_cohort_education %>%
+  pivot_longer(cols = -year_of_immigration_groups, 
+               names_to = "country", 
+               values_to = "proportion")
+
+
+print(prop_migration_cohort_education_long)
+
+create_country_plot <- function(country_data) {
+  ggplot(country_data, aes(x = proportion, y = year_of_immigration_groups, fill = year_of_immigration_groups)) +
+    geom_bar(stat = "identity") +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              hjust = -0.1, size = 3) +
+    scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+    scale_fill_manual(name = "Cohort",
+      values = c("Before 1965" = "lightgreen", 
+                 "1965 - 1979" = "red", 
+                 "1980 - 1999" = "orange",
+                 "After 1999" = "skyblue")) +
+    labs(title = str_to_title(unique(country_data$country)),
+         x = element_blank(),
+         y = element_blank()) +
+    theme_cowplot() +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = "none")  # Remove legend if not needed
+}
+
+country_plots <- prop_migration_cohort_education_long %>%
+  split(.$country) %>%
+  map(create_country_plot)
+
+combined_plot <- wrap_plots(country_plots, ncol = 2) +
+  plot_annotation(
+    title = "Proportion of With At Least Secondary Education by Immigration Cohort and Country of Origin",
+    subtitle = "Based on 2020 dataset",
+    theme = theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_migration_cohort <- combined_plot + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+print(combined_plot_migration_cohort)
+
+ggsave(filename = paste0(out_dir,"migration_cohort_education_panels.jpg"), plot = combined_plot_migration_cohort, width = 12, height = 9, dpi = 300)
 ```
 
