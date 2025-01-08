@@ -38,84 +38,41 @@ us_df_2010 <- read_dta(paste0(data_dir, "US_2010_v100.dta"))
 us_df_2020 <- read_dta(paste0(data_dir, "US_2020_v100.dta"))
 ```
 
-## education
+## education in native and migrants
 ```{r}
 countries <- c("Mexicans", "Puerto Ricans", "Dominicans", "Cubans", "US Mexican-born", "US Puerto-Rican-born", "US Dominican-born", "US Cuban-born")
 education <- c("less_than_primary", "primary_completed", "secondary_completed", "university_completed", "unknown")
 
-create_country_plot <- function(country) {
-  prop_educated <- data.frame(
-    levels = education,
-    proportion = c(as.numeric(table1[5:8, country]), 1 - sum(as.numeric(table1[5:8, country]))) / 1
-  )
+create_country_plot <- function(country, gender) {
+  if(gender == "women") {
+    prop_educated <- data.frame(
+      levels = education,
+      proportion = c(as.numeric(table1[5:8, country]), 1 - sum(as.numeric(table1[5:8, country]))) / 1
+    )
+    title_suffix <- "Women"
+  } else {
+    prop_educated <- data.frame(
+      levels = education,
+      proportion = c(as.numeric(table1[14:17, country]), 1 - sum(as.numeric(table1[14:17, country]))) / 1
+    )
+    title_suffix <- "Men"
+  }
   
   ggplot(prop_educated, aes(x = "", y = proportion, fill = levels)) +
     geom_bar(stat = "identity", width = 0.5) +
     geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
               position = position_stack(vjust = 0.5), size = 3) +
     scale_y_continuous(labels = scales::percent) +
-    scale_fill_manual(name = "Highest Education Achieved",
+    scale_fill_manual(name = paste("Highest Education Achieved for", title_suffix),
       values = c("less_than_primary" = "skyblue", 
-                                 "primary_completed" = "lightgreen", 
-                                 "secondary_completed" = "red", 
-                                 "university_completed" = "orange"),
-                      labels = c("Less than Primary", "Primary Completed", 
-                                 "Secondary Completed", "University Completed")) +
-    labs(title = country,
-         y = element_blank(),
-         x = NULL) +
-    theme_cowplot() +
-    theme(axis.text.x = element_blank(),
-          axis.text.y = element_blank(),  # This line removes y-axis text
-          axis.ticks.x = element_blank(),
-          axis.ticks.y = element_blank(),  # This line removes y-axis ticks
-          legend.position = "none",
-          plot.title = element_text(hjust = 0.5),
-          plot.subtitle = element_text(hjust = 0.5))
-}
-
-
-plots <- map(countries, create_country_plot)
-
-combined_plot <- wrap_plots(plots, ncol = 4) +
-  plot_annotation(
-    title = "Education Levels by Country",
-    subtitle = "Based on table1",
-    theme = theme(plot.title = element_text(hjust = 0.5),
-                  plot.subtitle = element_text(hjust = 0.5))
-  ) &
-  theme(legend.position = "bottom")
-
-
-combined_plot <- combined_plot + 
-  plot_layout(guides = "collect") & 
-  theme(legend.position = "bottom")
-
-print(combined_plot)
-
-ggsave(filename = paste0(out_dir,"education_panels.jpg"), plot = combined_plot, width = 15, height = 10, dpi = 300)
-```
-## percent married in native and migrant pop
-```{r}
-countries <- c("Mexicans", "Puerto Ricans", "Dominicans", "Cubans", "US Mexican-born", "US Puerto-Rican-born", "US Dominican-born", "US Cuban-born")
-marital_status <- c("married", "not_married")
-
-create_country_plot <- function(country) {
-  prop_married <- data.frame(
-    levels = marital_status,
-    proportion = c(as.numeric(table1[4, country]), 1 - as.numeric(table1[4, country])) / 1
-  )
-  
-  ggplot(prop_married, aes(x = "", y = proportion, fill = levels)) +
-    geom_bar(stat = "identity", width = 0.5) +
-    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
-              position = position_stack(vjust = 0.5), size = 3) +
-    scale_y_continuous(labels = scales::percent) +
-    scale_fill_manual(name = "Marital Status",
-      values = c("married" = "lightblue", 
-                 "not_married" = "pink"),
-      labels = c("Married", "Not Married")) +
-    labs(title = country,
+                 "primary_completed" = "lightgreen", 
+                 "secondary_completed" = "red", 
+                 "university_completed" = "orange",
+                 "unknown" = "gray"),
+      labels = c("Less than Primary", "Primary Completed", 
+                 "Secondary Completed", "University Completed",
+                 "Unknown")) +
+    labs(title = paste(country, "-", title_suffix),
          y = element_blank(),
          x = NULL) +
     theme_cowplot() +
@@ -128,24 +85,216 @@ create_country_plot <- function(country) {
           plot.subtitle = element_text(hjust = 0.5))
 }
 
-plots <- map(countries, create_country_plot)
+# Create plots for women
+plots_women <- map(countries, ~create_country_plot(.x, "women"))
 
-combined_plot <- wrap_plots(plots, ncol = 4) +
+# Create plots for men
+plots_men <- map(countries, ~create_country_plot(.x, "men"))
+
+# Combine plots for women
+combined_plot_women <- wrap_plots(plots_women, ncol = 4) +
   plot_annotation(
-    title = "Marital Status by Country",
+    title = "Education Levels by Country - Women",
     subtitle = "Based on table1",
     theme = theme(plot.title = element_text(hjust = 0.5),
                   plot.subtitle = element_text(hjust = 0.5))
   ) &
   theme(legend.position = "bottom")
 
-combined_plot <- combined_plot + 
+combined_plot_women <- combined_plot_women + 
   plot_layout(guides = "collect") & 
   theme(legend.position = "bottom")
 
-print(combined_plot)
+# Combine plots for men
+combined_plot_men <- wrap_plots(plots_men, ncol = 4) +
+  plot_annotation(
+    title = "Education Levels by Country - Men",
+    subtitle = "Based on table1",
+    theme = theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+  ) &
+  theme(legend.position = "bottom")
 
-ggsave(filename = paste0(out_dir,"marital_status_panels.jpg"), plot = combined_plot, width = 15, height = 10, dpi = 300)
+combined_plot_men <- combined_plot_men + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+# Save plots
+ggsave(filename = paste0(out_dir,"education_panels_women.jpg"), plot = combined_plot_women, width = 15, height = 10, dpi = 300)
+ggsave(filename = paste0(out_dir,"education_panels_men.jpg"), plot = combined_plot_men, width = 15, height = 10, dpi = 300)
+
+# Print plots
+print(combined_plot_women)
+print(combined_plot_men)
+```
+## percent married in native and migrant pop
+```{r}
+countries <- c("Mexicans", "Puerto Ricans", "Dominicans", "Cubans", "US Mexican-born", "US Puerto-Rican-born", "US Dominican-born", "US Cuban-born")
+marital_status <- c("married", "not_married")
+
+create_country_plot <- function(country, gender) {
+  if(gender == "women") {
+    prop_married <- data.frame(
+      levels = marital_status,
+      proportion = c(as.numeric(table1[4, country]), 1 - as.numeric(table1[4, country])) / 1
+    )
+    title_suffix <- "Women"
+  } else {
+    prop_married <- data.frame(
+      levels = marital_status,
+      proportion = c(as.numeric(table1[13, country]), 1 - as.numeric(table1[13, country])) / 1
+    )
+    title_suffix <- "Men"
+  }
+  
+  ggplot(prop_married, aes(x = "", y = proportion, fill = levels)) +
+    geom_bar(stat = "identity", width = 0.5) +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              position = position_stack(vjust = 0.5), size = 3) +
+    scale_y_continuous(labels = scales::percent) +
+    scale_fill_manual(name = paste("Marital Status -", title_suffix),
+      values = c("married" = "lightblue", 
+                 "not_married" = "pink"),
+      labels = c("Married", "Not Married")) +
+    labs(title = paste(country, "-", title_suffix),
+         y = element_blank(),
+         x = NULL) +
+    theme_cowplot() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.ticks.y = element_blank(),
+          legend.position = "none",
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5))
+}
+
+# Create plots for women
+plots_women <- map(countries, ~create_country_plot(.x, "women"))
+
+# Create plots for men
+plots_men <- map(countries, ~create_country_plot(.x, "men"))
+
+# Combine plots for women
+combined_plot_women <- wrap_plots(plots_women, ncol = 4) +
+  plot_annotation(
+    title = "Marital Status by Country - Women",
+    subtitle = "Based on table1",
+    theme = theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_women <- combined_plot_women + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+# Combine plots for men
+combined_plot_men <- wrap_plots(plots_men, ncol = 4) +
+  plot_annotation(
+    title = "Marital Status by Country - Men",
+    subtitle = "Based on table1",
+    theme = theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_men <- combined_plot_men + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+# Save plots
+ggsave(filename = paste0(out_dir,"marital_status_panels_women.jpg"), plot = combined_plot_women, width = 15, height = 10, dpi = 300)
+ggsave(filename = paste0(out_dir,"marital_status_panels_men.jpg"), plot = combined_plot_men, width = 15, height = 10, dpi = 300)
+
+# Print plots
+print(combined_plot_women)
+print(combined_plot_men)
+```
+## age groups in natives and migrants
+```{r}
+countries <- c("Mexicans", "Puerto Ricans", "Dominicans", "Cubans", "US Mexican-born", "US Puerto-Rican-born", "US Dominican-born", "US Cuban-born")
+age_groups <- c("Age 60 - 69", "Age 70 - 79", "Age 80 - 89")
+
+create_country_plot <- function(country, gender) {
+  if(gender == "women") {
+    prop_age <- data.frame(
+      levels = age_groups,
+      proportion = c(as.numeric(table1[1:3, country])) / 1
+    )
+    title_suffix <- "Women"
+  } else {
+    prop_age <- data.frame(
+      levels = age_groups,
+      proportion = c(as.numeric(table1[10:12, country])) / 1
+    )
+    title_suffix <- "Men"
+  }
+  
+  ggplot(prop_age, aes(x = "", y = proportion, fill = levels)) +
+    geom_bar(stat = "identity", width = 0.5) +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              position = position_stack(vjust = 0.5), size = 3) +
+    scale_y_continuous(labels = scales::percent) +
+    scale_fill_manual(name = paste("Age Groups -", title_suffix),
+      values = c("Age 60 - 69" = "lightblue", 
+                 "Age 70 - 79" = "orange",
+                 "Age 80 - 89" = "lightgreen"),
+      labels = age_groups) +
+    labs(title = paste(country, "-", title_suffix),
+         y = element_blank(),
+         x = NULL) +
+    theme_cowplot() +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.ticks.y = element_blank(),
+          legend.position = "none",
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5))
+}
+
+# Create plots for women
+plots_women <- map(countries, ~create_country_plot(.x, "women"))
+
+# Create plots for men
+plots_men <- map(countries, ~create_country_plot(.x, "men"))
+
+# Combine plots for women
+combined_plot_women <- wrap_plots(plots_women, ncol = 4) +
+  plot_annotation(
+    title = "Age Distribution by Country - Women",
+    subtitle = "Based on table1",
+    theme = theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_women <- combined_plot_women + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+# Combine plots for men
+combined_plot_men <- wrap_plots(plots_men, ncol = 4) +
+  plot_annotation(
+    title = "Age Distribution by Country - Men",
+    subtitle = "Based on table1",
+    theme = theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_men <- combined_plot_men + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+# Save plots
+ggsave(filename = paste0(out_dir,"age_distribution_panels_women.jpg"), plot = combined_plot_women, width = 15, height = 10, dpi = 300)
+ggsave(filename = paste0(out_dir,"age_distribution_panels_men.jpg"), plot = combined_plot_men, width = 15, height = 10, dpi = 300)
+
+# Print plots
+print(combined_plot_women)
+print(combined_plot_men)
 
 ```
 
