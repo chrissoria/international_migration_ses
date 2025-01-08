@@ -162,6 +162,16 @@ replace secondary_completed = 1 if inlist(edattain_string, "Grade 9", "Grade 10"
 generate university_completed = 0
 replace university_completed = 1 if inlist(edattain_string, "Associate's degree, type not specified", "Bachelor's degree", "Master's degree", "Doctoral degree", "Professional degree beyond a bachelor's degree")
 
+*primary school binary
+generate primary_or_above = 0
+replace primary_or_above = 1 if university_completed == 1
+replace primary_or_above = 1 if secondary_completed == 1
+replace primary_or_above = 1 if primary_completed == 1
+
+*secondary school binary
+generate secondary_or_above = 0
+replace secondary_or_above = 1 if university_completed == 1
+replace secondary_or_above = 1 if secondary_completed == 1
 
 decode year, gen(year_str)
 gen country_string = lower(bplcountry)
@@ -211,6 +221,8 @@ foreach s of local sexes {
 restore
 
 *keep if (bplcountry == 23050 | bplcountry == 21080 | bplcountry == 21100 | bplcountry == 22030 | bplcountry == 22040 | bplcountry == 22050 | bplcountry == 22060 | bplcountry == 21180 | bplcountry == 24040)
+
+decode bplcountry, gen(country_string)
 
 gen age_groups = .
 replace age_groups = 1 if age <70
@@ -298,7 +310,7 @@ tab race_native_category, miss
 gen married_cohab = (marst == 2) if marst != .
 
 gen years_in_us = 2010 - yrimm
-*replace years_in_us = . if citizen == 2
+replace years_in_us = . if years_in_us == 2010
 
 gen age_at_immigration = age - years_in_us
 *replace age_at_immigration = . if (citizen == 2 & bplcountry != 21180)
@@ -332,15 +344,19 @@ gen primary_completed = (edattain_string == "primary completed")
 gen secondary_completed = (edattain_string == "secondary completed")
 gen university_completed = (edattain_string == "university completed")
 
+*primary school binary
+generate primary_or_above = 0
+replace primary_or_above = 1 if university_completed == 1
+replace primary_or_above = 1 if secondary_completed == 1
+replace primary_or_above = 1 if primary_completed == 1
+
+*primary school binary
+generate secondary_or_above = 0
+replace secondary_or_above = 1 if university_completed == 1
+replace secondary_or_above = 1 if secondary_completed == 1
+
 decode year, gen(year_str)
-decode country, gen(country_string)
 
-replace country_string = "United States" if country_string == "united states"
-replace country_string = "Puerto Rico" if country_string == "puerto rico"
-replace country_string = "Mexico" if country_string == "mexico"
-replace country_string = "US" if country_string == "United States"
-
-drop if country_string == "Mexico"
 gen country_year = country_string + "_" + year_str
 
 gen hispanic_migrant_status = nativity_string + " " + hispan_string

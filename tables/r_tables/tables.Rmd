@@ -14,6 +14,7 @@ library(readxl)
 library(officer)
 library(broom)
 library(writexl)
+library(scales)
 ```
 
 ```{r}
@@ -113,6 +114,7 @@ in_df <- in_df %>%
 create_table_for_sex_international <- function(sex_value) {
   in_df %>%
     filter(sex == sex_value) %>%
+    filter(!is.na(country_year_bpl)) %>% 
     group_by(country_year) %>%
     summarise(
     mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
@@ -123,7 +125,7 @@ create_table_for_sex_international <- function(sex_value) {
     mean_primary_completed = weighted.mean(primary_completed, perwt_age_standardized, na.rm = TRUE),
     mean_secondary_completed = weighted.mean(secondary_completed, perwt_age_standardized, na.rm = TRUE),
     mean_university_completed = weighted.mean(university_completed, perwt_age_standardized, na.rm = TRUE),
-    count = n()
+    N = n()
     ) %>%
     pivot_longer(cols = -country_year, names_to = "variable", values_to = "value") %>%
     pivot_wider(names_from = country_year, values_from = value) %>%
@@ -135,8 +137,7 @@ create_table_for_sex_international <- function(sex_value) {
       mean_less_than_primary_completed = "Less than Primary",
       mean_primary_completed = "Primary",
       mean_secondary_completed = "Secondary",
-      mean_university_completed = "University",
-      mean_education_unknown = "Unknown"
+      mean_university_completed = "University"
     ))
 }
 
@@ -162,23 +163,24 @@ combined_table1 <- combined_table1 %>%
 print(combined_table1)
 
 #adding in the US born counterparts
-create_table_for_sex_international <- function(sex_value) {
-  in_df %>%
+create_table_for_sex_us_counterparts <- function(sex_value) {
+  us_df_2010 %>%
     filter(sex == sex_value) %>%
-    group_by(country_year_bpl) %>%
+    filter(country_string %in% c("mexico", "dominican republic", "cuba", "puerto rico")) %>% 
+    group_by(country_string) %>%
     summarise(
     mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
     mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
     mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
-    mean_married_cohab = weighted.mean(married_cohab, perwt_age_standardized, na.rm = TRUE),
-    mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt_age_standardized, na.rm = TRUE),
-    mean_primary_completed = weighted.mean(primary_completed, perwt_age_standardized, na.rm = TRUE),
-    mean_secondary_completed = weighted.mean(secondary_completed, perwt_age_standardized, na.rm = TRUE),
-    mean_university_completed = weighted.mean(university_completed, perwt_age_standardized, na.rm = TRUE),
-    count = n()
+    mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
+    mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
+    mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
+    mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
+    mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE),
+    N = n()
     ) %>%
-    pivot_longer(cols = -country_year_bpl, names_to = "variable", values_to = "value") %>%
-    pivot_wider(names_from = country_year_bpl, values_from = value) %>%
+    pivot_longer(cols = -country_string, names_to = "variable", values_to = "value") %>%
+    pivot_wider(names_from = country_string, values_from = value) %>%
     mutate(variable = recode(variable,
       mean_age_60_69 = "Age 60 - 69",
       mean_age_70_79 = "Age 70 - 79",
@@ -187,8 +189,7 @@ create_table_for_sex_international <- function(sex_value) {
       mean_less_than_primary_completed = "Less than Primary",
       mean_primary_completed = "Primary",
       mean_secondary_completed = "Secondary",
-      mean_university_completed = "University",
-      mean_education_unknown = "Unknown"
+      mean_university_completed = "University"
     ))
 }
 
@@ -228,6 +229,7 @@ combined_table1 <- cbind(combined_table1, combined_table2) %>%
   )
 
 print(combined_table1)
+table1 <- combined_table1
 
 table_md <- kbl(combined_table1, format = "markdown", label = "tab:table1", caption = "Summary Table") %>%
   kable_styling(latex_options = "scale=1.2")
@@ -273,7 +275,7 @@ table2_consolidated <- us_df_2020 %>%
       mean_is_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE),
       mean_female = weighted.mean(female, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
-      N = comma(n())
+      N = n()
     ) %>%
     pivot_longer(cols = -country_string, names_to = "variable", values_to = "value") %>%
     pivot_wider(names_from = country_string, values_from = value) %>%
@@ -324,7 +326,7 @@ table2_consolidated_migrant <- us_df_2020 %>%
       mean_is_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE),
       mean_female = weighted.mean(female, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
-      N = comma(n())
+      N = n()
     ) %>%
     pivot_longer(cols = -hispanic_migrant_status, names_to = "variable", values_to = "value") %>%
     pivot_wider(names_from = hispanic_migrant_status, values_from = value) %>%
@@ -375,7 +377,7 @@ table2_consolidated_native_race <- us_df_2020 %>%
       mean_is_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE),
       mean_female = weighted.mean(female, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
-      N = comma(n())
+      N = n()
     ) %>%
     pivot_longer(cols = -race_native_category, names_to = "variable", values_to = "value") %>%
     pivot_wider(names_from = race_native_category, values_from = value) %>%
@@ -863,7 +865,7 @@ print(table3_code, type = "latex",
 sink()
 ```
 
-## regressions
+## migrant regressions
 ```{r}
 dvs <- c("married_cohab", "age_at_immigration_under15", "age_at_immigration_15to49", "age_at_immigration_50plus", "secondary_or_above", "less_than_primary_completed", "primary_completed", "secondary_completed", "university_completed", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "is_naturalized_citizen", "female", "english_speaker")
 
@@ -899,24 +901,69 @@ excel_data <- list()
 
 # Loop through each model in results_list
 for (reason in names(results_list)) {
-  # Check if the model is valid
   if (!is.null(results_list[[reason]])) {
-    # Convert the model summary to a data frame using broom::tidy()
     model_summary <- tidy(results_list[[reason]])
     
-    # Add the model summary to the excel_data list
     excel_data[[reason]] <- model_summary
   } else {
     cat("\n\n", "No valid model for", reason, "\n")
   }
 }
 
-# Check if excel_data has been populated
 if (length(excel_data) > 0) {
-  # Write all tables to an Excel file, each model in a separate sheet
   write_xlsx(excel_data, path = paste0(out_dir, "../regressions/within_US_model_summaries.xlsx"))
 } else {
   cat("No valid data to write to Excel.\n")
 }
 ```
+## migrant regressions
+```{r}
+dvs <- c("married_cohab", "age_at_immigration_under15", "age_at_immigration_15to49", "age_at_immigration_50plus", "secondary_or_above", "less_than_primary_completed", "primary_completed", "secondary_completed", "university_completed", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "is_naturalized_citizen", "female", "english_speaker")
 
+ivs <- c("country_string", "age_70to79", "age_80to89")
+
+us_df_2020_filtered <- us_df_2020 %>% 
+   filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
+   mutate(country_string = fct_relevel(country_string, "mexico"))
+
+results_list <- list()
+
+# running the models
+for (dv in dvs) {
+  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
+
+  print(formula)
+
+  model <- glm(formula, data = us_df_2020_filtered, 
+               family = binomial(),
+               weights = perwt)
+
+  results_list[[dv]] <- model
+}
+
+summaries <- map(results_list, summary)
+
+for (reason in names(summaries)) {
+  cat("\n\n", "Summary for", reason, ":\n")
+  print(summaries[[reason]])
+}
+
+excel_data <- list()
+
+# Loop through each model in results_list
+for (reason in names(results_list)) {
+  if (!is.null(results_list[[reason]])) {
+    model_summary <- tidy(results_list[[reason]])
+    
+    excel_data[[reason]] <- model_summary
+  } else {
+    cat("\n\n", "No valid model for", reason, "\n")
+  }
+}
+
+if (length(excel_data) > 0) {
+  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/within_US_model_summaries.xlsx"))
+} else {
+  cat("No valid data to write to Excel.\n")
+}
+```

@@ -1,0 +1,96 @@
+---
+title: "plots"
+author: "Chris Soria"
+date: "2025-01-08"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(purrr)
+library(patchwork)
+```
+
+```{r setup, include=FALSE}
+target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/plots")
+current_dir <- normalizePath(getwd())
+
+if (current_dir == target_dir) {
+  out_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/plots/")
+  data_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/")
+  plot_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses//plots/")
+
+} else {
+  out_dir <- file.path("C:/Users/Ty/Desktop/ses_international/plots//")
+  data_dir <- file.path("C:/Users/Ty/Desktop/ses_international/data//")
+  plot_dir <- file.path("C:/Users/Ty/Desktop/ses_international/plots//")
+
+}
+
+print(getwd())
+```
+
+```{r}
+us_df_2010 <- read_dta(paste0(data_dir, "US_2010_v100.dta"))
+us_df_2020 <- read_dta(paste0(data_dir, "US_2020_v100.dta"))
+```
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+
+countries <- c("Mexicans", "US Mexican-born", "Puerto Ricans","US Puerto-Rican-born", "Dominicans", "US Dominican-born", "Cubans", "US Cuban-born")
+
+create_country_plot <- function(country) {
+  prop_educated <- data.frame(
+    education_level = c("less_than_primary", "primary_completed", "secondary_completed", "university_completed", "unknown"),
+    proportion = c(as.numeric(table1[5:8, country]), 1 - sum(as.numeric(table1[5:8, country]))) / 1
+  )
+  
+  ggplot(prop_educated, aes(x = "", y = proportion, fill = education_level)) +
+    geom_bar(stat = "identity", width = 0.5) +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              position = position_stack(vjust = 0.5), size = 3) +
+    scale_y_continuous(labels = scales::percent) +
+    scale_fill_manual(values = c("less_than_primary" = "skyblue", 
+                                 "primary_completed" = "lightgreen", 
+                                 "secondary_completed" = "red", 
+                                 "university_completed" = "orange"),
+                      labels = c("Less than Primary", "Primary Completed", 
+                                 "Secondary Completed", "University Completed")) +
+    labs(title = country,
+         y = element_blank(),
+         x = NULL) +
+    theme_minimal() +
+    theme(axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          legend.position = "none",
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5))
+}
+
+# Create plots
+plots <- map(countries, create_country_plot)
+
+# Combine plots
+combined_plot <- wrap_plots(plots, ncol = 2) +
+  plot_annotation(
+    title = "Education Levels by Country",
+    subtitle = "Based on table1",
+    theme = theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+  ) &
+  theme(legend.position = "bottom")
+
+# Add a shared legend at the bottom
+combined_plot <- combined_plot + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+ggsave(filename = paste0(out_dir,"education_panels.jpg"), plot = combined_plot, width = 10, height = 15, dpi = 300)
+```
+
+
