@@ -124,4 +124,12 @@ if (length(excel_data) > 0) {
   cat("No valid data to write to Excel.\n")
 }
 ```
+## is age at migration correlated with education?
+```{r}
+education_full_model <- lm(secondary_or_above ~ country_string + age + age_at_immigration_15to49 + age_at_immigration_50plus, data = us_df_2020, 
+               #family = binomial(),
+               weights = perwt)
+
+summary(education_full_model)
+```
 

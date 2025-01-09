@@ -15,6 +15,7 @@ library(officer)
 library(broom)
 library(writexl)
 library(scales)
+library(readr)
 ```
 
 ```{r}
@@ -135,10 +136,22 @@ ifr_1950 <- ifr_df %>%
 background_data <- left_join(e60, gdp, by = "country")
 background_data <- left_join(background_data, ifr_2010, by = "country")
 background_data <- left_join(background_data, ifr_1950, by = "country")
+
+rm(ifr_2010, ifr_1950, ifr_df, ifr_dfs, gdp, e60)
 ```
 ## table on background features
 ```{r}
+background_table <- background_data %>% 
+  filter(e60_gender == "Both sexes") %>% 
+  select(country, gdp, e60, ifr_1950, ifr_2010) %>% 
+  rename(Country = country,
+         `2010 GDP` = gdp,
+         `Life Expectancy at 60` = e60,
+         `Infant Mortality Rate (1950)` = ifr_1950,
+         `Infant Mortality Rate (2010)` = ifr_2010
+  )
 
+print(background_table)
 ```
 
 ## table1, featuring Hispanic in their native countries

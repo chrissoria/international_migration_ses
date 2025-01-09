@@ -128,6 +128,8 @@ label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "50 and above"
 label values age_at_immigration_groups age_immig_labels
 label variable age_at_immigration_groups "Age at Immigration Groups"
 
+decode age_at_immigration_groups, gen(age_at_immig_groups_string)
+
 gen age_at_immigration_under15 = (age_at_immigration < 15)
 gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)
 gen age_at_immigration_50plus = (age_at_immigration >= 50)
@@ -324,10 +326,11 @@ replace age_at_immigration_groups = 1 if age_at_immigration < 15
 replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 50
 replace age_at_immigration_groups = 3 if age_at_immigration >= 50
 
-
 label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "50 and above"
 label values age_at_immigration_groups age_immig_labels
 label variable age_at_immigration_groups "Age at Immigration Groups"
+
+decode age_at_immigration_groups, gen(age_at_immig_groups_string)
 
 gen age_at_immigration_under15 = (age_at_immigration < 15)
 gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)

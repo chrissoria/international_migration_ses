@@ -442,4 +442,213 @@ print(combined_plot_migration_cohort)
 
 ggsave(filename = paste0(out_dir,"migration_cohort_education_panels.jpg"), plot = combined_plot_migration_cohort, width = 12, height = 9, dpi = 300)
 ```
+## are people who migrated at a younger age more likely to get an education at an older age?
+```{r}
+countries <- c("mexico", "puerto rico", "dominican republic", "cuba")
+result_list <- list()
+
+for (country in countries) {
+  prop_cohort_education_country <- us_df_2020 %>% 
+    filter(country_string == country) %>%
+    group_by(age_at_immig_groups_string) %>% 
+    summarise(
+      secondary_or_above = weighted.mean(secondary_or_above, perwt, na.rm = TRUE)
+    )
+  
+  result_list[[country]] <- prop_cohort_education_country$secondary_or_above
+}
+
+prop_age_at_immig_education <- data.frame(
+  age_at_immig_groups = prop_cohort_education_country$age_at_immig_groups_string,
+  do.call(cbind, result_list)
+) %>%
+  mutate(age_at_immig_groups = factor(age_at_immig_groups, 
+                                      levels = c("Under 15", "15-49", "50 and above")))
+
+prop_age_at_immig_education_long <- prop_age_at_immig_education %>%
+  pivot_longer(cols = -age_at_immig_groups, 
+               names_to = "country", 
+               values_to = "proportion") %>%
+  mutate(country = str_to_title(country))
+
+create_country_plot <- function(country_data) {
+  ggplot(country_data, aes(x = proportion, y = age_at_immig_groups, fill = age_at_immig_groups)) +
+    geom_bar(stat = "identity") +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              hjust = -0.1, size = 3) +
+    scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+    scale_fill_manual(name = "Age at Immigration",
+      values = c("Under 15" = "#66c2a5", 
+                 "15-49" = "#fc8d62", 
+                 "50 and above" = "#8da0cb")) +
+    labs(title = unique(country_data$country),
+         x = "Proportion with At Least Secondary Education",
+         y = "Age at Immigration") +
+    theme_cowplot() +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = "none",
+          axis.title.x = element_blank())
+}
+
+country_plots <- prop_age_at_immig_education_long %>%
+  split(.$country) %>%
+  map(create_country_plot)
+
+combined_plot <- wrap_plots(country_plots, ncol = 2) +
+  plot_annotation(
+    title = "Proportion with At Least Secondary Education by Age at Immigration and Country of Origin",
+    subtitle = "Based on 2020 dataset",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 14),
+                  plot.subtitle = element_text(hjust = 0.5, size = 12))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_age_at_immig <- combined_plot + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+print(combined_plot_age_at_immig)
+
+ggsave(filename = paste0(out_dir,"age_at_immig_education_panels.jpg"), 
+       plot = combined_plot_age_at_immig, 
+       width = 12, height = 9, dpi = 300)
+```
+## are people who migrated at a younger age more likely to speak english at an older age?
+```{r}
+countries <- c("mexico", "puerto rico", "dominican republic", "cuba")
+result_list <- list()
+
+for (country in countries) {
+  prop_cohort_english_country <- us_df_2020 %>% 
+    filter(country_string == country) %>%
+    group_by(age_at_immig_groups_string) %>% 
+    summarise(
+      english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE)
+    )
+  
+  result_list[[country]] <- prop_cohort_english_country$english_speaker
+}
+
+prop_age_at_immig_english <- data.frame(
+  age_at_immig_groups = prop_cohort_english_country$age_at_immig_groups_string,
+  do.call(cbind, result_list)
+) %>%
+  mutate(age_at_immig_groups = factor(age_at_immig_groups, 
+                                      levels = c("Under 15", "15-49", "50 and above")))
+
+prop_age_at_immig_english_long <- prop_age_at_immig_english %>%
+  pivot_longer(cols = -age_at_immig_groups, 
+               names_to = "country", 
+               values_to = "proportion") %>%
+  mutate(country = str_to_title(country))
+
+create_country_plot <- function(country_data) {
+  ggplot(country_data, aes(x = proportion, y = age_at_immig_groups, fill = age_at_immig_groups)) +
+    geom_bar(stat = "identity") +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              hjust = -0.1, size = 3) +
+    scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+    scale_fill_manual(name = "Age at Immigration",
+      values = c("Under 15" = "#66c2a5", 
+                 "15-49" = "#fc8d62", 
+                 "50 and above" = "#8da0cb")) +
+    labs(title = unique(country_data$country),
+         x = "Proportion of English Speakers",
+         y = "Age at Immigration") +
+    theme_cowplot() +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = "none",
+          axis.title.x = element_blank())
+}
+
+country_plots <- prop_age_at_immig_english_long %>%
+  split(.$country) %>%
+  map(create_country_plot)
+
+combined_plot <- wrap_plots(country_plots, ncol = 2) +
+  plot_annotation(
+    title = "Proportion of English Speakers by Age at Immigration and Country of Origin",
+    subtitle = "Based on 2020 dataset",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 14),
+                  plot.subtitle = element_text(hjust = 0.5, size = 12))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_age_at_immig <- combined_plot + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+print(combined_plot_age_at_immig)
+
+ggsave(filename = paste0(out_dir,"age_at_immig_english_panels.jpg"), 
+       plot = combined_plot_age_at_immig, 
+       width = 12, height = 9, dpi = 300)
+```
+# what proportion of country migrants come from these cohorts?
+```{r}
+countries <- c("mexico", "puerto rico", "dominican republic", "cuba")
+result_list <- list()
+
+for (country in countries) {
+  prop_cohort_age_at_immig <- us_df_2020 %>% 
+    filter(country_string == country) %>%
+    summarise(
+      `Under 15` = weighted.mean(age_at_immigration_under15, perwt, na.rm = TRUE),
+      `15-49` = weighted.mean(age_at_immigration_15to49, perwt, na.rm = TRUE),
+      `50 and above` = weighted.mean(age_at_immigration_50plus, perwt, na.rm = TRUE)
+    )
+  
+  result_list[[country]] <- prop_cohort_age_at_immig
+}
+
+prop_age_at_immig <- bind_rows(result_list, .id = "country") %>%
+  pivot_longer(cols = -country, names_to = "age_at_immig_groups", values_to = "proportion") %>%
+  mutate(
+    country = str_to_title(country),
+    age_at_immig_groups = factor(age_at_immig_groups, levels = c("Under 15", "15-49", "50 and above"))
+  )
+
+create_country_plot <- function(country_data) {
+  ggplot(country_data, aes(x = proportion, y = age_at_immig_groups, fill = age_at_immig_groups)) +
+    geom_bar(stat = "identity") +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              hjust = -0.1, size = 3) +
+    scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+    scale_fill_manual(name = "Age at Immigration",
+      values = c("Under 15" = "#66c2a5", 
+                 "15-49" = "#fc8d62", 
+                 "50 and above" = "#8da0cb")) +
+    labs(title = unique(country_data$country),
+         x = "Proportion of Age at Immigration",
+         y = "Age at Immigration") +
+    theme_cowplot() +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = "none",
+          axis.title.x = element_blank())
+}
+
+country_plots <- prop_age_at_immig %>%
+  split(.$country) %>%
+  map(create_country_plot)
+
+combined_plot <- wrap_plots(country_plots, ncol = 2) +
+  plot_annotation(
+    title = "Proportion of Age at Immigration by Country of Origin",
+    subtitle = "Based on 2020 dataset",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 14),
+                  plot.subtitle = element_text(hjust = 0.5, size = 12))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_age_at_immig <- combined_plot + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+print(combined_plot_age_at_immig)
+
+ggsave(filename = paste0(out_dir,"age_at_immig_prop_panels.jpg"), 
+       plot = combined_plot_age_at_immig, 
+       width = 12, height = 9, dpi = 300)
+
+```
 
