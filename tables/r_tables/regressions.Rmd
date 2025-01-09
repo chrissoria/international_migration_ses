@@ -1,0 +1,127 @@
+---
+title: "regressions"
+author: "Chris Soria"
+date: "2025-01-08"
+output: html_document
+---
+```{r}
+target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables")
+current_dir <- normalizePath(getwd())
+
+if (current_dir == target_dir) {
+  out_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/")
+  data_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/")
+  plot_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses//plots/")
+
+} else {
+  out_dir <- file.path("C:/Users/Ty/Desktop/ses_international/tables/r_tables//")
+  data_dir <- file.path("C:/Users/Ty/Desktop/ses_international/data//")
+  plot_dir <- file.path("C:/Users/Ty/Desktop/ses_international/plots//")
+
+}
+
+print(getwd())
+```
+## migrant regressions
+```{r}
+dvs <- c("married_cohab", "age_at_immigration_under15", "age_at_immigration_15to49", "age_at_immigration_50plus", "secondary_or_above", "less_than_primary_completed", "primary_completed", "secondary_completed", "university_completed", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "is_naturalized_citizen", "female", "english_speaker")
+
+ivs <- c("country_string", "age_70to79", "age_80to89")
+
+us_df_2020_filtered <- us_df_2020 %>% 
+   filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
+   mutate(country_string = fct_relevel(country_string, "mexico"))
+
+results_list <- list()
+
+# running the models
+for (dv in dvs) {
+  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
+
+  print(formula)
+
+  model <- glm(formula, data = us_df_2020_filtered, 
+               family = binomial(),
+               weights = perwt)
+
+  results_list[[dv]] <- model
+}
+
+summaries <- map(results_list, summary)
+
+for (reason in names(summaries)) {
+  cat("\n\n", "Summary for", reason, ":\n")
+  print(summaries[[reason]])
+}
+
+excel_data <- list()
+
+# Loop through each model in results_list
+for (reason in names(results_list)) {
+  if (!is.null(results_list[[reason]])) {
+    model_summary <- tidy(results_list[[reason]])
+    
+    excel_data[[reason]] <- model_summary
+  } else {
+    cat("\n\n", "No valid model for", reason, "\n")
+  }
+}
+
+if (length(excel_data) > 0) {
+  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/within_US_model_summaries.xlsx"))
+} else {
+  cat("No valid data to write to Excel.\n")
+}
+```
+## migrant regressions
+```{r}
+dvs <- c("married_cohab", "age_at_immigration_under15", "age_at_immigration_15to49", "age_at_immigration_50plus", "secondary_or_above", "less_than_primary_completed", "primary_completed", "secondary_completed", "university_completed", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "is_naturalized_citizen", "female", "english_speaker")
+
+ivs <- c("country_string", "age_70to79", "age_80to89")
+
+us_df_2020_filtered <- us_df_2020 %>% 
+   filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
+   mutate(country_string = fct_relevel(country_string, "mexico"))
+
+results_list <- list()
+
+# running the models
+for (dv in dvs) {
+  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
+
+  print(formula)
+
+  model <- glm(formula, data = us_df_2020_filtered, 
+               family = binomial(),
+               weights = perwt)
+
+  results_list[[dv]] <- model
+}
+
+summaries <- map(results_list, summary)
+
+for (reason in names(summaries)) {
+  cat("\n\n", "Summary for", reason, ":\n")
+  print(summaries[[reason]])
+}
+
+excel_data <- list()
+
+# Loop through each model in results_list
+for (reason in names(results_list)) {
+  if (!is.null(results_list[[reason]])) {
+    model_summary <- tidy(results_list[[reason]])
+    
+    excel_data[[reason]] <- model_summary
+  } else {
+    cat("\n\n", "No valid model for", reason, "\n")
+  }
+}
+
+if (length(excel_data) > 0) {
+  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/within_US_model_summaries.xlsx"))
+} else {
+  cat("No valid data to write to Excel.\n")
+}
+```
+

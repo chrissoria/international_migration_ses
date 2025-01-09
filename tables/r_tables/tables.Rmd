@@ -37,8 +37,17 @@ print(getwd())
 ```
 ## reading in data
 ```{r}
+# US
 us_df_2010 <- read_dta(paste0(data_dir, "US_2010_v100.dta"))
 us_df_2020 <- read_dta(paste0(data_dir, "US_2020_v100.dta"))
+
+#international censuses
+in_df <- read_dta(paste0(data_dir,"CuDrMePrUs_10_12.dta"))
+
+in_df <- in_df %>%
+  mutate(country_year_bpl = as_factor(country_year_bpl))
+
+# background data
 gdp <- read_excel(paste0(data_dir, "gdp_per_capita.xlsx"))
 
 gdp <- gdp %>%
@@ -48,18 +57,17 @@ gdp <- gdp %>%
          country = ...1)
 
 #life expectancy at 60  
-e60 <- read_csv(paste0(data_dir, "e60.csv"))
-e60 <- e60 %>% 
-  filter((Location %in% c("Cuba", "Dominican Republic", "Puerto Rico", "Mexico") & Period == 2010 & Indicator == "Life expectancy at age 60 (years)"))
-
-e60_both_sexes <- e60 %>% 
-  filter(Dim1 == "Both sexes")
-  
-e60_males <- e60 %>% 
-  filter(Dim1 == "Male")
-
-e60_females <- e60 %>% 
-  filter(Dim1 == "Female")
+e60 <- read_csv(paste0(data_dir, "e60.csv")) %>%
+  filter(Location %in% c("Cuba", "Dominican Republic", "Puerto Rico", "Mexico"),
+         Period == 2010,
+         Indicator == "Life expectancy at age 60 (years)") %>%
+  select(Dim1, Value, Location) %>%
+  separate(Value, into = c("e60", "CI_lower", "CI_upper"), 
+           sep = " \\[|\\-|\\]", 
+           convert = TRUE, 
+           extra = "drop") %>% 
+  rename(country = Location,
+         e60_gender = Dim1)
 
 #infant mortality rates
 ifr_path <- paste0(data_dir, "IFR")
@@ -85,28 +93,52 @@ ifr_dfs <- lapply(names(ifr_dfs), function(name) {
       Int. = as.numeric(Int.),
       `Ref. date` = as.numeric(`Ref. date`)
     ) %>% 
-    filter(`Ref. date` == 2010)
+    filter(`Ref. date` %in% c(1950,2010))
 })
 
 ifr_df <- bind_rows(ifr_dfs) %>% 
-  filter(!is.na(`Std. err`) & Name == "VR Submitted to WHO/UNIGME 2023 version (VR)") %>% 
+  filter(!is.na(`Std. err`) & !Name %in% c("Census 2010 (Household Deaths)", "Demographic and Health Survey 2013 (Direct)", "VR from Oficina Nacional de Estadistica 2021 (VR)", "Encuesta Nacional de la Dinamica Demografica (ENADID) 2018 (Direct)", "Vital Registration data from Mexico Ministry of Health 2018 (VR)")) %>% 
   filter(!df_name %in% c("COL-Infant mortality rate-Total-datasources-download.csv", 
-                           "GTM-Infant mortality rate-Total-datasources-download.csv",
-                           "HND-Infant mortality rate-Total-datasources-download.csv",
-                           "SLV-Infant mortality rate-Total-datasources-download.csv"))
+                         "GTM-Infant mortality rate-Total-datasources-download.csv",
+                         "HND-Infant mortality rate-Total-datasources-download.csv",
+                         "SLV-Infant mortality rate-Total-datasources-download.csv")) %>% 
+  mutate(country = case_when(
+    df_name == "CUB-Infant mortality rate-Total-datasources-download.csv" ~ "Cuba",
+    df_name == "DOM-Infant mortality rate-Total-datasources-download.csv" ~ "Dominican Republic",
+    df_name == "MEX-Infant mortality rate-Total-datasources-download.csv" ~ "Mexico",
+    df_name == "USA-Infant mortality rate-Total-datasources-download.csv" ~ "United States",
+    TRUE ~ NA_character_
+  )) %>% 
+  select(Value, `Ref. date`, country) %>%
+  mutate(Value = as.character(Value)) %>%
+  add_row(Value = "6.861", `Ref. date` = 2010, country = "Puerto Rico") %>% 
+  add_row(Value = "70.531", `Ref. date` = 1950, country = "Puerto Rico") %>% 
+  add_row(Value = "87.121", `Ref. date` = 1950, country = "Cuba") %>% 
+  rename(ifr = Value,
+         ifr_year = `Ref. date`) %>% 
+  slice(-2)
+
 
 rm(ifr_path, ifr_files)
 
-#US census
-us_df <- us_df %>%
-  mutate(bplcountry = as_factor(bplcountry)) %>% 
-  mutate(race_native_category = as_factor(race_native_category))
+ifr_2010 <- ifr_df %>% 
+  filter(ifr_year == 2010) %>% 
+  rename(ifr_2010 = ifr) %>% 
+  select(-ifr_year)
 
-#international censuses
-in_df <- read_dta(paste0(data_dir,"CuDrMePrUs_10_12.dta"))
+ifr_1950 <- ifr_df %>% 
+  filter(ifr_year == 1950) %>% 
+  rename(ifr_1950 = ifr) %>% 
+  select(-ifr_year)
 
-in_df <- in_df %>%
-  mutate(country_year_bpl = as_factor(country_year_bpl))
+#merging all background data into one df
+background_data <- left_join(e60, gdp, by = "country")
+background_data <- left_join(background_data, ifr_2010, by = "country")
+background_data <- left_join(background_data, ifr_1950, by = "country")
+```
+## table on background features
+```{r}
+
 ```
 
 ## table1, featuring Hispanic in their native countries
@@ -925,105 +957,3 @@ prop_migration_cohort_speaks_english <- data.frame(
 print(prop_migration_cohort_speaks_english)
 ```
 
-## migrant regressions
-```{r}
-dvs <- c("married_cohab", "age_at_immigration_under15", "age_at_immigration_15to49", "age_at_immigration_50plus", "secondary_or_above", "less_than_primary_completed", "primary_completed", "secondary_completed", "university_completed", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "is_naturalized_citizen", "female", "english_speaker")
-
-ivs <- c("country_string", "age_70to79", "age_80to89")
-
-us_df_2020_filtered <- us_df_2020 %>% 
-   filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
-   mutate(country_string = fct_relevel(country_string, "mexico"))
-
-results_list <- list()
-
-# running the models
-for (dv in dvs) {
-  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
-
-  print(formula)
-
-  model <- glm(formula, data = us_df_2020_filtered, 
-               family = binomial(),
-               weights = perwt)
-
-  results_list[[dv]] <- model
-}
-
-summaries <- map(results_list, summary)
-
-for (reason in names(summaries)) {
-  cat("\n\n", "Summary for", reason, ":\n")
-  print(summaries[[reason]])
-}
-
-excel_data <- list()
-
-# Loop through each model in results_list
-for (reason in names(results_list)) {
-  if (!is.null(results_list[[reason]])) {
-    model_summary <- tidy(results_list[[reason]])
-    
-    excel_data[[reason]] <- model_summary
-  } else {
-    cat("\n\n", "No valid model for", reason, "\n")
-  }
-}
-
-if (length(excel_data) > 0) {
-  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/within_US_model_summaries.xlsx"))
-} else {
-  cat("No valid data to write to Excel.\n")
-}
-```
-## migrant regressions
-```{r}
-dvs <- c("married_cohab", "age_at_immigration_under15", "age_at_immigration_15to49", "age_at_immigration_50plus", "secondary_or_above", "less_than_primary_completed", "primary_completed", "secondary_completed", "university_completed", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "is_naturalized_citizen", "female", "english_speaker")
-
-ivs <- c("country_string", "age_70to79", "age_80to89")
-
-us_df_2020_filtered <- us_df_2020 %>% 
-   filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
-   mutate(country_string = fct_relevel(country_string, "mexico"))
-
-results_list <- list()
-
-# running the models
-for (dv in dvs) {
-  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
-
-  print(formula)
-
-  model <- glm(formula, data = us_df_2020_filtered, 
-               family = binomial(),
-               weights = perwt)
-
-  results_list[[dv]] <- model
-}
-
-summaries <- map(results_list, summary)
-
-for (reason in names(summaries)) {
-  cat("\n\n", "Summary for", reason, ":\n")
-  print(summaries[[reason]])
-}
-
-excel_data <- list()
-
-# Loop through each model in results_list
-for (reason in names(results_list)) {
-  if (!is.null(results_list[[reason]])) {
-    model_summary <- tidy(results_list[[reason]])
-    
-    excel_data[[reason]] <- model_summary
-  } else {
-    cat("\n\n", "No valid model for", reason, "\n")
-  }
-}
-
-if (length(excel_data) > 0) {
-  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/within_US_model_summaries.xlsx"))
-} else {
-  cat("No valid data to write to Excel.\n")
-}
-```
