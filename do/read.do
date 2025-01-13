@@ -8,6 +8,16 @@ use data/usa_00004.dta
 keep if sample == 202003
 keep if age > 59 & age < 90
 
+/*household variables 
+FAMSIZE counts the number of own family members residing with each individual, including the person her/himself. Persons not living with others related to them by blood, marriage/cohabitating partnership, or adoption are coded 1.
+*/
+gen lives_alone = (famsize == 1 & famsize != .)
+gen child_in_household = 1 if nchild > 0
+
+*for this study, we want to focus on "hispanic" as in those who are non-european
+gen latin_american = (bpl > 21019 & bpl < 24000) | bpl == 24040
+replace hispan = 0 if latin_american == 0
+
 gen age_groups = .
 replace age_groups = 1 if age <70
 replace age_groups = 2 if age >69 & age <80
@@ -128,8 +138,6 @@ label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "50 and above"
 label values age_at_immigration_groups age_immig_labels
 label variable age_at_immigration_groups "Age at Immigration Groups"
 
-decode age_at_immigration_groups, gen(age_at_immig_groups_string)
-
 gen age_at_immigration_under15 = (age_at_immigration < 15)
 gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)
 gen age_at_immigration_50plus = (age_at_immigration >= 50)
@@ -195,6 +203,13 @@ clear all
 use data/ipumsi_00002_US_2010.dta
 
 keep if age > 59 & age < 90
+
+gen lives_alone = (famsize == 1 & famsize != .)
+gen child_in_household = 1 if nchild > 0
+
+*for this study, we want to focus on "hispanic" as in those who are non-european
+gen latin_american = (bpl > 21019 & bpl < 24000) | bpl == 24040
+replace hispan = 0 if latin_american == 0
 
 ***below I will create the age standardization variable***
 
@@ -326,11 +341,10 @@ replace age_at_immigration_groups = 1 if age_at_immigration < 15
 replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 50
 replace age_at_immigration_groups = 3 if age_at_immigration >= 50
 
+
 label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "50 and above"
 label values age_at_immigration_groups age_immig_labels
 label variable age_at_immigration_groups "Age at Immigration Groups"
-
-decode age_at_immigration_groups, gen(age_at_immig_groups_string)
 
 gen age_at_immigration_under15 = (age_at_immigration < 15)
 gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)
@@ -385,6 +399,9 @@ capture append using data/ipumsi_00002_US_2010.dta
 decode country, gen(country_string)
 
 keep if age > 59 & age < 90
+
+gen lives_alone = (famsize == 1 & famsize != .)
+gen child_in_household = 1 if nchild > 0
 
 gen age_groups = .
 replace age_groups = 1 if age <70
