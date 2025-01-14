@@ -61,7 +61,7 @@ gdp <- gdp %>%
 e60 <- read_csv(paste0(data_dir, "e60.csv")) %>%
   filter(Location %in% c("Cuba", "Dominican Republic", "Puerto Rico", "Mexico"),
          Period == 2010,
-         Indicator == "Life expectancy at age 60 (years)") %>%
+         Indicator == "Life expectancy at 60 (years)") %>%
   select(Dim1, Value, Location) %>%
   separate(Value, into = c("e60", "CI_lower", "CI_upper"), 
            sep = " \\[|\\-|\\]", 
@@ -153,159 +153,7 @@ background_table <- background_data %>%
 
 print(background_table)
 ```
-
-## table1, featuring Hispanic in their native countries
-```{r}
-create_table_for_sex_international <- function(sex_value) {
-  in_df %>%
-    filter(sex == sex_value) %>%
-    filter(!is.na(country_year_bpl)) %>% 
-    group_by(country_year) %>%
-    summarise(
-    mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
-    mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
-    mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
-    mean_hhsize = weighted.mean(famsize, perwt_age_standardized, na.rm = TRUE),
-    mean_lives_alone = weighted.mean(lives_alone, perwt_age_standardized, na.rm = TRUE),
-    mean_has_child_in_hh = weighted.mean(child_in_household, perwt_age_standardized, na.rm = TRUE),
-    mean_married_cohab = weighted.mean(married_cohab, perwt_age_standardized, na.rm = TRUE),
-    mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt_age_standardized, na.rm = TRUE),
-    mean_primary_completed = weighted.mean(primary_completed, perwt_age_standardized, na.rm = TRUE),
-    mean_secondary_completed = weighted.mean(secondary_completed, perwt_age_standardized, na.rm = TRUE),
-    mean_university_completed = weighted.mean(university_completed, perwt_age_standardized, na.rm = TRUE),
-    N = n()
-    ) %>%
-    pivot_longer(cols = -country_year, names_to = "variable", values_to = "value") %>%
-    pivot_wider(names_from = country_year, values_from = value) %>%
-    mutate(variable = recode(variable,
-      mean_age_60_69 = "Age 60 - 69",
-      mean_age_70_79 = "Age 70 - 79",
-      mean_age_80_89 = "Age 80 - 89",
-      mean_married_cohab = "Married/Cohabiting",
-      mean_hhsize = "Household Size",
-      mean_lives_alone = "Lives Alone",
-      mean_has_child_in_hh = "Child in the Household", 
-      mean_less_than_primary_completed = "Less than Primary",
-      mean_primary_completed = "Primary",
-      mean_secondary_completed = "Secondary",
-      mean_university_completed = "University"
-    ))
-}
-
-table1_sex_1 <- create_table_for_sex_international(1)
-table1_sex_2 <- create_table_for_sex_international(2)
-
-combined_table1 <- bind_rows(
-  table1_sex_2, #females first
-  table1_sex_1 #males second
-)
-
-combined_table1 <- combined_table1 %>%
-  mutate(across(where(is.numeric), round, digits = 2)) %>% 
-  mutate(across(everything(), ~ as.character(.))) %>%    
-  mutate(across(everything(), ~ ifelse(. == "NaN", "-", .))) %>%   
-  mutate(across(everything(), ~ ifelse(. == "0", "-", .))) %>% 
-  mutate(Gender = ifelse(row_number() == 1, "Women", 
-                         ifelse(row_number() == 14, "Men", ""))) %>%
-                         
-  select(Gender, everything()) %>% 
-  rename(Demographics = variable) 
-
-print(combined_table1)
-
-#adding in the US born counterparts
-create_table_for_sex_us_counterparts <- function(sex_value) {
-  us_df_2010 %>%
-    filter(sex == sex_value) %>%
-    filter(country_string %in% c("mexico", "dominican republic", "cuba", "puerto rico")) %>% 
-    group_by(country_string) %>%
-    summarise(
-    mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
-    mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
-    mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
-    mean_hhsize = weighted.mean(famsize, perwt, na.rm = TRUE),
-    mean_lives_alone = weighted.mean(lives_alone, perwt, na.rm = TRUE),
-    mean_has_child_in_hh = weighted.mean(child_in_household, perwt, na.rm = TRUE),
-    mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
-    mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
-    mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
-    mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
-    mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE),
-    N = n()
-    ) %>%
-    pivot_longer(cols = -country_string, names_to = "variable", values_to = "value") %>%
-    pivot_wider(names_from = country_string, values_from = value) %>%
-    mutate(variable = recode(variable,
-      mean_age_60_69 = "Age 60 - 69",
-      mean_age_70_79 = "Age 70 - 79",
-      mean_age_80_89 = "Age 80 - 89",
-      mean_married_cohab = "Married/Cohabiting",
-      mean_hhsize = "Household Size",
-      mean_lives_alone = "Lives Alone",
-      mean_has_child_in_hh = "Child in the Household", 
-      mean_less_than_primary_completed = "Less than Primary",
-      mean_primary_completed = "Primary",
-      mean_secondary_completed = "Secondary",
-      mean_university_completed = "University"
-    ))
-}
-
-table1_sex_1_us <- create_table_for_sex_us_counterparts(1)
-table1_sex_2_us <- create_table_for_sex_us_counterparts(2)
-
-combined_table2 <- bind_rows(
-  table1_sex_2_us, #females first
-  table1_sex_1_us #males second
-)
-
-combined_table2 <- combined_table2 %>%
-  mutate(across(where(is.numeric), round, digits = 2)) %>% 
-  mutate(across(everything(), ~ as.character(.))) %>%    
-  mutate(across(everything(), ~ ifelse(. == "NaN", "-", .))) %>%   
-  mutate(across(everything(), ~ ifelse(. == "0", "-", .))) %>% 
-  select(-variable) 
-
-combined_table1 <- cbind(combined_table1, combined_table2) %>% 
-  rename(`US Mexican-born` = mexico,
-         `US Puerto-Rican-born` = `puerto rico`,
-         `US Dominican-born` = `dominican republic`,
-         `US Cuban-born` = cuba,
-         `Cubans`  = Cuba_2012,
-         `Dominicans`  = DR_2010,
-         `Dominicans`  = DR_2010,
-         `Mexicans`  = Mexico_2010,
-         `Puerto Ricans`  = PR_2010,
-         `All US Residents` = US_2010
-         ) %>%
-  select(
-    Gender, Demographics,
-    `Mexicans`, `US Mexican-born`, 
-    `Puerto Ricans`, `US Puerto-Rican-born`,
-    `Dominicans`, `US Dominican-born`,
-    `Cubans`, `US Cuban-born`
-  )
-
-print(combined_table1)
-table1 <- combined_table1
-
-table_md <- kbl(combined_table1, format = "markdown", label = "tab:table1", caption = "Summary Table") %>%
-  kable_styling(latex_options = "scale=1.2")
-
-writeLines(as.character(table_md), paste0(out_dir,"table1.tex"))
-
-table1_code <- xtable(combined_table1, caption = "Summary Statistics by Country and Sex For Hispanics in Their Native Countries", 
-                      align = "ll|l|llllllll")
-
-
-sink(paste0(out_dir,"table1.tex"))
-print(table1_code, type = "latex", 
-      caption.placement = "top",
-      #size = "//small",
-      include.rownames = FALSE)
-
-sink()
-```
-## table2, consolidated genders
+## table1, both genders
 ```{r}
 table2_consolidated <- us_df_2020 %>%
     filter(country_string == "mexico" | 
@@ -317,6 +165,7 @@ table2_consolidated <- us_df_2020 %>%
       mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
       mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
       mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
+      mean_age_90plus = weighted.mean(age_90plus, perwt, na.rm = TRUE), 
       mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
       mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
       mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
@@ -326,14 +175,14 @@ table2_consolidated <- us_df_2020 %>%
       mean_has_child_in_hh = weighted.mean(child_in_household, perwt, na.rm = TRUE),
       mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
       mean_age_at_immigration_15 = weighted.mean(age_at_immigration_under15, perwt, na.rm = TRUE),
-      mean_age_at_immigration_15to49 = weighted.mean(age_at_immigration_15to49, perwt, na.rm = TRUE),
+      mean_age_at_immigration_15to23 = weighted.mean(age_at_immigration_15to23, perwt, na.rm = TRUE),
+      mean_age_at_immigration_24to49 = weighted.mean(age_at_immigration_24to49, perwt, na.rm = TRUE),
       mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, perwt, na.rm = TRUE),
       mean_yrimm_before1965 = weighted.mean(yrimm_before1965, perwt, na.rm = TRUE),
       mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, perwt, na.rm = TRUE),
       mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, perwt, na.rm = TRUE),
       mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE),
       mean_is_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE),
-      mean_female = weighted.mean(female, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
       N = n()
     ) %>%
@@ -343,22 +192,23 @@ table2_consolidated <- us_df_2020 %>%
       mean_age_60_69 = "60 - 69",
       mean_age_70_79 = "70 - 79",
       mean_age_80_89 = "80 - 89",
+      mean_age_90plus = "90 plus",
       mean_married_cohab = "Married/Cohabiting",
       mean_hhsize = "Household Size",
       mean_lives_alone = "Lives Alone",
       mean_has_child_in_hh = "Lives with Child", 
-      mean_female = "Female",
       mean_english_speaker = "English Speakers",
       mean_is_citizen = "Citizen",
       mean_age_at_immigration_15 = "Less than 15",
-      mean_age_at_immigration_15to49 = "15 - 49",
-      mean_age_at_immigration_50plus = "Greater than 49",
+      mean_age_at_immigration_15to23 = "15 - 23",
+      mean_age_at_immigration_24to49 = "24 - 49",
+      mean_age_at_immigration_50plus = "50 and Above",
       mean_years_in_us = "Years in US",
       mean_less_than_primary_completed = "Less than Primary",
       mean_primary_completed = "Primary",
       mean_secondary_completed = "Secondary",
       mean_university_completed = "University",
-      mean_yrimm_before1965 = "Before 1966",
+      mean_yrimm_before1965 = "Before 1965",
       mean_yrimm_1965_1979 = "1965 - 1979",
       mean_yrimm_1980_1999 = "1980 - 1999",
       mean_yrimm_2000plus = "After 1999"
@@ -374,6 +224,7 @@ table2_consolidated_migrant <- us_df_2020 %>%
       mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
       mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
       mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
+      mean_age_90plus = weighted.mean(age_90plus, perwt, na.rm = TRUE), 
       mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
       mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
       mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
@@ -383,14 +234,14 @@ table2_consolidated_migrant <- us_df_2020 %>%
       mean_has_child_in_hh = weighted.mean(child_in_household, perwt, na.rm = TRUE),
       mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
       mean_age_at_immigration_15 = weighted.mean(age_at_immigration_under15, perwt, na.rm = TRUE),
-      mean_age_at_immigration_15to49 = weighted.mean(age_at_immigration_15to49, perwt, na.rm = TRUE),
+      mean_age_at_immigration_15to23 = weighted.mean(age_at_immigration_15to23, perwt, na.rm = TRUE),
+      mean_age_at_immigration_24to49 = weighted.mean(age_at_immigration_24to49, perwt, na.rm = TRUE),
       mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, perwt, na.rm = TRUE),
       mean_yrimm_before1965 = weighted.mean(yrimm_before1965, perwt, na.rm = TRUE),
       mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, perwt, na.rm = TRUE),
       mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, perwt, na.rm = TRUE),
       mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE),
       mean_is_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE),
-      mean_female = weighted.mean(female, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
       N = n()
     ) %>%
@@ -400,22 +251,23 @@ table2_consolidated_migrant <- us_df_2020 %>%
       mean_age_60_69 = "60 - 69",
       mean_age_70_79 = "70 - 79",
       mean_age_80_89 = "80 - 89",
+      mean_age_90plus = "90 plus",
       mean_married_cohab = "Married/Cohabiting",
       mean_hhsize = "Household Size",
       mean_lives_alone = "Lives Alone",
       mean_has_child_in_hh = "Lives with Child", 
-      mean_female = "Female",
       mean_english_speaker = "English Speakers",
       mean_is_citizen = "Citizen",
       mean_age_at_immigration_15 = "Less than 15",
-      mean_age_at_immigration_15to49 = "15 - 49",
-      mean_age_at_immigration_50plus = "Greater than 49",
+      mean_age_at_immigration_15to23 = "15 - 23",
+      mean_age_at_immigration_24to49 = "24 - 49",
+      mean_age_at_immigration_50plus = "50 and Above",
       mean_years_in_us = "Years in US",
       mean_less_than_primary_completed = "Less than Primary",
       mean_primary_completed = "Primary",
       mean_secondary_completed = "Secondary",
       mean_university_completed = "University",
-      mean_yrimm_before1965 = "Before 1966",
+      mean_yrimm_before1965 = "Before 1965",
       mean_yrimm_1965_1979 = "1965 - 1979",
       mean_yrimm_1980_1999 = "1980 - 1999",
       mean_yrimm_2000plus = "After 1999"
@@ -431,6 +283,7 @@ table2_consolidated_native_race <- us_df_2020 %>%
       mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
       mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
       mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
+      mean_age_90plus = weighted.mean(age_90plus, perwt, na.rm = TRUE), 
       mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
       mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
       mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
@@ -440,14 +293,14 @@ table2_consolidated_native_race <- us_df_2020 %>%
       mean_has_child_in_hh = weighted.mean(child_in_household, perwt, na.rm = TRUE),
       mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
       mean_age_at_immigration_15 = weighted.mean(age_at_immigration_under15, perwt, na.rm = TRUE),
-      mean_age_at_immigration_15to49 = weighted.mean(age_at_immigration_15to49, perwt, na.rm = TRUE),
+      mean_age_at_immigration_15to23 = weighted.mean(age_at_immigration_15to23, perwt, na.rm = TRUE),
+      mean_age_at_immigration_24to49 = weighted.mean(age_at_immigration_24to49, perwt, na.rm = TRUE),
       mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, perwt, na.rm = TRUE),
       mean_yrimm_before1965 = weighted.mean(yrimm_before1965, perwt, na.rm = TRUE),
       mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, perwt, na.rm = TRUE),
       mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, perwt, na.rm = TRUE),
       mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE),
       mean_is_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE),
-      mean_female = weighted.mean(female, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
       N = n()
     ) %>%
@@ -457,22 +310,23 @@ table2_consolidated_native_race <- us_df_2020 %>%
       mean_age_60_69 = "60 - 69",
       mean_age_70_79 = "70 - 79",
       mean_age_80_89 = "80 - 89",
+      mean_age_90plus = "90 plus",
       mean_married_cohab = "Married/Cohabiting",
       mean_hhsize = "Household Size",
       mean_lives_alone = "Lives Alone",
       mean_has_child_in_hh = "Lives with Child", 
-      mean_female = "Female",
       mean_english_speaker = "English Speakers",
       mean_is_citizen = "Citizen",
       mean_age_at_immigration_15 = "Less than 15",
-      mean_age_at_immigration_15to49 = "15 - 49",
-      mean_age_at_immigration_50plus = "Greater than 49",
+      mean_age_at_immigration_15to23 = "15 - 23",
+      mean_age_at_immigration_24to49 = "24 - 49",
+      mean_age_at_immigration_50plus = "50 and Above",
       mean_years_in_us = "Years in US",
       mean_less_than_primary_completed = "Less than Primary",
       mean_primary_completed = "Primary",
       mean_secondary_completed = "Secondary",
       mean_university_completed = "University",
-      mean_yrimm_before1965 = "Before 1966",
+      mean_yrimm_before1965 = "Before 1965",
       mean_yrimm_1965_1979 = "1965 - 1979",
       mean_yrimm_1980_1999 = "1980 - 1999",
       mean_yrimm_2000plus = "After 1999"
@@ -509,10 +363,11 @@ table2_consolidated <- table2_consolidated %>%
     `Native Hispanic ` = `native-born hispanic`
   ) %>% 
   add_row(Demographics = "Age", .before = 1) %>% 
-  add_row(Demographics = "Education Completed", .before = 5) %>% 
-  add_row(Demographics = "Household", .before = 10) %>% 
-  add_row(Demographics = "Age Migrated", .before = 15) %>% 
-  add_row(Demographics = "Migration Cohort", .before = 20)
+  add_row(Demographics = "Education Completed", .before = 6) %>% 
+  add_row(Demographics = "Household", .before = 11) %>% 
+  add_row(Demographics = "Age Migrated", .before = 16) %>% 
+  add_row(Demographics = "Migration Cohort", .before = 21) %>% 
+  add_row(Demographics = "Acculturation", .before = 26)
 
 print(table2_consolidated)
 
@@ -528,21 +383,24 @@ latex_code <- capture.output(print(table2_consolidated_code,
 
 #to replace align tabular code
 tabular_line_index <- grep("\\\\begin\\{tabular\\}", latex_code)
-latex_code[tabular_line_index] <- "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|cccccccc}"
+latex_code[tabular_line_index] <- "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lccccc|cccc}"
 
 # To align rows right
 adjustments <- list(
-  list(rows = c("60 - 69", "70 - 79", "80 - 89"), width = 1.5),
+  list(rows = c("60 - 69", "70 - 79", "80 - 89", "90 plus"), width = 1.5),
   list(rows = c("Less than Primary"), width = 3.2),
   list(rows = c("Primary"), width = 1.7),
   list(rows = c("Secondary", "University"), width = 2),
   list(rows = c("Less than 15"), width = 2.4),
-  list(rows = c("15 - 49"), width = 1.6),
-  list(rows = c("Greater than 50","Lives with Child"), width = 2.9),
+  list(rows = c("50 and Above", "Citizen"), width = 2.6),
+  list(rows = c("15 - 23", "24 - 49"), width = 1.6),
+  list(rows = c("Lives with Child"), width = 2.9),
   list(rows = c("Before 1965"), width = 2.3),
   list(rows = c("1965 - 1979", "1980 - 1999", "Lives Alone"), width = 2.2),
-  list(rows = c("After 2000"), width = 2.1),
-  list(rows = c("Household Size"), width = 2.7)
+  list(rows = c("After 1999"), width = 2.1),
+  list(rows = c("Household Size"), width = 2.7),
+  list(rows = c("English Speakers"), width = 3.0),
+  list(rows = c("Married/Cohabiting"), width = 3.3)
 )
 
 adjust_latex_rows <- function(latex_code, adjustments) {
@@ -564,9 +422,192 @@ adjust_latex_rows <- function(latex_code, adjustments) {
 
 latex_code <- adjust_latex_rows(latex_code, adjustments)
 
-writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/table2_consolidated.tex")
+writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/table1.tex")
 ```
+## table2, featuring Hispanic in their native countries
+```{r}
+create_table_for_sex_international <- function(sex_value) {
+  in_df %>%
+    filter(sex == sex_value) %>%
+    filter(!is.na(country_string)) %>% 
+    group_by(country_string) %>%
+    summarise(
+    mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
+    mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
+    mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
+    mean_age_90plus = weighted.mean(age_90plus, perwt, na.rm = TRUE), 
+    mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
+    mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
+    mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
+    mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE),
+    mean_hhsize = weighted.mean(famsize, perwt, na.rm = TRUE),
+    mean_lives_alone = weighted.mean(lives_alone, perwt, na.rm = TRUE),
+    mean_has_child_in_hh = weighted.mean(child_in_household, perwt, na.rm = TRUE),
+    mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
+    N = n()
+    ) %>%
+    pivot_longer(cols = -country_string, names_to = "variable", values_to = "value") %>%
+    pivot_wider(names_from = country_string, values_from = value) %>%
+    mutate(variable = recode(variable,
+      mean_age_60_69 = "60 - 69",
+      mean_age_70_79 = "70 - 79",
+      mean_age_80_89 = "80 - 89",
+      mean_age_90plus = "90 plus",
+      mean_married_cohab = "Married/Cohabiting",
+      mean_hhsize = "Household Size",
+      mean_lives_alone = "Lives Alone",
+      mean_has_child_in_hh = "Lives with Child", 
+      mean_less_than_primary_completed = "Less than Primary",
+      mean_primary_completed = "Primary",
+      mean_secondary_completed = "Secondary",
+      mean_university_completed = "University"
+    ))
+}
 
+table1_sex_1 <- create_table_for_sex_international(1)
+table1_sex_2 <- create_table_for_sex_international(2)
+
+combined_table1 <- bind_rows(
+  table1_sex_2, #females first
+  table1_sex_1 #males second
+)
+
+combined_table1 <- combined_table1 %>%
+  mutate(across(where(is.numeric), round, digits = 2)) %>% 
+  mutate(across(everything(), ~ as.character(.))) %>%    
+  mutate(across(everything(), ~ ifelse(. == "NaN", "-", .))) %>%   
+  mutate(across(everything(), ~ ifelse(. == "0", "-", .))) %>% 
+  rename(Demographics = variable)
+
+#adding in the US born counterparts
+create_table_for_sex_us_counterparts <- function(sex_value) {
+  us_df_2010 %>%
+    filter(sex == sex_value) %>%
+    filter(country_string %in% c("mexico", "dominican republic", "cuba", "puerto rico")) %>% 
+    group_by(country_string) %>%
+    summarise(
+    mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
+    mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
+    mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
+    mean_age_90plus = weighted.mean(age_90plus, perwt, na.rm = TRUE), 
+    mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
+    mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
+    mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
+    mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE),
+    mean_hhsize = weighted.mean(famsize, perwt, na.rm = TRUE),
+    mean_lives_alone = weighted.mean(lives_alone, perwt, na.rm = TRUE),
+    mean_has_child_in_hh = weighted.mean(child_in_household, perwt, na.rm = TRUE),
+    mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
+    N = n()
+    ) %>%
+    pivot_longer(cols = -country_string, names_to = "variable", values_to = "value") %>%
+    pivot_wider(names_from = country_string, values_from = value) %>%
+    mutate(variable = recode(variable,
+      mean_age_60_69 = "60 - 69",
+      mean_age_70_79 = "70 - 79",
+      mean_age_80_89 = "80 - 89",
+      mean_age_90plus = "90 plus",
+      mean_married_cohab = "Married/Cohabiting",
+      mean_hhsize = "Household Size",
+      mean_lives_alone = "Lives Alone",
+      mean_has_child_in_hh = "Lives with Child", 
+      mean_less_than_primary_completed = "Less than Primary",
+      mean_primary_completed = "Primary",
+      mean_secondary_completed = "Secondary",
+      mean_university_completed = "University"
+    ))
+}
+
+table1_sex_1_us <- create_table_for_sex_us_counterparts(1)
+table1_sex_2_us <- create_table_for_sex_us_counterparts(2)
+
+combined_table2 <- bind_rows(
+  table1_sex_2_us, #females first
+  table1_sex_1_us #males second
+)
+
+combined_table2 <- combined_table2 %>%
+  mutate(across(where(is.numeric), round, digits = 2)) %>% 
+  mutate(across(everything(), ~ as.character(.))) %>%    
+  mutate(across(everything(), ~ ifelse(. == "NaN", "-", .))) %>%   
+  mutate(across(everything(), ~ ifelse(. == "0", "-", .))) %>% 
+  select(-variable) 
+
+table1 <- cbind(combined_table1, combined_table2) %>% 
+  rename(`US Mexican-born` = mexico,
+         `US Puerto-Rican-born` = `puerto rico`,
+         `US Dominican-born` = `dominican republic`,
+         `US Cuban-born` = cuba,
+         `Cubans`  = Cuba,
+         `Dominicans`  = DR,
+         `Mexicans`  = Mexico,
+         `Puerto Ricans`  = PR,
+         `All US Residents` = US
+         ) %>%
+  select(
+    Demographics,
+    `Mexicans`, `US Mexican-born`, 
+    `Puerto Ricans`, `US Puerto-Rican-born`,
+    `Dominicans`, `US Dominican-born`,
+    `Cubans`, `US Cuban-born`
+  ) %>% 
+  add_row(Demographics = "Age", .before = 1) %>% 
+  add_row(Demographics = "Education Completed", .before = 6) %>% 
+  add_row(Demographics = "Household", .before = 11) %>% 
+  add_row(Demographics = "Age", .before = 17) %>% 
+  add_row(Demographics = "Education Completed", .before = 22) %>% 
+  add_row(Demographics = "Household", .before = 27) %>% 
+  mutate(Gender = ifelse(row_number() == 1, "Female", 
+                         ifelse(row_number() == 17, "Male", ""))) %>%
+  select(Gender, everything())
+
+print(table1)
+
+table1_code <- xtable(table1, 
+                                   caption = "Sociodemographics of Hispanics in the U.S. by Birth Country (2020 Census)", 
+                                   align = "lll|cccccccc")
+
+latex_code <- capture.output(print(table1_code, 
+                                   type = "latex", 
+                                   caption.placement = "top",
+                                   size = "\\small",
+                                   include.rownames = FALSE))
+
+tabular_line_index <- grep("\\\\begin\\{tabular\\}", latex_code)
+latex_code[tabular_line_index] <- "\\begin{tabular}{>{l>{\\raggedright\\arraybackslash}p{3.2cm}|cccccccc"
+
+adjustments <- list(
+  list(rows = c("60 - 69", "70 - 79", "80 - 89"), width = 1.5),
+  list(rows = c("Less than Primary"), width = 3.2),
+  list(rows = c("Primary"), width = 1.7),
+  list(rows = c("Secondary", "University"), width = 2),
+  list(rows = c("Less than 15"), width = 2.4),
+  list(rows = c("15 - 49"), width = 1.6),
+  list(rows = c("Greater than 50", "Lives with Child"), width = 2.9),
+  list(rows = c("Before 1965"), width = 2.3),
+  list(rows = c("1965 - 1979", "1980 - 1999", "Lives Alone"), width = 2.2),
+  list(rows = c("After 2000"), width = 2.1),
+  list(rows = c("Household Size"), width = 2.7)
+)
+
+# Function to adjust LaTeX rows based on the adjustments list
+adjust_latex_rows <- function(latex_code, adjustments) {
+  for (adjustment in adjustments) {
+    width <- adjustment$width
+    for (row in adjustment$rows) {
+      pattern <- paste0("& \\\\multicolumn\\{1\\}\\{>\\{\\\\raggedleft\\\\arraybackslash\\}p\\{.*cm\\}\\|\\}\\{\\\\makebox\\[.*cm\\]\\[r\\]\\{\\}\\}& ", row)
+      replacement <- paste0("& \\\\multicolumn{1}{>{\\\\raggedleft\\\\arraybackslash}p{", width, "cm}|}{\\\\makebox[", width, "cm][r]{", row, "}}")
+      latex_code <- str_replace_all(latex_code, pattern, replacement)
+    }
+  }
+  return(latex_code)
+}
+
+latex_code <- adjust_latex_rows(latex_code, adjustments)
+print(latex_code)
+
+writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/table2.tex")
+```
 
 ## table2, both sexes
 ```{r}
@@ -785,7 +826,7 @@ table3_consolidated <-table3_consolidated %>%
   mutate(across(everything(), ~ ifelse(. == "0", "-", .))) %>% 
   add_row(Demographics = "Age", .before = 1) %>% 
   add_row(Demographics = "Education Completed", .before = 5) %>% 
-  add_row(Demographics = "Age Migrated", .before = 11) %>% 
+  add_row(Demographics = "Migrated", .before = 11) %>% 
   add_row(Demographics = "Migration Cohort", .before = 15) %>% 
   rename(`Foreign Black Hispanic` = `foreign-born black hispanic`,
          `Foreign White Hispanic` = `foreign-born white hispanic`,
@@ -873,11 +914,11 @@ writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_se
 ## table 3
 ```{r}
 variable_labels <- c(
-  mean_age = "Age",
+  mean_= "Age",
   mean_married_cohab = "Married/Cohabiting",
   mean_english_speaker = "English Speakers",
   mean_is_citizen = "Citizen",
-  mean_age_at_immigration = "Age at Immigration",
+  mean_age_at_immigration = "at Immigration",
   mean_years_in_us = "Years in US",
   mean_less_than_primary_completed = "Less than Primary Completed",
   mean_primary_completed = "Primary Completed",
@@ -891,7 +932,7 @@ create_table_for_race <- function(sex_value) {
     filter(!is.na(hispanic_migrant_status_race)) %>% 
     group_by(hispanic_migrant_status_race) %>%
     summarise(
-      mean_age = weighted.mean(age, perwt, na.rm = TRUE),
+      mean_= weighted.mean(age, perwt, na.rm = TRUE),
       mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
       mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
       mean_is_citizen = weighted.mean(is_citizen, perwt, na.rm = TRUE),
@@ -941,7 +982,7 @@ print(table3_code, type = "latex",
 
 sink()
 ```
-## proportion of age group that speaks english
+## proportion of group that speaks english
 ```{r}
 countries <- c("mexico", "puerto rico", "dominican republic", "cuba")
 

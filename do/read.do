@@ -6,30 +6,38 @@ capture log close
 use data/usa_00004.dta
 
 keep if sample == 202003
-keep if age > 59 & age < 90
+keep if age > 59
 
 /*household variables 
 FAMSIZE counts the number of own family members residing with each individual, including the person her/himself. Persons not living with others related to them by blood, marriage/cohabitating partnership, or adoption are coded 1.
 */
 gen lives_alone = (famsize == 1 & famsize != .)
-gen child_in_household = 1 if nchild > 0
 
-*for this study, we want to focus on "hispanic" as in those who are non-european
-gen latin_american = (bpl > 21019 & bpl < 24000) | bpl == 24040
+gen child_in_household = 0
+replace child_in_household = 1 if nchild > 0 
+tab child_in_household
+
+/*for this study, we want to focus on "hispanic" as in those who are non-european
+gen latin_american = (bpld > 21019 & bpld < 24000)
+replace latin_american = 1 if hispan > 0 & bpld == 24040
+tab latin_american hispan
 replace hispan = 0 if latin_american == 0
+*/
 
 gen age_groups = .
 replace age_groups = 1 if age <70
 replace age_groups = 2 if age >69 & age <80
 replace age_groups = 3 if age >79 & age <90
+replace age_groups = 4 if age >89
 
-label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-88"
+label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-89" 4 "90+"
 label values age_groups age_group_labels
 label variable age_groups "Age Groups"
 
 gen age_60to69 = (age >= 60 & age < 70)
 gen age_70to79 = (age >= 70 & age < 80)
 gen age_80to89 = (age >= 80 & age < 90)
+gen age_90plus = age >= 90
 
 gen year_of_immigration_groups = .
 replace year_of_immigration_groups = 1 if yrimmig < 1965 & yrimmig != 0
@@ -130,16 +138,17 @@ replace age_at_immigration = . if (nativity_string == "native-born")
 
 gen age_at_immigration_groups = .
 replace age_at_immigration_groups = 1 if age_at_immigration < 15
-replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 50
-replace age_at_immigration_groups = 3 if age_at_immigration >= 50
+replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 23
+replace age_at_immigration_groups = 3 if age_at_immigration >= 24 & age_at_immigration < 50
+replace age_at_immigration_groups = 4 if age_at_immigration >= 50
 
-
-label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "50 and above"
+label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "24-50" 4 "50 and above"
 label values age_at_immigration_groups age_immig_labels
 label variable age_at_immigration_groups "Age at Immigration Groups"
 
-gen age_at_immigration_under15 = (age_at_immigration < 15)
-gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)
+gen age_at_immigration_under15 = age_at_immigration < 15
+gen age_at_immigration_15to23 = age_at_immigration >= 15 & age_at_immigration < 23
+gen age_at_immigration_24to60 = age_at_immigration >= 24 & age_at_immigration < 50
 gen age_at_immigration_50plus = (age_at_immigration >= 50)
 
 gen is_naturalized_citizen = (citizen == 2)
@@ -197,18 +206,31 @@ tab hispanic_migrant_status
 
 gen hispanic_migrant_status_race = nativity_string + " " + race_string
 
+*Central American Latino == 1
+gen SALat = 1 if bpl == 210 & hispan ~= 0
+*Other Latine (Non-European) == 0
+replace SALat = 0 if (bpl < 400 | bpl > 499) & hispan ~= 0 & bpl ~= 210
+*Non-Latino == 2
+replace SALat = 2 if hispan == 0
+*European Latino == 3
+replace SALat = 3 if (bpl >= 400 & bpl <= 499) & hispan ~= 0 & bpl ~= 210
+
 save data/US_2020_v100.dta, replace
 clear all
 
 use data/ipumsi_00002_US_2010.dta
 
-keep if age > 59 & age < 90
+keep if age > 59
 
 gen lives_alone = (famsize == 1 & famsize != .)
-gen child_in_household = 1 if nchild > 0
+gen child_in_household = 0
+replace child_in_household = 1 if nchild > 0 
+tab child_in_household
 
 *for this study, we want to focus on "hispanic" as in those who are non-european
-gen latin_american = (bpl > 21019 & bpl < 24000) | bpl == 24040
+gen latin_american = (bpl > 21019 & bpl < 24000)
+replace latin_american = 1 if hispan > 0 & bpl == 24040
+tab latin_american
 replace hispan = 0 if latin_american == 0
 
 ***below I will create the age standardization variable***
@@ -247,14 +269,16 @@ gen age_groups = .
 replace age_groups = 1 if age <70
 replace age_groups = 2 if age >69 & age <80
 replace age_groups = 3 if age >79 & age <90
+replace age_groups = 4 if age >89
 
-label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-88"
+label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-89" 4 "90+"
 label values age_groups age_group_labels
 label variable age_groups "Age Groups"
 
 gen age_60to69 = (age >= 60 & age < 70)
 gen age_70to79 = (age >= 70 & age < 80)
 gen age_80to89 = (age >= 80 & age < 90)
+gen age_90plus = age >= 90
 
 gen year_of_immigration_groups = .
 replace year_of_immigration_groups = 1 if yrimm < 1965 & yrimm != 0
@@ -338,16 +362,17 @@ gen age_at_immigration = age - years_in_us
 
 gen age_at_immigration_groups = .
 replace age_at_immigration_groups = 1 if age_at_immigration < 15
-replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 50
-replace age_at_immigration_groups = 3 if age_at_immigration >= 50
+replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 23
+replace age_at_immigration_groups = 3 if age_at_immigration >= 24 & age_at_immigration < 50
+replace age_at_immigration_groups = 4 if age_at_immigration >= 50
 
-
-label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "50 and above"
+label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "24-50" 4 "50 and above"
 label values age_at_immigration_groups age_immig_labels
 label variable age_at_immigration_groups "Age at Immigration Groups"
 
-gen age_at_immigration_under15 = (age_at_immigration < 15)
-gen age_at_immigration_15to49 = (age_at_immigration >= 15 & age_at_immigration < 50)
+gen age_at_immigration_under15 = age_at_immigration < 15
+gen age_at_immigration_15to23 = age_at_immigration >= 15 & age_at_immigration < 23
+gen age_at_immigration_24to60 = age_at_immigration >= 24 & age_at_immigration < 50
 gen age_at_immigration_50plus = (age_at_immigration >= 50)
 
 gen is_naturalized_citizen = (citizen == 3)
@@ -398,23 +423,27 @@ capture append using data/ipumsi_00002_US_2010.dta
 
 decode country, gen(country_string)
 
-keep if age > 59 & age < 90
+keep if age > 59
 
 gen lives_alone = (famsize == 1 & famsize != .)
-gen child_in_household = 1 if nchild > 0
+gen child_in_household = 0
+replace child_in_household = 1 if nchild > 0 
+tab child_in_household
 
 gen age_groups = .
 replace age_groups = 1 if age <70
 replace age_groups = 2 if age >69 & age <80
 replace age_groups = 3 if age >79 & age <90
+replace age_groups = 4 if age >89
 
-label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-88"
+label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-89" 4 "90+"
 label values age_groups age_group_labels
 label variable age_groups "Age Groups"
 
 gen age_60to69 = (age >= 60 & age < 70)
 gen age_70to79 = (age >= 70 & age < 80)
 gen age_80to89 = (age >= 80 & age < 90)
+gen age_90plus = age >= 90
 
 gen male = (sex == 1)
 gen female = (sex == 2)
@@ -529,12 +558,6 @@ save data/All_International.dta, replace
 
 *keep if (country_year == "Mexico_2010" | country_year == "Mexico_2020" | country_year == "PR_2010" | country_year == "PR_2020" | country_year == "US_2010" | country_year == "US_2020")
 keep if country_year == "Cuba_2012" | country_year == "DR_2010" | country_year == "Mexico_2010" | country_year == "PR_2010" | country_year == "US_2010"
-
-gen country_year_bpl = "US 2010 PR-born" if bpl == 21180
-replace country_year_bpl = "US 2010 DR-born" if bpl == 21100
-replace country_year_bpl = "US 2010 Cuban-born" if bpl == 21080
-replace country_year_bpl = "US 2010 Mexican-born" if bpl == 22060
-replace country_year_bpl = country_year if country_year_bpl == "."
 
 save data/CuDrMePrUs_10_12.dta, replace
 
