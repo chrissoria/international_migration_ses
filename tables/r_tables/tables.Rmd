@@ -228,16 +228,32 @@ write.csv(background_data, paste0(out_dir,"../background_data.csv"))
 ```
 ## table on background features
 ```{r}
+background_data <- read.csv(paste0(data_dir,"hispanic_immigrant_count.csv")) 
+
 background_table <- background_data %>% 
-  select(country, gdp, e60, ifr_1950, ifr_2010) %>% 
-  rename(Country = country,
-         `2010 GDP` = gdp,
+  select(bpld_string, GDPpercapita, e60, IMR_1950, IMR_2019) %>% 
+  rename(Country = bpld_string,
+         `GDP` = GDPpercapita,
          `Life Expectancy at 60` = e60,
-         `Infant Mortality Rate (1950)` = ifr_1950,
-         `Infant Mortality Rate (2010)` = ifr_2010
+         `Infant Mortality Rate (1950)` = IMR_1950,
+         `Infant Mortality Rate (2019)` = IMR_2019
   )
 
 print(background_table)
+
+background_table_code <- xtable(background_table, 
+                                   caption = "Latin American Development Indicators", 
+                                   align = "ll|cccc")
+
+latex_code <- capture.output(print(background_table_code, 
+                                   type = "latex", 
+                                   caption.placement = "top",
+                                   include.rownames = FALSE))
+
+writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/background_table.tex")
+
+print(latex_code)
+rm(background_table)
 ```
 ## table1
 ```{r}
@@ -1944,8 +1960,8 @@ table1_25_plus <- table1_25_plus %>%
   add_row(Demographics = "Education Completed", .before = 6) %>% 
   add_row(Demographics = "Household", .before = 11) %>% 
   add_row(Demographics = "Age Migrated", .before = 16) %>% 
-  add_row(Demographics = "Migration Cohort", .before = 21) %>% 
-  add_row(Demographics = "Acculturation", .before = 26)
+  add_row(Demographics = "Migration Cohort", .before = 19) %>% 
+  add_row(Demographics = "Acculturation", .before = 24)
 
 print(table1_25_plus)
 
