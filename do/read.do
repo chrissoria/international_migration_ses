@@ -3,10 +3,32 @@ capture cd "C:\Users\Ty\Desktop\ses_international"
 
 clear all
 capture log close
-use data/usa_00004.dta
 
-keep if sample == 202003
+foreach data in "2020" "2010" {
+use "data/usa_00003.dta", clear
+if "`data'" == "2020" {
+    keep if sample == 202003
+}
+else {
+	keep if sample == 201005
+}
 keep if age > 59
+
+gen HispanicCategory = .
+*identify hispanics from central america
+replace HispanicCategory = 3 if bpl == 210 & hispan ~= 0
+*identify hispanics from outside europe, asia, central america
+replace HispanicCategory = 2 if (bpl < 400 | bpl > 599) & hispan ~= 0 & bpl ~= 210
+*identify hispanic-europeans and hispanic-asians
+replace HispanicCategory = 1 if (bpl >= 400 & bpl <= 599) & hispan ~= 0 & bpl ~= 210
+*identify non-hispanics
+replace HispanicCategory = 0 if HispanicCategory == .
+
+label define HispanicCategory_labels 3 "Central-American Latino" 2 "Other Latino" 1 "Hispanic Non-Latino" 0 "Not Latino"
+label values HispanicCategory HispanicCategory_labels
+label variable HispanicCategory "Hispanic Category"
+
+decode HispanicCategory, gen(HispanicCategoryString)
 
 /*household variables 
 FAMSIZE counts the number of own family members residing with each individual, including the person her/himself. Persons not living with others related to them by blood, marriage/cohabitating partnership, or adoption are coded 1.
@@ -138,17 +160,17 @@ replace age_at_immigration = . if (nativity_string == "native-born")
 
 gen age_at_immigration_groups = .
 replace age_at_immigration_groups = 1 if age_at_immigration < 15
-replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 23
-replace age_at_immigration_groups = 3 if age_at_immigration >= 24 & age_at_immigration < 50
+replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 25
+replace age_at_immigration_groups = 3 if age_at_immigration >= 25 & age_at_immigration < 50
 replace age_at_immigration_groups = 4 if age_at_immigration >= 50
 
-label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "24-50" 4 "50 and above"
+label define age_immig_labels 1 "Under 15" 2 "15-24" 3 "25-50" 4 "50 and above"
 label values age_at_immigration_groups age_immig_labels
 label variable age_at_immigration_groups "Age at Immigration Groups"
 
 gen age_at_immigration_under15 = age_at_immigration < 15
-gen age_at_immigration_15to23 = age_at_immigration >= 15 & age_at_immigration < 23
-gen age_at_immigration_24to60 = age_at_immigration >= 24 & age_at_immigration < 50
+gen age_at_immigration_15to24 = age_at_immigration >= 15 & age_at_immigration < 25
+gen age_at_immigration_25to49 = age_at_immigration >= 25 & age_at_immigration < 50
 gen age_at_immigration_50plus = (age_at_immigration >= 50)
 
 gen is_naturalized_citizen = (citizen == 2)
@@ -204,217 +226,23 @@ gen country_year = country_string + "_" + year_str
 gen hispanic_migrant_status = nativity_string + " " + hispan_string
 tab hispanic_migrant_status
 
+gen hispanic_category_migrant_status = nativity_string + " " + HispanicCategoryString
+tab hispanic_category_migrant_status
+
+replace hispanic_category_migrant_status = "foreign-born Not Latino" if hispanic_category_migrant_status == "foreign-born Hispanic Non-Latino"
+
 gen hispanic_migrant_status_race = nativity_string + " " + race_string
 
-*Central American Latino == 1
-gen SALat = 1 if bpl == 210 & hispan ~= 0
-*Other Latine (Non-European) == 0
-replace SALat = 0 if (bpl < 400 | bpl > 499) & hispan ~= 0 & bpl ~= 210
-*Non-Latino == 2
-replace SALat = 2 if hispan == 0
-*European Latino == 3
-replace SALat = 3 if (bpl >= 400 & bpl <= 499) & hispan ~= 0 & bpl ~= 210
-
-save data/US_2020_v100.dta, replace
+if "`data'" == "2020" {
+        save "data/US_2020_v100.dta", replace
+    }
+    else {
+        save "data/US_2010_v100.dta", replace
+    }
 clear all
-
-use data/ipumsi_00002_US_2010.dta
-
-keep if age > 59
-
-gen lives_alone = (famsize == 1 & famsize != .)
-gen child_in_household = 0
-replace child_in_household = 1 if nchild > 0 
-tab child_in_household
-
-*for this study, we want to focus on "hispanic" as in those who are non-european
-gen latin_american = (bpl > 21019 & bpl < 24000)
-replace latin_american = 1 if hispan > 0 & bpl == 24040
-tab latin_american
-replace hispan = 0 if latin_american == 0
-
-***below I will create the age standardization variable***
-
-preserve
-
-decode sex, gen(sex_string)
-replace sex_string = lower(sex_string)
-levelsof sex_string, local(sexes)
-tempfile original_data
-save `original_data'
-
-foreach s of local sexes {
-    use `original_data', clear
-    
-    keep if sex_string == "`s'"
-    
-    collapse (sum) perwt, by(age2)
-    egen total_perwt = total(perwt)
-    gen age_weight_`s' = perwt / total_perwt
-    drop total_perwt
-    drop perwt
-    decode age2, gen(age2_string)
-    gen match_var_us = "`s'" + age2_string
-    
-    export delimited using "data/weights/us_age_weights_`s'.csv", replace
-    save "data/weights/us_age_weights_`s'.dta", replace
 }
-restore
 
-*keep if (bplcountry == 23050 | bplcountry == 21080 | bplcountry == 21100 | bplcountry == 22030 | bplcountry == 22040 | bplcountry == 22050 | bplcountry == 22060 | bplcountry == 21180 | bplcountry == 24040)
 
-decode bplcountry, gen(country_string)
-
-gen age_groups = .
-replace age_groups = 1 if age <70
-replace age_groups = 2 if age >69 & age <80
-replace age_groups = 3 if age >79 & age <90
-replace age_groups = 4 if age >89
-
-label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-89" 4 "90+"
-label values age_groups age_group_labels
-label variable age_groups "Age Groups"
-
-gen age_60to69 = (age >= 60 & age < 70)
-gen age_70to79 = (age >= 70 & age < 80)
-gen age_80to89 = (age >= 80 & age < 90)
-gen age_90plus = age >= 90
-
-gen year_of_immigration_groups = .
-replace year_of_immigration_groups = 1 if yrimm < 1965 & yrimm != 0
-replace year_of_immigration_groups = 2 if yrimm >= 1965 & yrimm < 1981 & yrimm != 0
-replace year_of_immigration_groups = 3 if yrimm >= 1980 & yrimm < 2000 & yrimm != 0
-replace year_of_immigration_groups = 4 if yrimm >= 2000 & yrimm != 0
-
-label define year_of_immigration_groups_l 1 "Before 1965" 2 "1965 - 1979" 3 "1980 - 1999" 4 "After 1999"
-label values year_of_immigration_groups year_of_immigration_groups_l
-label variable year_of_immigration_groups "Year of Immigration Cohort"
-
-decode year_of_immigration_groups, gen(year_of_immig_groups_string)
-
-gen yrimm_before1965 = (yrimm < 1965 & yrimm != 0)
-gen yrimm_1965to1980 = (yrimm >= 1965 & yrimm < 1981 & yrimm != 0)
-gen yrimm_1980to1999 = (yrimm >= 1980 & yrimm < 2000 & yrimm != 0)
-gen yrimm_2000plus = (yrimm >= 2000 & yrimm != 0)
-
-decode nativity, gen(nativity_string)
-decode race, gen(race_string)
-decode hispan, gen(hispan_string)
-
-replace hispan_string = "hispanic" if hispan_string != "not hispanic"
-
-*a weird thing in the data, dominicans are often classified as not hispanic. changing to hispanic. 
-replace hispan_string = "hispanic" if bpl == 26010
-
-replace race_string = "other" if race_string != "white" & race_string != "black"
-replace race_string = race_string + " " + hispan_string
-
-gen native_foreign_race = nativity_string + " " + race_string
-tab native_foreign_race
-
-gen race_native_category = .
-
-* foreign hispanic
-replace race_native_category = 1 if native_foreign_race == "foreign-born black hispanic"
-replace race_native_category = 2 if native_foreign_race == "foreign-born white hispanic"
-replace race_native_category = 3 if native_foreign_race == "foreign-born other hispanic"
-
-* foreign born not hispanic
-replace race_native_category = 4 if native_foreign_race == "foreign-born black not hispanic"
-replace race_native_category = 5 if native_foreign_race == "foreign-born white not hispanic"
-replace race_native_category = 6 if native_foreign_race == "foreign-born other not hispanic"
-
-*hispanic natives
-replace race_native_category = 7 if native_foreign_race == "native-born black hispanic"
-replace race_native_category = 8 if native_foreign_race == "native-born white hispanic"
-replace race_native_category = 9 if native_foreign_race == "native-born other hispanic"
-
-*non-hispanic natives
-replace race_native_category = 10 if native_foreign_race == "native-born black not hispanic"
-replace race_native_category = 11 if native_foreign_race == "native-born white not hispanic"
-replace race_native_category = 12 if native_foreign_race == "native-born other not hispanic"
-
-label define category_labels 1 "Foreign-Born Black Hispanic" ///
-                             2 "Foreign-Born White Hispanic" ///
-                             3 "Foreign-Born Other Hispanic" ///
-                             4 "Foreign-Born Black Non-Hispanic" ///
-                             5 "Foreign-Born White Non-Hispanic" ///
-                             6 "Foreign-Born Other Non-Hispanic" ///
-                             7 "Native-Born Black Hispanic" ///
-                             8 "Native-Born White Hispanic" ///
-                             9 "Native-Born Other Hispanic" ///
-                             10 "Native-Born Black Non-Hispanic" ///
-                             11 "Native-Born White Non-Hispanic" ///
-                             12 "Native-Born Other Non-Hispanic"
-
-label values race_native_category category_labels
-
-tab native_foreign_race
-tab race_native_category, miss
-
-gen married_cohab = (marst == 2) if marst != .
-
-gen years_in_us = 2010 - yrimm
-replace years_in_us = . if years_in_us == 2010
-
-gen age_at_immigration = age - years_in_us
-*replace age_at_immigration = . if (citizen == 2 & bplcountry != 21180)
-
-gen age_at_immigration_groups = .
-replace age_at_immigration_groups = 1 if age_at_immigration < 15
-replace age_at_immigration_groups = 2 if age_at_immigration >= 15 & age_at_immigration < 23
-replace age_at_immigration_groups = 3 if age_at_immigration >= 24 & age_at_immigration < 50
-replace age_at_immigration_groups = 4 if age_at_immigration >= 50
-
-label define age_immig_labels 1 "Under 15" 2 "15-49" 3 "24-50" 4 "50 and above"
-label values age_at_immigration_groups age_immig_labels
-label variable age_at_immigration_groups "Age at Immigration Groups"
-
-gen age_at_immigration_under15 = age_at_immigration < 15
-gen age_at_immigration_15to23 = age_at_immigration >= 15 & age_at_immigration < 23
-gen age_at_immigration_24to60 = age_at_immigration >= 24 & age_at_immigration < 50
-gen age_at_immigration_50plus = (age_at_immigration >= 50)
-
-gen is_naturalized_citizen = (citizen == 3)
-gen is_birth_citizen = (citizen == 2)
-
-gen male = (sex == 1)
-gen female = (sex == 2)
-
-gen english_speaker = (speakeng == 1)
-
-decode edattain, gen(edattain_string)
-
-gen less_than_primary_completed = (edattain_string == "less than primary completed")
-gen primary_completed = (edattain_string == "primary completed")
-gen secondary_completed = (edattain_string == "secondary completed")
-gen university_completed = (edattain_string == "university completed")
-
-*primary school binary
-generate primary_or_above = 0
-replace primary_or_above = 1 if university_completed == 1
-replace primary_or_above = 1 if secondary_completed == 1
-replace primary_or_above = 1 if primary_completed == 1
-
-*primary school binary
-generate secondary_or_above = 0
-replace secondary_or_above = 1 if university_completed == 1
-replace secondary_or_above = 1 if secondary_completed == 1
-
-decode year, gen(year_str)
-
-gen country_year = country_string + "_" + year_str
-
-gen hispanic_migrant_status = nativity_string + " " + hispan_string
-tab hispanic_migrant_status
-
-gen hispanic_migrant_status_race = nativity_string + " " + race_string
-
-save data/US_2010_v100.dta, replace
-
-clear
-
-*/
 use data/ses_v2.dta
 
 capture append using "C:\Users\Ty\Desktop\ses_international\data\ipumsi_00002_US_2010.dta"
