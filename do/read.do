@@ -94,12 +94,11 @@ replace nativity_string = "foreign-born" if contains_us_state == 0
 replace nativity_string = "native-born" if contains_us_state == 1
 
 decode race, gen(race_string)
-replace race_string = "black" if race_string == "Black/African American"
-replace race_string = "white" if race_string == "White"
+replace race_string = "black" if race_string == "black/african american"
 
 decode hispan, gen(hispan_string)
 
-replace hispan_string = "hispanic" if hispan_string != "Not Hispanic"
+replace hispan_string = "hispanic" if hispan_string != "not hispanic"
 replace hispan_string = lower(hispan_string)
 
 *a weird thing in the data, dominicans are often classified as not hispanic. changing to hispanic. 

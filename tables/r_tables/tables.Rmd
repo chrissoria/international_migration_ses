@@ -209,9 +209,18 @@ background_data <- left_join(background_data, ifr_2010, by = "country")
 background_data <- left_join(background_data, ifr_1950, by = "country")
 background_data <- left_join(background_data, ifr_2019, by = "country")
 
+
 background_data <- background_data %>%
   arrange(desc(ifr_2010)) %>%
   distinct(country, .keep_all = TRUE)
+
+counts <- read.csv(paste0(data_dir,"hispanic_immigrant_count.csv")) %>% 
+  select(bpld_string, count, percent) %>% 
+  mutate(percent = percent*100) %>% 
+  rename(country = bpld_string)
+
+background_data <- left_join(background_data, counts, by = "country") %>% 
+  arrange(country)
 
 rm(ifr_2010, ifr_1950, ifr_2019, ifr_df, ifr_dfs, gdp, e60)
 
@@ -291,9 +300,9 @@ table1<- us_df_2020 %>%
       mean_yrimm_2000plus = "After 1999"
     ))
 
-print(table2_consolidated)
+print(table1)
 
-table2_consolidated_migrant <- us_df_2020 %>%
+table1_migrant <- us_df_2020 %>%
   filter(!country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
   filter(!hispanic_category_migrant_status %in% c("native-born Not Latino")) %>% 
     group_by(hispanic_category_migrant_status) %>%
@@ -351,9 +360,9 @@ table2_consolidated_migrant <- us_df_2020 %>%
     )) %>% 
     select(-variable)
 
-print(table2_consolidated_migrant)
+print(table1_migrant)
 
-table2_consolidated_native_race <- us_df_2020 %>%
+table1_native_race <- us_df_2020 %>%
   filter(race_native_category %in% c(10, 11, 12)) %>% 
     group_by(race_native_category) %>%
     summarise(
@@ -413,22 +422,22 @@ table2_consolidated_native_race <- us_df_2020 %>%
          `White` = `11`,
          `Other` = `12`)
 
-print(table2_consolidated_native_race)
+print(table1_native_race)
 
-table1<- bind_cols(
-  table2_consolidated,
-  table2_consolidated_migrant,
-  table2_consolidated_native_race
+table1 <- bind_cols(
+  table1,
+  table1_migrant,
+  table1_native_race
 )
 
-rm(table2_consolidated_migrant, table2_consolidated_native_race)
+rm(table1_migrant, table1_native_race)
 
-table1<- table1%>%
+table1 <- table1 %>%
   mutate(across(where(is.numeric), round, digits = 2)) %>% 
   mutate(across(everything(), ~ as.character(.))) %>%    
   mutate(across(everything(), ~ ifelse(. == "NaN", "-", .))) %>%   
   mutate(across(everything(), ~ ifelse(. == "0", "-", .))) %>% 
-  select(variable, mexico, `puerto rico`, `dominican republic`, cuba,`foreign-born Central-American Latino`, `foreign-born Other Latin-American`,`foreign-born Not Latino`, `native-born Other Latin-American`, `Black`, `White`, `Other`) %>% 
+  select(variable, mexico, `puerto rico`, `dominican republic`, cuba,`foreign-born Central-American Latino`, `foreign-born Other Latino`,`foreign-born Not Latino`, `native-born Other Latino`, `Black`, `White`, `Other`) %>% 
   rename(
     `Dominican Republic` = `dominican republic`,
     Mexico = mexico,
@@ -436,9 +445,9 @@ table1<- table1%>%
     Demographics = variable,
     Cuba = cuba,
     `Central America` = `foreign-born Central-American Latino`,
-    `Latin America` = `foreign-born Other Latin-American`,
-    `Other` = `foreign-born Not Latino`,
-    `Hispanic` = `native-born Other Latin-American`
+    `Latin America` = `foreign-born Other Latino`,
+    `Other Countries` = `foreign-born Not Latino`,
+    `Hispanic` = `native-born Other Latino`
   ) %>% 
   add_row(Demographics = "Age", .before = 1) %>% 
   add_row(Demographics = "Education Completed", .before = 6) %>% 
@@ -447,13 +456,13 @@ table1<- table1%>%
   add_row(Demographics = "Migration Cohort", .before = 21) %>% 
   add_row(Demographics = "Acculturation", .before = 26)
 
-print(table2_consolidated)
+print(table1)
 
-table2_consolidated_code <- xtable(table2_consolidated, 
+table1_code <- xtable(table1, 
                                    caption = "Sociodemographics of Hispanics in the U.S. by Birth Country (2020 Census)", 
                                    align = "ll|ccccccccccc")
 
-latex_code <- capture.output(print(table2_consolidated_code, 
+latex_code <- capture.output(print(table1_code, 
                                    type = "latex", 
                                    caption.placement = "top",
                                    size = "\\small",
@@ -501,6 +510,8 @@ adjust_latex_rows <- function(latex_code, adjustments) {
 latex_code <- adjust_latex_rows(latex_code, adjustments)
 
 writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/table1.tex")
+
+rm(table1, table1_code, adjustments, latex_code, adjust_latex_rows)
 ```
 ## table2, featuring Hispanic in their native countries
 ```{r}
