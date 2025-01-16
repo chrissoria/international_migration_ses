@@ -14,6 +14,8 @@ else {
 }
 keep if age > 59
 
+gen birth_year = year - age
+
 gen HispanicCategory = .
 *identify hispanics from central america
 replace HispanicCategory = 3 if bpl == 210 & hispan ~= 0
@@ -274,6 +276,8 @@ capture append using data/ipumsi_00002_US_2010.dta
 decode country, gen(country_string)
 
 keep if age > 59
+
+gen birth_year = year - age
 
 gen lives_alone = (famsize == 1 & famsize != .)
 gen child_in_household = 0
