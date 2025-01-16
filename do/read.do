@@ -198,24 +198,31 @@ generate secondary_completed = 0
 generate university_completed = 0
 
 if "`data'" == "2020" {
-replace less_than_primary_completed = 1 if inlist(edattain_string, "grade 1", "grade 2", "grade 3", "grade 4", "grade 5", "kindergarten", "no schooling completed", "nursery school, preschool")
-
-replace primary_completed = 1 if inlist(edattain_string, "grade 6", "grade 7", "grade 8")
-
-replace secondary_completed = 1 if inlist(edattain_string, "grade 9", "grade 10", "grade 11", "12th grade, no diploma", "ged or alternative credential", "regular high school diploma", "1 or more years of college credit, no degree", "some college, but less than 1 year")
-
-replace university_completed = 1 if inlist(edattain_string, "associate's degree, type not specified", "bachelor's degree", "master's degree", "doctoral degree", "professional degree beyond a bachelor's degree")
-
-} else {
-
-replace less_than_primary_completed = 1 if inlist(edattain_string, "nursery school to grade 4", "grade 5 or 6", "no schooling completed")
-
-replace primary_completed = 1 if inlist(edattain_string, "grade 7 or 8")
-
-replace secondary_completed = 1 if inlist(edattain_string, "grade 9", "grade 10", "grade 11", "12th grade, no diploma", "high school graduate or ged", "1 or more years of college credit, no degree", "some college, but less than 1 year")
-
-replace university_completed = 1 if inlist(edattain_string, "associate's degree, type not specified", "bachelor's degree", "master's degree", "doctoral degree", "professional degree beyond a bachelor's degree")	
+    replace less_than_primary_completed = 1 if inlist(edattain_string, "grade 1", "grade 2", "grade 3", "grade 4", "grade 5", ///
+        "kindergarten", "no schooling completed", "nursery school, preschool")
+    
+    replace primary_completed = 1 if inlist(edattain_string, "grade 6", "grade 7", "grade 8")
+    
+    replace secondary_completed = 1 if inlist(edattain_string, "grade 9", "grade 10", "grade 11", "12th grade, no diploma", ///
+        "ged or alternative credential", "regular high school diploma", ///
+        "1 or more years of college credit, no degree", "some college, but less than 1 year")
+    
+    replace university_completed = 1 if inlist(edattain_string, "associate's degree, type not specified", "bachelor's degree", ///
+        "master's degree", "doctoral degree", "professional degree beyond a bachelor's degree")
 }
+else {
+    replace less_than_primary_completed = 1 if inlist(edattain_string, "nursery school to grade 4", "grade 5 or 6", ///
+        "no schooling completed")
+    
+    replace primary_completed = 1 if inlist(edattain_string, "grade 7 or 8")
+    
+    replace secondary_completed = 1 if inlist(edattain_string, "grade 9", "grade 10", "grade 11", "12th grade, no diploma", ///
+        "high school graduate or ged", "1 or more years of college credit, no degree", "some college, but less than 1 year")
+    
+    replace university_completed = 1 if inlist(edattain_string, "associate's degree, type not specified", "bachelor's degree", ///
+        "master's degree", "doctoral degree", "professional degree beyond a bachelor's degree")	
+}
+
 
 tab less_than_primary_completed
 tab primary_completed
@@ -256,3 +263,151 @@ if "`data'" == "2020" {
     }
 clear all
 }
+
+
+use data/ses_v2.dta
+
+capture append using "C:\Users\Ty\Desktop\ses_international\data\ipumsi_00002_US_2010.dta"
+
+capture append using data/ipumsi_00002_US_2010.dta
+
+decode country, gen(country_string)
+
+keep if age > 59
+
+gen lives_alone = (famsize == 1 & famsize != .)
+gen child_in_household = 0
+replace child_in_household = 1 if nchild > 0 
+tab child_in_household
+
+gen age_groups = .
+replace age_groups = 1 if age <70
+replace age_groups = 2 if age >69 & age <80
+replace age_groups = 3 if age >79 & age <90
+replace age_groups = 4 if age >89
+
+label define age_group_labels 1 "60-69" 2 "69-78" 3 "79-89" 4 "90+"
+label values age_groups age_group_labels
+label variable age_groups "Age Groups"
+
+gen age_60to69 = (age >= 60 & age < 70)
+gen age_70to79 = (age >= 70 & age < 80)
+gen age_80to89 = (age >= 80 & age < 90)
+gen age_90plus = age >= 90
+
+gen male = (sex == 1)
+gen female = (sex == 2)
+
+decode edattain, gen(edattain_string)
+
+gen less_than_primary_completed = (edattain_string == "less than primary completed")
+gen primary_completed = (edattain_string == "primary completed")
+gen secondary_completed = (edattain_string == "secondary completed")
+gen university_completed = (edattain_string == "university completed")
+gen education_unknown = (edattain_string == "unknown")
+
+gen married_cohab = (marst == 2) if marst != .
+
+replace country_string = "United States" if country_string == "united states"
+replace country_string = "Puerto Rico" if country_string == "puerto rico"
+replace country_string = "Mexico" if country_string == "mexico"
+replace country_string = "Honduras" if country_string == "honduras"
+replace country_string = "Guatemala" if country_string == "guatemala"
+replace country_string = "El Salvador" if country_string == "el salvador"
+replace country_string = "Dominican Republic" if country_string == "dominican republic"
+replace country_string = "Cuba" if country_string == "cuba"
+replace country_string = "Colombia" if country_string == "colombia"
+
+replace country_string = "DR" if country_string == "Dominican Republic"
+replace country_string = "US" if country_string == "United States"
+replace country_string = "ES" if country_string == "El Salvador"
+replace country_string = "PR" if country_string == "Puerto Rico"
+
+decode year, gen(year_str)
+gen country_year = country_string + "_" + year_str
+
+decode sex, gen(sex_string)
+replace sex_string = lower(sex_string)
+
+levelsof country_year, local(countries)
+levelsof sex_string, local(sexes)
+
+preserve
+
+tempfile original_data
+save `original_data'
+
+* Calculating weights for each country and sex in international sample
+foreach c of local countries {
+    foreach s of local sexes {
+        use `original_data', clear
+        
+        keep if country_year == "`c'" & sex_string == "`s'"
+        
+        collapse (sum) perwt, by(age2)
+        egen total_perwt = total(perwt)
+        gen age_weight_`c'_`s' = perwt / total_perwt
+        drop total_perwt
+        drop perwt
+        
+        decode age2, gen(age2_string)
+        gen match_var_in = "`c'" + "`s'" + age2_string
+        
+        sum age_weight_`c'_`s'
+        
+        export delimited using "data/weights/in_age_weights_`c'_`s'.csv", replace
+        save "data/weights/in_age_weights_`c'_`s'.dta", replace
+    }
+}
+
+restore
+
+decode age2, gen(age2_string)
+gen match_var_in = country_year + sex_string + age2_string
+gen match_var_us = sex_string + age2_string
+
+*next, I want to merge in the US weights by sex
+levelsof sex_string, local(sexes)
+
+foreach s of local sexes {
+	merge m:1 match_var_us using data/weights/us_age_weights_`s'.dta
+	drop _merge
+}
+
+gen age_weight_us = age_weight_female 
+replace age_weight_us = age_weight_male if age_weight_us == .
+
+drop age_weight_female age_weight_male
+*save data/international__65_89.dta, replace
+
+levelsof country_year, local(countries)
+levelsof sex_string, local(sexes)
+
+foreach c of local countries {
+    foreach s of local sexes {
+	
+	merge m:1 match_var_in using "data/weights/in_age_weights_`c'_`s'.dta"
+	drop _merge
+    }
+}
+
+levelsof country_year, local(countries)
+gen age_weight_in = .
+
+foreach c of local countries {
+    replace age_weight_in = age_weight_`c'_female if sex_string == "female" & age_weight_in == .
+    replace age_weight_in = age_weight_`c'_male if sex_string == "male" & age_weight_in == .
+    drop age_weight_`c'_male age_weight_`c'_female
+}
+
+gen age_weight_ratio = (age_weight_us/age_weight_in)
+
+gen perwt_age_standardized = perwt * age_weight_ratio
+
+*keep if (country_year == "Mexico_2010" | country_year == "Mexico_2020" | country_year == "PR_2010" | country_year == "PR_2020" | country_year == "US_2010" | country_year == "US_2020")
+
+keep if country_year == "Cuba_2012" | country_year == "DR_2010" | country_year == "Mexico_2010" | country_year == "PR_2010" | country_year == "US_2010" | country_year == "Mexico_2020" | country_year == "PR_2020" | | country_year == "US_2020"
+
+save data/CuDrMePrUs_10_12.dta, replace
+
+clear all

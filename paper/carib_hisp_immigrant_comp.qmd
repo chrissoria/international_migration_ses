@@ -113,8 +113,8 @@ The complexity of migration from Latin America to the United States is underscor
 \begin{table}[ht]
 \centering
 \caption{Latin American Development Indicators} 
-\begin{tabular}{l|p{2cm}ccc}
-Country & GDP & Life Expectancy at 60 & Infant Mortality Rate (1950) & Infant Mortality Rate (2019) \\ 
+\begin{tabular}{l|p{2.5cm}ccc}
+Country & GDP Per Capita & Life Expectancy at 60 & Infant Mortality Rate (1950) & Infant Mortality Rate (2019) \\ 
   \hline
 Argentina & 14187.5 & 21.59 & 68.00 & 7.75 \\ 
   Belize/British Honduras & 7460 & 21.69 & 89.34 & 12.42 \\ 
@@ -436,50 +436,55 @@ Age &  &  &  &  &  &  &  &  &  &  &  \\
 
 
 % table 2 standardized
+
+
+% 2010 and 2020 mexico, pr, us
+
 \begin{table}[ht]
 \centering
-\caption{Summary Statistics by Country and Sex For Hispanics in Their Native Countries (Age Standardized)} 
+\caption{Summary Statistics by Country and Sex For Hispanics in Their Native Countries (2010 and 2020)} 
 \begingroup\small
-\begin{tabular}{l>{\raggedright\arraybackslash}p{3.2cm}|ccccccccc}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{3.2cm}|cccccc}
   \hline
-Gender & Demographics & Mexicans & US Mexican-born & Puerto Ricans & US Puerto-Rican-born & Dominicans & US Dominican-born & Cubans & US Cuban-born \\ 
+Gender & Demographics & Mexico 2010 & Mexico 2020 & Puerto Rico 2010 & Puerto Rico 2020 & United States 2010 & United States 2020 \\ 
   \hline
-Female & Age &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.53 & 0.57 & 0.5 & 0.57 & 0.52 & 0.59 & 0.5 & 0.37 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.31 & 0.29 & 0.32 & 0.28 & 0.31 & 0.27 & 0.31 & 0.36 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.13 & 0.11 & 0.15 & 0.13 & 0.14 & 0.11 & 0.15 & 0.23 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.03 & 0.03 & 0.03 & 0.03 & 0.04 & 0.03 & 0.04 & 0.04 \\ 
-   & Education Completed &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} &  & 0.43 & 0.26 & 0.18 & 0.72 & 0.34 & 0.27 & 0.12 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} &  & 0.32 & 0.25 & 0.3 & 0.18 & 0.31 & 0.49 & 0.26 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} &  & 0.23 & 0.36 & 0.44 & 0.07 & 0.3 & 0.18 & 0.47 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} &  & 0.03 & 0.13 & 0.09 & 0.03 & 0.06 & 0.06 & 0.15 \\ 
-   & Household &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} &  & 3.57 & 2.23 & 2.37 & 3.54 & 3.11 & 3.01 & 2.48 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} &  & 0.16 & 0.27 & 0.32 & 0.12 & 0.25 & 0.14 & 0.29 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} &  & 0.42 & 0.29 & 0.31 & 0.55 & 0.45 & 0.51 & 0.3 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} &  & 0.47 & 0.42 & 0.35 & 0.39 & 0.3 & 0.46 & 0.35 \\ 
-   & N & 624788 & 6055 & 5267 & 2148 & 44053 & 728 & 107811 & 2211 \\ 
-  Male & Age &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.54 & 0.63 & 0.54 & 0.59 & 0.54 & 0.6 & 0.52 & 0.43 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.31 & 0.27 & 0.32 & 0.3 & 0.3 & 0.3 & 0.32 & 0.35 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.12 & 0.09 & 0.13 & 0.09 & 0.12 & 0.09 & 0.13 & 0.2 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.03 & 0.02 & 0.02 & 0.02 & 0.03 & 0.01 & 0.03 & 0.02 \\ 
-   & Education Completed &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} &  & 0.44 & 0.21 & 0.17 & 0.67 & 0.26 & 0.2 & 0.12 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} &  & 0.3 & 0.27 & 0.29 & 0.21 & 0.3 & 0.48 & 0.24 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} &  & 0.21 & 0.38 & 0.44 & 0.07 & 0.33 & 0.24 & 0.46 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} &  & 0.05 & 0.14 & 0.1 & 0.05 & 0.11 & 0.09 & 0.17 \\ 
-   & Household &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} &  & 3.68 & 2.4 & 2.55 & 3.56 & 3.5 & 2.95 & 2.53 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} &  & 0.13 & 0.18 & 0.25 & 0.16 & 0.16 & 0.17 & 0.22 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} &  & 0.34 & 0.24 & 0.25 & 0.5 & 0.39 & 0.43 & 0.2 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} &  & 0.75 & 0.67 & 0.61 & 0.68 & 0.67 & 0.68 & 0.66 \\ 
-   & N & 572708 & 5038 & 3989 & 1614 & 41426 & 427 & 96337 & 1675 \\ 
+Female & Age &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.53 & 0.55 & 0.5 & 0.45 & 0.49 & 0.5 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.31 & 0.29 & 0.32 & 0.34 & 0.29 & 0.31 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.13 & 0.13 & 0.15 & 0.17 & 0.18 & 0.15 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.03 & 0.03 & 0.03 & 0.04 & 0.05 & 0.05 \\ 
+   & Education Completed &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.61 & 0.45 & 0.26 & 0.15 & 0.04 & 0.03 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.29 & 0.38 & 0.25 & 0.21 & 0.14 & 0.09 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.07 & 0.11 & 0.36 & 0.44 & 0.63 & 0.62 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.03 & 0.07 & 0.13 & 0.2 & 0.2 & 0.26 \\ 
+   & Household &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} & 3.56 & 3.42 & 2.23 & 2.15 & 2.01 & 2.06 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} & 0.13 & 0.14 & 0.27 & 0.3 & 0.36 & 0.33 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} & 0.58 & 0.57 & 0.29 & 0.26 & 0.17 & 0.17 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} & 0.46 & 0.47 & 0.42 & 0.4 & 0.47 & 0.49 \\ 
+   & N & 624788 & 975534 & 5267 & 24887 & 380399 & 2292118 \\ 
+  Male & Age &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.54 & 0.56 & 0.54 & 0.48 & 0.55 & 0.54 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.31 & 0.3 & 0.32 & 0.35 & 0.29 & 0.31 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.12 & 0.12 & 0.13 & 0.15 & 0.14 & 0.12 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.03 & 0.02 & 0.02 & 0.02 & 0.02 & 0.02 \\ 
+   & Education Completed &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.56 & 0.4 & 0.21 & 0.15 & 0.04 & 0.03 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.29 & 0.37 & 0.27 & 0.24 & 0.12 & 0.08 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.07 & 0.1 & 0.38 & 0.43 & 0.54 & 0.56 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.08 & 0.13 & 0.14 & 0.18 & 0.29 & 0.32 \\ 
+   & Household &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} & 3.7 & 3.52 & 2.4 & 2.28 & 2.16 & 2.16 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} & 0.11 & 0.11 & 0.18 & 0.22 & 0.22 & 0.23 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} & 0.56 & 0.53 & 0.24 & 0.2 & 0.14 & 0.15 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} & 0.74 & 0.74 & 0.67 & 0.61 & 0.71 & 0.69 \\ 
+   & N & 572708 & 887846 & 3989 & 18867 & 306158 & 1932434 \\ 
    \hline
 \end{tabular}
 \endgroup
 \end{table}
+
 \end{landscape}
 
 \newpage
