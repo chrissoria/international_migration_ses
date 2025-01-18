@@ -1920,7 +1920,7 @@ rm(table1_25_plus, table1_25_plus_code, adjustments, latex_code, adjust_latex_ro
 create_table_for_sex_international_standardized <- function(sex_value) {
   in_df %>%
     filter(sex == sex_value) %>%
-    filter(!is.na(country_string)) %>% 
+    filter(!is.na(country_string) & age != 999) %>% 
     group_by(country_string) %>%
     summarise(
     mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
@@ -2065,7 +2065,7 @@ latex_code <- capture.output(print(table1_code,
                                    include.rownames = FALSE))
 
 tabular_line_index <- grep("\\\\begin\\{tabular\\}", latex_code)
-latex_code[tabular_line_index] <- "\\begin{tabular}{l>{\\raggedright\\arraybackslash}p{3.2cm}|ccccccccc}"
+latex_code[tabular_line_index] <- "\\begin{tabular}{l>{\\raggedright\\arraybackslash}p{3.2cm}|cccccccc}"
 
 adjustments <- list(
   list(rows = c("60 - 69", "70 - 79", "80 - 89", "90 plus"), width = 1.5),
