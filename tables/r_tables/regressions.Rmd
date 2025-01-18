@@ -4,6 +4,12 @@ author: "Chris Soria"
 date: "2025-01-08"
 output: html_document
 ---
+
+```{r}
+library(emmeans)
+library(tidyverse)
+```
+
 ```{r}
 target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables")
 current_dir <- normalizePath(getwd())
@@ -126,10 +132,58 @@ if (length(excel_data) > 0) {
 ```
 ## is age at migration correlated with education?
 ```{r}
-education_full_model <- lm(secondary_or_above ~ country_string + age + age_at_immigration_15to49 + age_at_immigration_50plus, data = us_df_2020, 
-               #family = binomial(),
-               weights = perwt)
+run_education_model <- function(data, dv, country) {
+  model <- data %>%
+    filter(country_string == country) %>%
+    glm(as.formula(paste(dv, "~ age + as.factor(female) + race_string + as.factor(english_speaker) + married_cohab + year_of_immig_groups_string + age_at_immig_groups_string")), 
+        data = ., 
+        family = binomial(),
+        weights = perwt)
+  
+  return(model)
+}
 
-summary(education_full_model)
+primary_completed_model_me <- run_education_model(us_df_2020, "primary_or_above", "mexico")
+primary_completed_model_cu <- run_education_model(us_df_2020, "primary_or_above", "cuba")
+primary_completed_model_pr <- run_education_model(us_df_2020, "primary_or_above", "puerto rico")
+primary_completed_model_dr <- run_education_model(us_df_2020, "primary_or_above", "dominican republic")
+
+summary(primary_completed_model_me)
+
+get_emmeans_summary <- function(model, specs = "age_at_immig_groups_string", age = 65, female = 1, english_speaker = 1, race_string = "white hispanic", year_of_immig_groups_string = "1980 - 1999") {
+  emm <- emmeans(model, 
+                 specs = specs,
+                 at = list(age = age, female = female, english_speaker = english_speaker, race_string = race_string, year_of_immig_groups_string = year_of_immig_groups_string),
+                 type = "response")
+  
+  emm_summary <- transform(summary(emm))
+  
+  return(emm_summary)
+}
+
+emm_primary_completed_model_me <- get_emmeans_summary(primary_completed_model_me) %>% 
+  mutate(country = "mexico")
+emm_primary_completed_model_cu <- get_emmeans_summary(primary_completed_model_cu) %>% 
+  mutate(country = "cuba")
+emm_primary_completed_model_pr <- get_emmeans_summary(primary_completed_model_pr) %>% 
+  mutate(country = "puerto rico")
+emm_primary_completed_model_dr <- get_emmeans_summary(primary_completed_model_dr) %>% 
+  mutate(country = "dominican republic")
+
+all_emms_full_controls <- rbind(emm_primary_completed_model_me, emm_primary_completed_model_cu, emm_primary_completed_model_pr, emm_primary_completed_model_dr)
+
+print(all_emms_full_controls)
+
+ggplot(all_emms_full_controls, aes(x = age_at_immig_groups_string, y = prob, color = country, group = country)) +
+  geom_point(position = position_dodge(width = 0.2)) +
+  geom_line(position = position_dodge(width = 0.2)) +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.1, position = position_dodge(width = 0.2)) +
+  labs(x = "Age at Immigration", y = "Probability of Primary Education or Above", 
+       title = "Probability of Primary Education or Above by Age at Immigration and Country") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_color_brewer(palette = "Set1")
+
+ggsave(paste0(plot_dir, "predicted_primary_education_by_immigration_age_and_country.png"), width = 12, height = 8)
 ```
 

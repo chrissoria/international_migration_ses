@@ -46,6 +46,15 @@ acs_2010 <- "US_2010_v100.dta"
 us_df_2010 <- read_dta(paste0(data_dir, census_2010))
 us_df_2020 <- read_dta(paste0(data_dir, "US_2020_v100.dta"))
 
+us_df_2020 <- us_df_2020 %>% 
+  mutate(age_at_immig_groups_string = case_when(
+    age_at_immigration_groups == 1 ~ "Under 15",
+    age_at_immigration_groups == 2 ~ "15-24",
+    age_at_immigration_groups == 3 ~ "25-49",
+    age_at_immigration_groups == 4 ~ "50 and above"
+  ),
+  age_at_immig_groups_string = factor(age_at_immig_groups_string, levels = c("Under 15", "15-24", "25-49" ,"50 and above"))) 
+
 #international censuses
 in_df <- read_dta(paste0(data_dir,"CuDrMePrUs_10_12.dta"))
 
