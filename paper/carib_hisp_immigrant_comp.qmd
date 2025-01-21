@@ -846,4 +846,8 @@ States.
 
 \newpage
 
+\% quarto render
+"/Users/chrissoria/Documents/Research/us_international_ses/paper/carib_hisp_immigrant_comp.qmd"
+--to docx
+
 # References
