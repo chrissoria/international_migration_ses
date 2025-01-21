@@ -35,75 +35,300 @@ abstract: |
   
 bibliography: usinternationalses.bib  
 linestretch: 1.2
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Introduction and Background TODO: Rewrite this whole intro {#sec-intro}
 
-Latin American and Caribbean Countries (LACCs) are key sources of Hispanic immigrants to the United Sates [@passel_what_2024]. In 2022, people of Mexican origin made up nearly 60% of the U.S. Hispanic population, totaling about 37.4 million. Puerto Ricans were the next largest group at 5.9 million, with an additional 3.2 million living on the island. Salvadorans, Cubans, Dominicans, Guatemalans, Colombians, and Hondurans each have populations exceeding 1 million in the United States [@noe-bustamante_key_2023]. 
+In this paper we explore sociodemographic variation of U.S. older adult
+immigrants by country and cohort of emigration, and compare these U.S.
+immigrants to the corresponding cohorts of older adults in their home
+countries of emigration.
 
-These immigrant populations include a rapidly growing subgroup who are aged 65 and above, among whom there is wide variation in socioeconomic and caregiving resources. In this paper we explore sociodemographic variation of U.S. older adult immigrants by country and cohort of emigration, and compare these U.S. immigrants to the corresponding cohorts of older adults in their home countries of emigration. 
-
-The paper is designed to support hypothesis generation for international comparative Hispanic aging studies. This includes providing background context for the global family of health and retirement studies in the region such as the ongoing Caribbean American Dementia and Aging Study (CADAS) which is collecting harmonized data on healthy aging in Puerto Rico, Dominican Republic, and Cuba [@llibre-guerra_caribbean-american_2021]. We analyze census microdata from these countries along with other major Hispanic Caribbean-adjacent sending countries including Mexico, Colombia, El Salvador, Guatemala, and Honduras. We compare older adults in these sending countries to country-specific immigrant samples in the U.S. American Community Survey, focusing on socioeconomic differences such as education, as well as marital status and co-residence patterns related to caregiver availability. We also examine differences by citizenship and immigration age to further explore immigrant selectivity patterns. The highly varied experiences of these cohorts will help inform future comparative research on Hispanic healthy aging.  
+The paper is designed to support hypothesis generation for international
+comparative Hispanic aging studies. This includes providing background
+context for the global family of health and retirement studies in the
+region such as the ongoing Caribbean American Dementia and Aging Study
+(CADAS) which is collecting harmonized data on healthy aging in Puerto
+Rico, Dominican Republic, and Cuba
+[@llibre-guerra_caribbean-american_2021]. We analyze census microdata
+from these countries along with other major Hispanic Caribbean-adjacent
+sending countries including Mexico, Colombia, El Salvador, Guatemala,
+and Honduras. We compare older adults in these sending countries to
+country-specific immigrant samples in the U.S. American Community
+Survey, focusing on socioeconomic differences such as education, as well
+as marital status and co-residence patterns related to caregiver
+availability. We also examine differences by citizenship and immigration
+age to further explore immigrant selectivity patterns. The highly varied
+experiences of these cohorts will help inform future comparative
+research on Hispanic healthy aging.
 
 ## Literature Review {#sec-lit}
 
-International migration patterns are shaped by a complex interplay of factors, including labor market demands, educational opportunities, and political and economic instability [@mcauliffe_who_2024; @valentine_migration_2017]. In the North American context, Massey et al. posit that established social networks play a pivotal role in migration dynamics, with family reunification serving as a primary motivator [@silva_violence_2014]. This reunification imperative creates a self-perpetuating cycle of migration flows [@massey_evaluation_1994]. Age also significantly influences migration patterns, with younger individuals typically dominating migrant populations. Mexican migrants exemplify this trend; despite recent cohorts showing a slight increase in average age, they remain predominantly youthful[@angel_aging_2017]. This persistent age pattern underscores migration's enduring appeal to younger generations, even as sending countries' overall populations age [TODO: Will, do you know any good papers to cite here? Maybe an HCAP paper?].
+Latin American and Caribbean Countries (LACCs) are key sources of
+Hispanic immigrants to the United Sates [@passel_what_2024]. In 2022,
+people of Mexican origin made up nearly 60% of the U.S. Hispanic
+population, totaling about 37.4 million. Puerto Ricans were the next
+largest group at 5.9 million, with an additional 3.2 million living on
+the island. Salvadorans, Cubans, Dominicans, Guatemalans, Colombians,
+and Hondurans each have populations exceeding 1 million in the United
+States [@noe-bustamante_key_2023]. These immigrant populations include a
+rapidly growing subgroup who are aged 60 and above, among whom there is
+wide variation in socioeconomic and care giving resources.
 
-Other LACCs similarly exhibit diverse migration drivers and patterns, with specific political agreements further shaping these movements and creating unique migration landscapes across the region. Puerto Rico's special status as a U.S. territory since 1898, for instance, has facilitated legal entry to the U.S. mainland for its residents^[Despite their high out-migration rate, Puerto Ricans in the United States send less money than Dominicans and Mexicans to their relatives back home. Possible explanations for this are the extensive public support system in place on the island and relatively higher standard of living compared to other LACCs. [@duany_send_2010]]. Likewise, the Cuban Adjustment Act of 1966 and subsequent policies, such as the "wet foot, dry foot" policy (1995-2017), have significantly influenced Cuban migration to the United States [@duany_cuban_2017]. These examples illustrate how political arrangements can create facilitated migration channels, potentially leading to what migration theorists term "migration systems" or "transnational social spaces" [@kritz_international_1992].
+These international migration patterns are shaped by a complex interplay
+of factors, including labor market demands, educational opportunities,
+and political and economic instability [@mcauliffe_who_2024;
+@valentine_migration_2017]. In the North American context, Massey et al.
+posit that established social networks play a pivotal role in migration
+dynamics, with family reunification serving as a primary motivator
+[@silva_violence_2014]. This reunification imperative creates a
+self-perpetuating cycle of migration flows [@massey_evaluation_1994].
+Age also significantly influences migration patterns, with younger
+individuals typically dominating migrant populations. Mexican migrants
+exemplify this trend; despite recent cohorts showing a slight increase
+in average age, they remain predominantly youthful[@angel_aging_2017].
+This persistent age pattern underscores migration's enduring appeal to
+younger generations, even as sending countries' overall populations age
+\[TODO: Will, do you know any good papers to cite here? Maybe an HCAP
+paper?\].
 
-Economic factors underpin much of the migration from Latin America to the United States, exemplifying classic push-pull migration theory [@hanson_us_2023]. Economic insecurity in Latin American countries acts as a push factor [@capielo_rosario_conceptualizing_2023; @larotta_silva_determinantes_2019], while periods of US economic growth further amplify wage differentials between the two regions [@bahar_often_2024].  For instance, Colombian and Guatemalan workers in the U.S. earn \$288-\$299 for every $100 earned by their counterparts at home, while Nicaraguan migrants see an even larger differential [@clemens_place_2009]^[Beyond wages, housing availability [@henao_subjective_2023] and access to technology [@nevado-pena_improving_2019] significantly influence life satisfaction and migration decisions [@causa_should_2020; @winkler_how_2016]]. However, these wage differentials are partially explained by positive selection, as migrants often possess characteristics associated with higher productivity and adaptability. This selection bias is further evidenced by research showing that immigrants tend to have longer life expectancies than native-born populations [@aldridge_global_2018].
+Other LACCs similarly exhibit diverse migration drivers and patterns,
+with specific political agreements further shaping these movements and
+creating unique migration landscapes across the region. Puerto Rico's
+special status as a U.S. territory since 1898, for instance, has
+facilitated legal entry to the U.S. mainland for its residents[^1].
+Likewise, the Cuban Adjustment Act of 1966 and subsequent policies, such
+as the "wet foot, dry foot" policy (1995-2017), have significantly
+influenced Cuban migration to the United States [@duany_cuban_2017].
+These examples illustrate how political arrangements can create
+facilitated migration channels, potentially leading to what migration
+theorists term "migration systems" or "transnational social spaces"
+[@kritz_international_1992].
 
-Alongside economic factors, political instability has been a significant driver of forced migration from Latin American countries to the United States, aligning with theories of refugee and asylum migration [@fitzgerald_sociology_2018]. Historical events underscore this trend. The Cuban Revolution of 1959, for instance, generated the largest refugee movement to the United States in history, resulting in approximately 1.4 million Cuban refugees [@duany_cuban_2017]^[This record was recently surpassed 2021-23 [@gonzalez_current_2024]].  Similarly, the Salvadoran Civil War (1979-1992) led to the displacement of about 1 million people, many of whom subsequently migrated to the U.S., often through irregular channels [@cervantes_salvador_2018]. Guatemala and Honduras experienced similar trajectories of political instability, exacerbated by U.S. interventions in the mid-20th century [@jonas_centaurs_2018; @pine_working_2008]. These events led to substantial emigration waves, with Guatemalan immigrants in the U.S. increasing from 71,000 in 1980 to over 480,000 by 2000, and Honduran immigrants from 39,000 to 283,000 [@batalova_central_2021]. Recent data underscores this trend: in the first 11 months of 2023, over 50% of approximately 412,000 asylum applications to the Department of Homeland Security came from Venezuela, Cuba, Colombia, and Nicaragua [@noauthor_nationwide_2024].
+[^1]: Despite their high out-migration rate, Puerto Ricans in the United
+    States send less money than Dominicans and Mexicans to their
+    relatives back home. Possible explanations for this are the
+    extensive public support system in place on the island and
+    relatively higher standard of living compared to other LACCs.
+    [@duany_send_2010]
 
-Much of the literature on Latin American migrants predominantly focuses on individuals who emigrated during periods of economic distress and political upheaval. However, there is a notable paucity of research examining those who opt to remain in their home countries under similar circumstances. Additionally, there is a shortage of comparative studies that analyze Latin American migrants in relation to both their counterparts who stayed in their home countries and themselves prior to migration, limiting our understanding of the full spectrum of migration outcomes and selectivity. We addresses this gap by conducting a comparative analysis of older adults from Latin American countries who have migrated to the United States and their counterparts who have remained in their countries of origin. By examining the sociodemographic characteristics of these populations, this research aims to elucidate the selectivity of migration processes and their long-term implications. 
+Economic factors underpin much of the migration from Latin America to
+the United States, exemplifying classic push-pull migration theory
+[@hanson_us_2023]. Economic insecurity in Latin American countries acts
+as a push factor [@capielo_rosario_conceptualizing_2023;
+@larotta_silva_determinantes_2019], while periods of US economic growth
+further amplify wage differentials between the two regions
+[@bahar_often_2024]. For instance, Colombian and Guatemalan workers in
+the U.S. earn \$288-\$299 for every \$100 earned by their counterparts
+at home, while Nicaraguan migrants see an even larger differential
+[@clemens_place_2009][^2]. However, these wage differentials are
+partially explained by positive selection, as migrants often possess
+characteristics associated with higher productivity and adaptability.
+This selection bias is further evidenced by research showing that
+immigrants tend to have longer life expectancies than native-born
+populations [@aldridge_global_2018].
+
+[^2]: Beyond wages, housing availability [@henao_subjective_2023] and
+    access to technology [@nevado-pena_improving_2019] significantly
+    influence life satisfaction and migration decisions
+    [@causa_should_2020; @winkler_how_2016]
+
+Alongside economic factors, political instability has been a significant
+driver of forced migration from Latin American countries to the United
+States, aligning with theories of refugee and asylum migration
+[@fitzgerald_sociology_2018]. Historical events underscore this trend.
+The Cuban Revolution of 1959, for instance, generated the largest
+refugee movement to the United States in history, resulting in
+approximately 1.4 million Cuban refugees [@duany_cuban_2017][^3].
+Similarly, the Salvadoran Civil War (1979-1992) led to the displacement
+of about 1 million people, many of whom subsequently migrated to the
+U.S., often through irregular channels [@cervantes_salvador_2018].
+Guatemala and Honduras experienced similar trajectories of political
+instability, exacerbated by U.S. interventions in the mid-20th century
+[@jonas_centaurs_2018; @pine_working_2008]. These events led to
+substantial emigration waves, with Guatemalan immigrants in the U.S.
+increasing from 71,000 in 1980 to over 480,000 by 2000, and Honduran
+immigrants from 39,000 to 283,000 [@batalova_central_2021]. Recent data
+underscores this trend: in the first 11 months of 2023, over 50% of
+approximately 412,000 asylum applications to the Department of Homeland
+Security came from Venezuela, Cuba, Colombia, and Nicaragua
+[@noauthor_nationwide_2024].
+
+[^3]: This record was recently surpassed 2021-23
+    [@gonzalez_current_2024]
+
+Much of the literature on Latin American migrants predominantly focuses
+on individuals who emigrated during periods of economic distress and
+political upheaval. However, there is a notable paucity of research
+examining those who opt to remain in their home countries under similar
+circumstances. Additionally, there is a shortage of comparative studies
+that analyze Latin American migrants in relation to both their
+counterparts who stayed in their home countries and themselves prior to
+migration, limiting our understanding of the full spectrum of migration
+outcomes and selectivity. We addresses this gap by conducting a
+comparative analysis of older adults from Latin American countries who
+have migrated to the United States and their counterparts who have
+remained in their countries of origin. By examining the sociodemographic
+characteristics of these populations, this research aims to elucidate
+the selectivity of migration processes and their long-term implications.
 
 ## Data and Methods {#sec-methods}
 
-Census data for this study were obtained from IPUMS International [@ruggles_ipums_2024]. The current analysis draws on the latest harmonized census data available in IPUMS for Colombia (2005), Cuba (2012), the Dominican Republic (2010), El Salvador (2007), Guatemala (2002), Honduras (2001), Mexico (2020), Puerto Rico (2010), and the United States (2020)^[PR 2010 is a 1% sample, PR 2020 is 5%, US 2010 is 1%, and US 2020 is 5%. The 2010 and 2020 census data available through IPUMS International are limited to 1% and 5% samples, respectively. While the U.S. IPUMS database offers larger samples, it lacks certain variables, such as country of birth for the Dominican Republic.]. We on individuals aged 60 to 89, as some datasets, such as Puerto Rico's, top-coded ages at 89 (TODO: update the justification here). To ensure comparability, we standardized means in the international censuses based on the U.S. sex-specific age distribution. We also applied weights provided by IPUMS to make the samples nationally representative. 
+Census data for this study were obtained from IPUMS International
+[@ruggles_ipums_2024]. The current analysis draws on the latest
+harmonized census data available in IPUMS for Colombia (2005), Cuba
+(2012), the Dominican Republic (2010), El Salvador (2007), Guatemala
+(2002), Honduras (2001), Mexico (2020), Puerto Rico (2010), and the
+United States (2020)[^4]. We on individuals aged 60 to 89, as some
+datasets, such as Puerto Rico's, top-coded ages at 89 (TODO: update the
+justification here). To ensure comparability, we standardized means in
+the international censuses based on the U.S. sex-specific age
+distribution. We also applied weights provided by IPUMS to make the
+samples nationally representative.
 
-Table 1 presents means of sociodemographics of all 65-89 year-olds from each country's census. The variables included are age, percent married/cohabiting, and highest educational level obtained (using internationally standardized categorizations of less than primary, primary, secondary, and university). Table 2 displays means for each country's counterparts who have emigrated to the U.S. In addition to the variables in Table 1, it includes percent English speakers, percent naturalized citizens, mean age at immigration, and mean years in the U.S. based on the American Community Survey data. Table 3 shows the same variables as in Table 2, drawn from the American Community, but categorized by race/ethnicity and nativity status.
+[^4]: PR 2010 is a 1% sample, PR 2020 is 5%, US 2010 is 1%, and US 2020
+    is 5%. The 2010 and 2020 census data available through IPUMS
+    International are limited to 1% and 5% samples, respectively. While
+    the U.S. IPUMS database offers larger samples, it lacks certain
+    variables, such as country of birth for the Dominican Republic.
+
+Table 1 presents means of sociodemographics of all people above age 60
+from each country's census. The variables included are age, percent
+married/cohabiting, and highest educational level obtained (using
+internationally standardized categorizations of less than primary,
+primary, secondary, and university). Table 2 displays means for each
+country's counterparts who have emigrated to the U.S. In addition to the
+variables in Table 1, it includes percent English speakers, percent
+naturalized citizens, mean age at immigration, and mean years in the
+U.S. based on the American Community Survey data. Table 3 shows the same
+variables as in Table 2, drawn from the American Community, but
+categorized by race/ethnicity and nativity status.
 
 ## Results and Comparative Analysis {#sec-results}
 
-TODO:
-Identify which migrant groups moved to the US at the youngest ages comparatively
-Variations in migration motivations and experiences
-Disparities in socioeconomic outcomes and integration patterns
-Unique challenges faced by specific national groups
+TODO: Identify which migrant groups moved to the US at the youngest ages
+comparatively Variations in migration motivations and experiences
+Disparities in socioeconomic outcomes and integration patterns Unique
+challenges faced by specific national groups
 
-Questions: 
-which countries send the most skilled workers, which have the most educated people?
-Differences in age, gender, and education levels among various national groups
-Geographic distribution and settlement patterns within the United States
-Healthcare access and outcomes
-Housing conditions
-Who are the people choose to stay, and why do they stay?
+Questions: which countries send the most skilled workers, which have the
+most educated people? Differences in age, gender, and education levels
+among various national groups Geographic distribution and settlement
+patterns within the United States Healthcare access and outcomes Housing
+conditions Who are the people choose to stay, and why do they stay?
 
 ### Hispanic older adults in their native countries
 
-Table 1 shows sex-specific sociodemographic characteristics among older adults aged 65 to 89, comparing across current country of residence in the Hispanic Caribbean and adjacent countries. Rates of current marriage/cohabitation are substantially higher among men than women; among women, they vary significantly across countries, ranging from 38% in the Dominican Republic to 48% in the U.S. Regarding education, there are even larger differences between neighboring countries. E.g., among women in this age group, 76% of Dominicans have less than primary education compared with 31% of Cubans and Puerto Ricans; the highest rate is Honduras at 86% and lowest is the U.S. at 4%. There are similarly large differences among men
-.
-### Hispanic older adults as migrants in the U.S.
+Table 1 shows sex-specific sociodemographic characteristics among older
+adults aged 65 to 89, comparing across current country of residence in
+the Hispanic Caribbean and adjacent countries. Rates of current
+marriage/cohabitation are substantially higher among men than women;
+among women, they vary significantly across countries, ranging from 38%
+in the Dominican Republic to 48% in the U.S. Regarding education, there
+are even larger differences between neighboring countries. E.g., among
+women in this age group, 76% of Dominicans have less than primary
+education compared with 31% of Cubans and Puerto Ricans; the highest
+rate is Honduras at 86% and lowest is the U.S. at 4%. There are
+similarly large differences among men . \### Hispanic older adults as
+migrants in the U.S.
 
-Table 2 presents sociodemographics of migrants from these countries living in the U.S. The youngest groups are men from El Salvador (71.23), Guatemala (70.78), and Honduras (71.5), who are about two years younger than their counterparts in their native. The oldest group consists of Cuban women (73.35), who are slightly younger than U.S. women overall (73.75), while Cuban men (74.6) are older than the U.S. average for men (73.13). These differences reflect a combination of differential mortality rates and varying immigration patterns by birth cohort. Marital/cohabitation status is also affected by these factors as well as potentially by different cultural influences on partnership; for many countries rates are somewhat lower among immigrants in the U.S. For example, the age-adjusted married/cohabiting rate among women in Cuba is 43%, compared to 31% for Cuban-born women immigrants in the U.S.
+Table 2 presents sociodemographics of migrants from these countries
+living in the U.S. The youngest groups are men from El Salvador (71.23),
+Guatemala (70.78), and Honduras (71.5), who are about two years younger
+than their counterparts in their native. The oldest group consists of
+Cuban women (73.35), who are slightly younger than U.S. women overall
+(73.75), while Cuban men (74.6) are older than the U.S. average for men
+(73.13). These differences reflect a combination of differential
+mortality rates and varying immigration patterns by birth cohort.
+Marital/cohabitation status is also affected by these factors as well as
+potentially by different cultural influences on partnership; for many
+countries rates are somewhat lower among immigrants in the U.S. For
+example, the age-adjusted married/cohabiting rate among women in Cuba is
+43%, compared to 31% for Cuban-born women immigrants in the U.S.
 
-Many of these migrant groups have low rates of reporting that they speak English, with women generally less likely to speak English than men. The lowest English speaking rates are among migrants from the Dominican Republic, where only 60% of female and 70% of male migrants speak English, and Mexico, with 65% of female and 74% of males speaking English. In contrast, migrants from Cuba (71% of females and 78% of males), Colombia (83% of females and 88% of males), and Guatemala (79% of females and 87% of males) have higher English speaking rates. 
+Many of these migrant groups have low rates of reporting that they speak
+English, with women generally less likely to speak English than men. The
+lowest English speaking rates are among migrants from the Dominican
+Republic, where only 60% of female and 70% of male migrants speak
+English, and Mexico, with 65% of female and 74% of males speaking
+English. In contrast, migrants from Cuba (71% of females and 78% of
+males), Colombia (83% of females and 88% of males), and Guatemala (79%
+of females and 87% of males) have higher English speaking rates.
 
-In terms of citizenship, females are slightly more likely to become naturalized U.S. citizens than men. Typically, men emigrate to the U.S. at a younger age, about two years earlier on average. For example, females from Honduras arrive at an average age of 36.48, while males arrive at 34.42, often resulting in longer U.S. residency for men—Honduran men report an average of 37.16 years compared to women's 36.17 years. However, Guatemala is an exception; despite migrating at a younger age (32.05), Guatemalan men have spent fewer years in the U.S. (38.75) compared to women (39.26).
+In terms of citizenship, females are slightly more likely to become
+naturalized U.S. citizens than men. Typically, men emigrate to the U.S.
+at a younger age, about two years earlier on average. For example,
+females from Honduras arrive at an average age of 36.48, while males
+arrive at 34.42, often resulting in longer U.S. residency for
+men—Honduran men report an average of 37.16 years compared to women's
+36.17 years. However, Guatemala is an exception; despite migrating at a
+younger age (32.05), Guatemalan men have spent fewer years in the U.S.
+(38.75) compared to women (39.26).
 
-Men are more likely to have a college degree across all groups: Guatemalan men (12%) compared to women (8%), Honduran men (14%) versus women (11%), and Salvadoran men (10%) against women (5%). The largest gender gap is among Colombian migrants, with 24% of men holding a college degree compared to 16% of women. The least educated groups are Mexican migrants (6% of men and 4% of women with college degrees) and those from the Dominican Republic (9% for men and 7% for women). These relative gender patterns are similar to their counterparts living in their native countries (Table 1), however overall the U.S. migrants have markedly higher education than those still living in their countries of birth. 
+Men are more likely to have a college degree across all groups:
+Guatemalan men (12%) compared to women (8%), Honduran men (14%) versus
+women (11%), and Salvadoran men (10%) against women (5%). The largest
+gender gap is among Colombian migrants, with 24% of men holding a
+college degree compared to 16% of women. The least educated groups are
+Mexican migrants (6% of men and 4% of women with college degrees) and
+those from the Dominican Republic (9% for men and 7% for women). These
+relative gender patterns are similar to their counterparts living in
+their native countries (Table 1), however overall the U.S. migrants have
+markedly higher education than those still living in their countries of
+birth.
 
 ### Race/ethnicity and nativity in U.S.
 
-Table 3 is similar to table 2, but now looks by racial category (Black, White, and Other racial identities), Hispanic, and native-born category. Average ages across these groups are quite similar. Both Hispanic migrant and native Blacks are much less likely to be married or cohabitating, with rates of 28% and 27%, respectively. In contrast, individuals identifying as White, whether Hispanic migrant or native, are more likely to be married or cohabitating. Black migrants are slightly more likely to speak English but are less likely to become naturalized citizens. They also tend to immigrate at an older age and spend fewer years in the U.S., while Whites and those of other Hispanic races have similar immigration patterns. White Hispanic migrants have slightly longer U.S. residency. Interestingly, the college degree gap between Black and White migrants is nonexistent; both groups are equally likely to earn a degree. This contrasts with non-Hispanic US native populations, where only 17% of Black men hold a college degree compared to 36% of White men. Hispanic migrants identifying as a race other than White or Black are the least likely to have a college degree and most likely to have less than primary education, with 33% of women and 32% of men in this category having less than a primary education.
+Table 3 is similar to table 2, but now looks by racial category (Black,
+White, and Other racial identities), Hispanic, and native-born category.
+Average ages across these groups are quite similar. Both Hispanic
+migrant and native Blacks are much less likely to be married or
+cohabitating, with rates of 28% and 27%, respectively. In contrast,
+individuals identifying as White, whether Hispanic migrant or native,
+are more likely to be married or cohabitating. Black migrants are
+slightly more likely to speak English but are less likely to become
+naturalized citizens. They also tend to immigrate at an older age and
+spend fewer years in the U.S., while Whites and those of other Hispanic
+races have similar immigration patterns. White Hispanic migrants have
+slightly longer U.S. residency. Interestingly, the college degree gap
+between Black and White migrants is nonexistent; both groups are equally
+likely to earn a degree. This contrasts with non-Hispanic US native
+populations, where only 17% of Black men hold a college degree compared
+to 36% of White men. Hispanic migrants identifying as a race other than
+White or Black are the least likely to have a college degree and most
+likely to have less than primary education, with 33% of women and 32% of
+men in this category having less than a primary education.
 
 ## Discussion {#sec-discussion}
 
-This study will provide a comprehensive sociodemographic comparison of older adult Hispanic populations both in their countries of origin and as immigrants in the United States. The analysis so far reveals significant variations in education levels marital status and migration patterns across different Hispanic subgroups. These findings have important implications for understanding the diverse experiences of Hispanic older adults and for informing policies related to healthy aging and caregiving. The ongoing analysis (to be reported in the full paper) is expanding this analysis to further examine patterns by immigration cohort, also using multivariate regression to better parse mechanisms underlying the observed differences.
+This study will provide a comprehensive sociodemographic comparison of
+older adult Hispanic populations both in their countries of origin and
+as immigrants in the United States. The analysis so far reveals
+significant variations in education levels marital status and migration
+patterns across different Hispanic subgroups. These findings have
+important implications for understanding the diverse experiences of
+Hispanic older adults and for informing policies related to healthy
+aging and caregiving. The ongoing analysis (to be reported in the full
+paper) is expanding this analysis to further examine patterns by
+immigration cohort, also using multivariate regression to better parse
+mechanisms underlying the observed differences.
 
-That Mexican migrants have fewer years of formal education is a finding that other researchers have come across [@hanson_us_2023].
+That Mexican migrants have fewer years of formal education is a finding
+that other researchers have come across [@hanson_us_2023].
 
-The complexity of migration from Latin America to the United States is underscored by the region's evolving migration landscape, which has seen a dramatic increase in intra-regional movement and return migration since 2010, challenging the traditional narrative of unidirectional flows to North America and Europe while still maintaining significant outward migration patterns [@tanco_dramatic_2023]. Additionally, this paper does not capture return-migrants to Latin America. Lastly, this research considers migrant populations and host countries pre-pandemic, which is markedly different than post-pandemic patterns [@hanson_us_2023].
+The complexity of migration from Latin America to the United States is
+underscored by the region's evolving migration landscape, which has seen
+a dramatic increase in intra-regional movement and return migration
+since 2010, challenging the traditional narrative of unidirectional
+flows to North America and Europe while still maintaining significant
+outward migration patterns [@tanco_dramatic_2023]. Additionally, this
+paper does not capture return-migrants to Latin America. Lastly, this
+research considers migrant populations and host countries pre-pandemic,
+which is markedly different than post-pandemic patterns
+[@hanson_us_2023].
 
 \begin{landscape} 
 \newgeometry{layoutwidth=297mm, layoutheight=210mm, left=20mm, right=20mm, top=20mm, bottom=20mm, footskip=15mm}
@@ -113,37 +338,41 @@ The complexity of migration from Latin America to the United States is underscor
 \begin{table}[ht]
 \centering
 \caption{Latin American Development Indicators} 
-\begin{tabular}{l|p{2.5cm}ccc}
-Country & GDP Per Capita & Life Expectancy at 60 & Infant Mortality Rate (1950) & Infant Mortality Rate (2019) \\ 
+\begin{tabular}{l|cccccc}
   \hline
-Argentina & 14187.5 & 21.59 & 68.00 & 7.75 \\ 
-  Belize/British Honduras & 7460 & 21.69 & 89.34 & 12.42 \\ 
-  Bolivia & 3686.3 & 19.42 & 182.16 & 28.83 \\ 
-  Brazil & 10294.9 & 21.32 & 143.77 & 11.81 \\ 
-  Canada & 53431.2 & 24.99 & 41.47 & 4.44 \\ 
-  Chile & 17067.8 & 24.57 & 139.00 & 6.55 \\ 
-  Colombia & 6947.4 & 22.69 & 97.33 & 9.36 \\ 
-  Costa Rica & 16942 & 24.52 & 80.94 & 7.29 \\ 
-  Cuba & .. & 21.57 & 87.12 & 4.89 \\ 
-  Dominican Republic & 10717.6 & 22.60 & 63.00 & 4.14 \\ 
-  Ecuador & 6609.8 & 22.83 & 144.02 & 10.15 \\ 
-  El Salvador & 5391.1 & 22.01 & 78.05 & 14.05 \\ 
-  Guatemala & 5762.8 & 20.65 & 107.00 & 18.54 \\ 
-  Guyana/British Guiana & 20765.4 & 18.01 & 82.80 & 11.40 \\ 
-  Haiti & 1705.8 & 16.25 & 237.19 & 53.03 \\ 
-  Honduras & 3231.7 & 18.13 & 86.00 & 14.66 \\ 
-  Jamaica & 6839.7 & 18.66 & 91.87 & 11.56 \\ 
-  Mexico & 13790 & 22.20 & 96.00 & 10.79 \\ 
-  Nicaragua & 2612.9 & 24.50 & 55.14 & 12.59 \\ 
-  Panama & 18686.4 & 23.98 & 53.02 & 14.27 \\ 
-  Paraguay & 6276.4 & 21.01 & 75.69 & 9.45 \\ 
-  Peru & 7906.6 & 23.37 & 164.76 & 16.01 \\ 
-  Puerto Rico & 36779.1 & 25.32 & 70.53 & 5.31 \\ 
-  Trinidad and Tobago & 20016.2 & 21.44 & 74.65 & 21.55 \\ 
-  Uruguay & 22797.8 & 21.71 & 62.51 & 5.64 \\ 
-  Venezuela & .. & 20.67 & 80.00 & 25.54 \\ 
+Country & Total & Percent of Migrants & GDP & Life Expectancy at 60 & Infant Mortality Rate (1950) & Infant Mortality Rate (2019) \\ 
+  \hline
+Mexico and Carribean Countries &  &  &  &  &  &  \\ 
+  Argentina & 48615 & 1.18 & 14187.50 & 21.59 & 68.00 & 7.75 \\ 
+  Belize/British Honduras & 1912 & 0.05 & 7460.00 & 21.69 & 89.34 & 12.42 \\ 
+  Bolivia & 16749 & 0.41 & 3686.30 & 19.42 & 182.16 & 28.83 \\ 
+  Brazil & 7814 & 0.19 & 10294.90 & 21.32 & 143.77 & 11.81 \\ 
+  Canada & 2922 & 0.07 & 53431.20 & 24.99 & 41.47 & 4.44 \\ 
+  Chile & 27920 & 0.68 & 17067.80 & 24.57 & 139.00 & 6.55 \\ 
+  Colombia & 194022 & 4.72 & 6947.40 & 22.69 & 97.33 & 9.36 \\ 
+  Costa Rica & 20884 & 0.51 & 16942.00 & 24.52 & 80.94 & 7.29 \\ 
+  Cuba & 462503 & 11.24 & 9605.30 & 21.57 & 87.12 & 4.89 \\ 
+  Dominican Republic & 248511 & 6.04 & 10717.60 & 22.60 & 63.00 & 4.14 \\ 
+  Ecuador & 91850 & 2.23 & 6609.80 & 22.83 & 144.02 & 10.15 \\ 
+  El Salvador & 198955 & 4.84 & 5391.10 & 22.01 & 78.05 & 14.05 \\ 
+  Guatemala & 99842 & 2.43 & 5762.80 & 20.65 & 107.00 & 18.54 \\ 
+  Guyana/British Guiana & 2234 & 0.05 & 20765.40 & 18.01 & 82.80 & 11.40 \\ 
+  Haiti & 1739 & 0.04 & 1705.80 & 16.25 & 237.19 & 53.03 \\ 
+  Honduras & 60125 & 1.46 & 3231.70 & 18.13 & 86.00 & 14.66 \\ 
+  Jamaica & 2627 & 0.06 & 6839.70 & 18.66 & 91.87 & 11.56 \\ 
+  Mexico & 1809510 & 43.99 & 13790.00 & 22.20 & 96.00 & 10.79 \\ 
+  Nicaragua & 60186 & 1.46 & 2612.90 & 24.50 & 55.14 & 12.59 \\ 
+  Panama & 33245 & 0.81 & 18686.40 & 23.98 & 53.02 & 14.27 \\ 
+  Paraguay & 3214 & 0.08 & 6276.40 & 21.01 & 75.69 & 9.45 \\ 
+  Peru & 116599 & 2.83 & 7906.60 & 23.37 & 164.76 & 16.01 \\ 
+  Puerto Rico & 540375 & 13.14 & 36779.10 & 25.32 & 70.53 & 5.31 \\ 
+  Trinidad and Tobago & 2120 & 0.05 & 20016.20 & 21.44 & 74.65 & 21.55 \\ 
+  Uruguay & 12472 & 0.30 & 22797.80 & 21.71 & 62.51 & 5.64 \\ 
+  Venezuela & 43299 & 1.05 & 15943.60 & 20.67 & 80.00 & 25.54 \\ 
+   \hline
 \end{tabular}
 \end{table}
+
 
 % table 1
 
@@ -157,7 +386,7 @@ Argentina & 14187.5 & 21.59 & 68.00 & 7.75 \\
 \cline{2-12}
 & \multicolumn{7}{c|}{} & \multicolumn{1}{c}{} & \multicolumn{3}{c}{Non-Hispanic} \\
   \hline
-Demographics & Mexico & Puerto Rico$^1$ & Dominican Republic & Cuba & Central America & Latin America$^2$ & Other & Hispanic & Black & White & Other \\ 
+Demographics & Mexico & Puerto Rico & Dominican Republic & Cuba & Central America & Latin America & Other Countries & Hispanic & Black & White & Other \\ 
   \hline
 Age &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }}& 0.6 & 0.47 & 0.6 & 0.43 & 0.63 & 0.56 & 0.52 & 0.59 & 0.58 & 0.5 & 0.57 \\ 
@@ -166,19 +395,19 @@ Age &  &  &  &  &  &  &  &  &  &  &  \\
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }}& 0.02 & 0.03 & 0.03 & 0.05 & 0.02 & 0.03 & 0.04 & 0.03 & 0.03 & 0.04 & 0.03 \\ 
   Education Completed &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }}& 0.35 & 0.14 & 0.25 & 0.1 & 0.24 & 0.08 & 0.09 & 0.07 & 0.03 & 0.01 & 0.03 \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }}& 0.23 & 0.12 & 0.18 & 0.12 & 0.15 & 0.06 & 0.05 & 0.06 & 0.04 & 0.02 & 0.03 \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }}& 0.34 & 0.57 & 0.44 & 0.51 & 0.45 & 0.54 & 0.45 & 0.64 & 0.69 & 0.59 & 0.57 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }}& 0.31 & 0.24 & 0.26 & 0.19 & 0.23 & 0.11 & 0.09 & 0.15 & 0.14 & 0.06 & 0.08 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }}& 0.24 & 0.39 & 0.32 & 0.41 & 0.35 & 0.47 & 0.38 & 0.5 & 0.54 & 0.51 & 0.47 \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }}& 0.08 & 0.18 & 0.13 & 0.27 & 0.15 & 0.31 & 0.42 & 0.23 & 0.25 & 0.39 & 0.38 \\ 
-  Household$^3$ &  &  &  &  &  &  &  &  &  &  &  \\ 
+  Household &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }}& 3.32 & 2.31 & 2.87 & 2.46 & 3.14 & 2.73 & 2.65 & 2.37 & 2.06 & 1.95 & 2.27 \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }}& 0.16 & 0.32 & 0.24 & 0.27 & 0.18 & 0.21 & 0.21 & 0.28 & 0.39 & 0.29 & 0.31 \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }}& 0.51 & 0.31 & 0.45 & 0.32 & 0.48 & 0.4 & 0.35 & 0.28 & 0.24 & 0.14 & 0.25 \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }}& 0.56 & 0.42 & 0.41 & 0.44 & 0.46 & 0.52 & 0.59 & 0.49 & 0.35 & 0.59 & 0.48 \\ 
   Age Migrated &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.4cm}|}{\makebox[2.4cm][r]{Less than 15 }}& 0.11 & 0.29 & 0.06 & 0.17 & 0.06 & 0.07 & 0.13 & - & - & - & - \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.6cm}|}{\makebox[1.6cm][r]{15 - 23 }}& 0.24 & 0.26 & 0.15 & 0.12 & 0.17 & 0.14 & 0.14 & - & - & - & - \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.6cm}|}{\makebox[1.6cm][r]{24 - 49 }}& 0.48 & 0.27 & 0.53 & 0.44 & 0.59 & 0.54 & 0.5 & - & - & - & - \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.6cm}|}{\makebox[2.6cm][r]{50 and Above }}& 0.13 & 0.16 & 0.23 & 0.25 & 0.15 & 0.22 & 0.2 & - & - & - & - \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.6cm}|}{\makebox[1.6cm][r]{15 - 23 }}& 0.31 & 0.3 & 0.19 & 0.16 & 0.23 & 0.2 & 0.2 & - & - & - & - \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.6cm}|}{\makebox[1.6cm][r]{24 - 49 }}& 0.45 & 0.25 & 0.52 & 0.42 & 0.56 & 0.51 & 0.47 & - & - & - & - \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.6cm}|}{\makebox[2.6cm][r]{50 and Above }}& 0.13 & 0.16 & 0.23 & 0.25 & 0.15 & 0.22 & 0.2 & 1 & 1 & 1 & 1 \\ 
   Migration Cohort &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.3cm}|}{\makebox[2.3cm][r]{Before 1965 }}& 0.15 & 0.41 & 0.08 & 0.25 & 0.09 & 0.11 & 0.21 & - & - & - & - \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{1965 - 1979 }}& 0.45 & 0.28 & 0.33 & 0.35 & 0.37 & 0.34 & 0.31 & - & - & - & - \\ 
@@ -187,8 +416,7 @@ Age &  &  &  &  &  &  &  &  &  &  &  \\
   Acculturation &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.6cm}|}{\makebox[1.6cm][r]{Citizen }}& 0.54 & - & 0.68 & 0.8 & 0.66 & 0.71 & 0.74 & - & - & - & - \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{3cm}|}{\makebox[3cm][r]{English Speakers }}& 0.73 & 0.91 & 0.69 & 0.76 & 0.82 & 0.87 & 0.93 & 0.99 & 1 & 1 & 1 \\ 
-    \hline
-  N & 79,658 & 23,021 & 8,980 & 21,242 & 20,064 & 25,003 & 352,960 & 120,724 & 313,063 & 3,165,675 & 94,162 \\ 
+  N & 79658 & 23021 & 8980 & 21242 & 20064 & 25003 & 352960 & 120724 & 313063 & 3165675 & 94162 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -254,6 +482,8 @@ Female & Age &  &  &  &  &  &  &  &  \\
 
 \newpage
 
+### Tables
+
 \begin{landscape} 
 \newgeometry{layoutwidth=297mm, layoutheight=210mm, left=20mm, right=20mm, top=20mm, bottom=20mm, footskip=15mm}
 
@@ -274,8 +504,8 @@ Age &  &  &  &  &  &  &  &  &  &  &  \\
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }}& 0.03 & 0.04 & 0.03 & 0.06 & 0.02 & 0.03 & 0.04 & 0.03 & 0.04 & 0.05 & 0.04 \\ 
   Education Completed &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }}& 0.36 & 0.14 & 0.26 & 0.1 & 0.24 & 0.08 & 0.09 & 0.07 & 0.02 & 0.01 & 0.03 \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }}& 0.23 & 0.12 & 0.19 & 0.13 & 0.15 & 0.06 & 0.05 & 0.06 & 0.03 & 0.02 & 0.03 \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }}& 0.34 & 0.55 & 0.43 & 0.51 & 0.45 & 0.54 & 0.45 & 0.64 & 0.68 & 0.62 & 0.58 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }}& 0.31 & 0.24 & 0.27 & 0.19 & 0.23 & 0.11 & 0.09 & 0.15 & 0.14 & 0.06 & 0.09 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }}& 0.24 & 0.39 & 0.31 & 0.42 & 0.35 & 0.47 & 0.38 & 0.5 & 0.54 & 0.54 & 0.48 \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }}& 0.07 & 0.19 & 0.12 & 0.26 & 0.15 & 0.31 & 0.42 & 0.23 & 0.26 & 0.36 & 0.37 \\ 
   Household &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }}& 3.29 & 2.25 & 2.78 & 2.44 & 3.14 & 2.73 & 2.65 & 2.37 & 2.05 & 1.89 & 2.26 \\ 
@@ -318,8 +548,8 @@ Age &  &  &  &  &  &  &  &  &  &  &  \\
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }}& 0.02 & 0.02 & 0.02 & 0.04 & 0.02 & 0.03 & 0.04 & 0.03 & 0.02 & 0.03 & 0.02 \\ 
   Education Completed &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }}& 0.35 & 0.14 & 0.23 & 0.09 & 0.24 & 0.08 & 0.09 & 0.07 & 0.03 & 0.01 & 0.03 \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }}& 0.23 & 0.11 & 0.17 & 0.11 & 0.15 & 0.06 & 0.05 & 0.06 & 0.04 & 0.02 & 0.03 \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }}& 0.34 & 0.58 & 0.46 & 0.5 & 0.45 & 0.54 & 0.45 & 0.64 & 0.7 & 0.55 & 0.55 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }}& 0.3 & 0.25 & 0.25 & 0.18 & 0.23 & 0.11 & 0.09 & 0.15 & 0.15 & 0.06 & 0.08 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }}& 0.24 & 0.4 & 0.34 & 0.4 & 0.35 & 0.47 & 0.38 & 0.5 & 0.55 & 0.47 & 0.45 \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }}& 0.09 & 0.17 & 0.14 & 0.29 & 0.15 & 0.31 & 0.42 & 0.23 & 0.23 & 0.42 & 0.4 \\ 
   Household &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }}& 3.35 & 2.4 & 3.01 & 2.49 & 3.14 & 2.73 & 2.65 & 2.37 & 2.07 & 2.02 & 2.28 \\ 
@@ -406,8 +636,8 @@ Age &  &  &  &  &  &  &  &  &  &  &  \\
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }}& 0.03 & 0.05 & 0.03 & 0.07 & 0.03 & 0.03 & 0.04 & 0.03 & 0.03 & 0.04 & 0.03 \\ 
   Education Completed &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }}& 0.4 & 0.17 & 0.28 & 0.12 & 0.29 & 0.1 & 0.11 & 0.07 & 0.03 & 0.01 & 0.03 \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }}& 0.23 & 0.11 & 0.2 & 0.16 & 0.17 & 0.07 & 0.06 & 0.06 & 0.04 & 0.02 & 0.03 \\ 
-  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }}& 0.29 & 0.51 & 0.41 & 0.49 & 0.41 & 0.52 & 0.42 & 0.64 & 0.69 & 0.59 & 0.57 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }}& 0.3 & 0.22 & 0.28 & 0.23 & 0.24 & 0.12 & 0.1 & 0.15 & 0.14 & 0.06 & 0.08 \\ 
+  \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }}& 0.2 & 0.37 & 0.3 & 0.4 & 0.31 & 0.45 & 0.36 & 0.5 & 0.54 & 0.51 & 0.47 \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }}& 0.07 & 0.21 & 0.12 & 0.23 & 0.14 & 0.3 & 0.41 & 0.23 & 0.25 & 0.39 & 0.38 \\ 
   Household &  &  &  &  &  &  &  &  &  &  &  \\ 
   \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }}& 3.45 & 2.44 & 2.93 & 2.57 & 3.24 & 2.82 & 2.86 & 2.37 & 2.06 & 1.95 & 2.27 \\ 
@@ -434,6 +664,50 @@ Age &  &  &  &  &  &  &  &  &  &  &  \\
 
 % table 2 standardized
 
+\begin{table}[ht]
+\centering
+\caption{Summary Statistics by Country and Sex For Hispanics in Their Native Countries (Age Standardized)} 
+\begingroup\small
+\begin{tabular}{l>{\raggedright\arraybackslash}p{3.2cm}|cccccccc}
+  \hline
+Gender & Demographics & Mexicans & US Mexican-born & Puerto Ricans & US Puerto-Rican-born & Dominicans & US Dominican-born & Cubans & US Cuban-born \\ 
+  \hline
+Female & Age &  &  &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.54 & 0.57 & 0.47 & 0.57 & 0.52 & 0.59 & 0.5 & 0.37 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.3 & 0.29 & 0.33 & 0.28 & 0.31 & 0.27 & 0.31 & 0.36 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.13 & 0.11 & 0.16 & 0.13 & 0.14 & 0.11 & 0.15 & 0.23 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.03 & 0.03 & 0.04 & 0.03 & 0.04 & 0.03 & 0.04 & 0.04 \\ 
+   & Education Completed &  &  &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.53 & 0.43 & 0.21 & 0.18 & 0.72 & 0.34 & 0.28 & 0.12 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.33 & 0.32 & 0.23 & 0.3 & 0.17 & 0.31 & 0.49 & 0.26 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.09 & 0.23 & 0.4 & 0.44 & 0.07 & 0.3 & 0.17 & 0.47 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.05 & 0.03 & 0.17 & 0.09 & 0.03 & 0.06 & 0.06 & 0.15 \\ 
+   & Household &  &  &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} & 3.47 & 3.57 & 2.19 & 2.37 & 3.54 & 3.11 & 3.02 & 2.48 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} & 0.14 & 0.16 & 0.29 & 0.32 & 0.13 & 0.25 & 0.14 & 0.29 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} & 0.58 & 0.42 & 0.28 & 0.31 & 0.55 & 0.45 & 0.52 & 0.3 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} & 0.44 & 0.47 & 0.4 & 0.35 & 0.38 & 0.3 & 0.45 & 0.35 \\ 
+   & N & 1596847 & 6055 & 30154 & 2148 & 44053 & 728 & 107811 & 2211 \\ 
+  Male & Age &  &  &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.56 & 0.63 & 0.51 & 0.59 & 0.54 & 0.6 & 0.52 & 0.43 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.3 & 0.27 & 0.33 & 0.3 & 0.3 & 0.3 & 0.32 & 0.35 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.12 & 0.09 & 0.14 & 0.09 & 0.12 & 0.09 & 0.13 & 0.2 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.02 & 0.02 & 0.02 & 0.02 & 0.03 & 0.01 & 0.03 & 0.02 \\ 
+   & Education Completed &  &  &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.47 & 0.44 & 0.17 & 0.17 & 0.67 & 0.26 & 0.2 & 0.12 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.33 & 0.3 & 0.25 & 0.29 & 0.21 & 0.3 & 0.48 & 0.24 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.09 & 0.21 & 0.41 & 0.44 & 0.07 & 0.33 & 0.24 & 0.46 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.11 & 0.05 & 0.17 & 0.1 & 0.05 & 0.11 & 0.09 & 0.17 \\ 
+   & Household &  &  &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} & 3.6 & 3.68 & 2.34 & 2.55 & 3.56 & 3.5 & 2.95 & 2.53 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} & 0.11 & 0.13 & 0.2 & 0.25 & 0.16 & 0.16 & 0.17 & 0.22 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} & 0.54 & 0.34 & 0.22 & 0.25 & 0.5 & 0.39 & 0.43 & 0.2 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} & 0.74 & 0.75 & 0.63 & 0.61 & 0.68 & 0.67 & 0.67 & 0.66 \\ 
+   & N & 1456521 & 5038 & 22856 & 1614 & 41426 & 427 & 96337 & 1675 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
 
 % 2010 and 2020 mexico, pr, us
 
@@ -441,42 +715,42 @@ Age &  &  &  &  &  &  &  &  &  &  &  \\
 \centering
 \caption{Summary Statistics by Country and Sex For Hispanics in Their Native Countries (2010 and 2020)} 
 \begingroup\small
-\begin{tabular}{l>{\raggedright\arraybackslash}p{3.5cm}|cccccccc}
+\begin{tabular}{l>{\raggedright\arraybackslash}p{3.2cm}|cccccc}
   \hline
-Gender & Demographics & Mexicans & US Mexican-born & Puerto Ricans & US Puerto-Rican-born & Dominicans & US Dominican-born & Cubans & US Cuban-born \\ 
+Gender & Demographics & Mexico 2010 & Mexico 2020 & Puerto Rico 2010 & Puerto Rico 2020 & United States 2010 & United States 2020 \\ 
   \hline
-Female & Age &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.54 & 0.58 & 0.47 & 0.54 & 0.52 & 0.55 & 0.5 & 0.39 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.3 & 0.29 & 0.33 & 0.29 & 0.31 & 0.3 & 0.31 & 0.36 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.13 & 0.11 & 0.16 & 0.13 & 0.14 & 0.12 & 0.15 & 0.21 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.03 & 0.03 & 0.04 & 0.03 & 0.04 & 0.03 & 0.04 & 0.04 \\ 
-   & Education Completed &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.53 & 0.62 & 0.21 & 0.27 & 0.72 & 0.41 & 0.28 & 0.25 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.33 & 0.07 & 0.23 & 0.1 & 0.17 & 0.16 & 0.49 & 0.08 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.09 & 0.26 & 0.4 & 0.52 & 0.07 & 0.34 & 0.17 & 0.47 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.05 & 0.05 & 0.17 & 0.11 & 0.03 & 0.09 & 0.06 & 0.2 \\ 
-   & Household &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} & 3.47 & 3.42 & 2.19 & 2.27 & 3.54 & 2.99 & 3.02 & 2.42 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} & 0.14 & 0.17 & 0.29 & 0.34 & 0.13 & 0.25 & 0.14 & 0.28 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} & 0.58 & 0.54 & 0.28 & 0.32 & 0.55 & 0.5 & 0.52 & 0.32 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} & 0.44 & 0.42 & 0.4 & 0.33 & 0.38 & 0.25 & 0.45 & 0.38 \\ 
-   & N & 1596847 & 25012 & 30154 & 10009 & 44053 & 2992 & 107811 & 9966 \\ 
-  Male & Age &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.56 & 0.63 & 0.51 & 0.6 & 0.54 & 0.59 & 0.52 & 0.44 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.3 & 0.26 & 0.33 & 0.29 & 0.3 & 0.29 & 0.32 & 0.36 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.12 & 0.09 & 0.14 & 0.1 & 0.12 & 0.1 & 0.13 & 0.18 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.02 & 0.02 & 0.02 & 0.02 & 0.03 & 0.01 & 0.03 & 0.02 \\ 
-   & Education Completed &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.47 & 0.61 & 0.17 & 0.23 & 0.67 & 0.34 & 0.2 & 0.22 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.33 & 0.06 & 0.25 & 0.11 & 0.21 & 0.15 & 0.48 & 0.08 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.09 & 0.26 & 0.41 & 0.54 & 0.07 & 0.4 & 0.24 & 0.47 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.11 & 0.06 & 0.17 & 0.12 & 0.05 & 0.11 & 0.09 & 0.23 \\ 
-   & Household &  &  &  &  &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} & 3.6 & 3.55 & 2.34 & 2.41 & 3.56 & 3.19 & 2.95 & 2.47 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} & 0.11 & 0.13 & 0.2 & 0.25 & 0.16 & 0.17 & 0.17 & 0.21 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} & 0.54 & 0.52 & 0.22 & 0.29 & 0.5 & 0.48 & 0.43 & 0.26 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} & 0.74 & 0.68 & 0.63 & 0.59 & 0.68 & 0.59 & 0.67 & 0.65 \\ 
-   & N & 1456521 & 21190 & 22856 & 7394 & 41426 & 1758 & 96337 & 7731 \\ 
+Female & Age &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.53 & 0.55 & 0.5 & 0.45 & 0.49 & 0.5 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.31 & 0.29 & 0.32 & 0.34 & 0.29 & 0.31 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.13 & 0.13 & 0.15 & 0.17 & 0.18 & 0.15 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.03 & 0.03 & 0.03 & 0.04 & 0.05 & 0.05 \\ 
+   & Education Completed &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.61 & 0.45 & 0.26 & 0.15 & 0.04 & 0.03 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.29 & 0.38 & 0.25 & 0.21 & 0.14 & 0.09 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.07 & 0.11 & 0.36 & 0.44 & 0.63 & 0.62 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.03 & 0.07 & 0.13 & 0.2 & 0.2 & 0.26 \\ 
+   & Household &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} & 3.56 & 3.42 & 2.23 & 2.15 & 2.01 & 2.06 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} & 0.13 & 0.14 & 0.27 & 0.3 & 0.36 & 0.33 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} & 0.58 & 0.57 & 0.29 & 0.26 & 0.17 & 0.17 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} & 0.46 & 0.47 & 0.42 & 0.4 & 0.47 & 0.49 \\ 
+   & N & 624788 & 975534 & 5267 & 24887 & 380399 & 2292118 \\ 
+  Male & Age &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{60 - 69 }} & 0.54 & 0.56 & 0.54 & 0.48 & 0.55 & 0.54 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{70 - 79 }} & 0.31 & 0.3 & 0.32 & 0.35 & 0.29 & 0.31 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{80 - 89 }} & 0.12 & 0.12 & 0.13 & 0.15 & 0.14 & 0.12 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.5cm}|}{\makebox[1.5cm][r]{90 plus }} & 0.03 & 0.02 & 0.02 & 0.02 & 0.02 & 0.02 \\ 
+   & Education Completed &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.56 & 0.4 & 0.21 & 0.15 & 0.04 & 0.03 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.29 & 0.37 & 0.27 & 0.24 & 0.12 & 0.08 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.07 & 0.1 & 0.38 & 0.43 & 0.54 & 0.56 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.08 & 0.13 & 0.14 & 0.18 & 0.29 & 0.32 \\ 
+   & Household &  &  &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.7cm}|}{\makebox[2.7cm][r]{Household Size }} & 3.7 & 3.52 & 2.4 & 2.28 & 2.16 & 2.16 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.2cm}|}{\makebox[2.2cm][r]{Lives Alone }} & 0.11 & 0.11 & 0.18 & 0.22 & 0.22 & 0.23 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2.9cm}|}{\makebox[2.9cm][r]{Lives with Child }} & 0.56 & 0.53 & 0.24 & 0.2 & 0.14 & 0.15 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.4cm}|}{\makebox[3.4cm][r]{Married/Cohabiting }} & 0.74 & 0.74 & 0.67 & 0.61 & 0.71 & 0.69 \\ 
+   & N & 572708 & 887846 & 3989 & 18867 & 306158 & 1932434 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -493,17 +767,17 @@ Female & Age &  &  &  &  &  &  &  &  \\
 Gender & Demographics & Mexico 2010 & Mexico 2020 & Mexico-Born US 2010 & Mexico-Born US 2020 \\ 
   \hline
 Female & Education Completed &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.59 & 0.56 & 0.42 & 0.44 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.30 & 0.32 & 0.32 & 0.22 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.07 & 0.08 & 0.23 & 0.29 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.59 & 0.56 & 0.42 & 0.43 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.30 & 0.32 & 0.32 & 0.29 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.07 & 0.08 & 0.23 & 0.20 \\ 
    & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.03 & 0.04 & 0.03 & 0.05 \\ 
-   & N & 535289.00 & 440990.00 & 5314.00 & 17541.00 \\ 
-  Male & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.54 & 0.52 & 0.41 & 0.44 \\ 
-   & Education Completed &  &  &  &  \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.30 & 0.31 & 0.31 & 0.21 \\ 
-   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.07 & 0.07 & 0.22 & 0.28 \\ 
+   & N & 535289.00 & 440990.00 & 5314.00 & 16897.00 \\ 
+  Male & Education Completed &  &  &  &  \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{3.2cm}|}{\makebox[3.2cm][r]{Less than Primary }} & 0.54 & 0.52 & 0.41 & 0.44 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{1.7cm}|}{\makebox[1.7cm][r]{Primary }} & 0.30 & 0.31 & 0.31 & 0.27 \\ 
+   & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{Secondary }} & 0.07 & 0.07 & 0.22 & 0.20 \\ 
    & \multicolumn{1}{>{\raggedleft\arraybackslash}p{2cm}|}{\makebox[2cm][r]{University }} & 0.08 & 0.10 & 0.05 & 0.07 \\ 
-   & N & 494127.00 & 404169.00 & 4569.00 & 13915.00 \\ 
+   & N & 494127.00 & 404169.00 & 4569.00 & 13531.00 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -512,14 +786,94 @@ Female & Education Completed &  &  &  &  \\
 \end{landscape}
 
 \newpage
+
+### Definitions
+
+**English Speaker:** We define an "English speaker" as anyone who says
+they speak English, including those who say "yes, but not well."
+
+**Education Levels:** In order to make education categories comparable
+to the US. We exclude those who received a GED from these categories.
+
+-   "**Less Than Primary**" includes individuals with education levels
+    such as "grade 1" through "grade 5," "kindergarten," "no schooling
+    completed," or "nursery school, preschool."
+
+-   "**Primary Completed**" includes those who completed grades 6
+    through 11, representing completion of primary education but not
+    secondary school.
+
+-   "**Secondary Completed**" includes individuals with a "regular high
+    school diploma," partial college experience (e.g., "1 or more years
+    of college credit, no degree" or "some college, but less than 1
+    year"), or those who attended up to the 12th grade without
+    graduating, indicating completion of secondary education or partial
+    college.
+
+-   "**University Completed**" includes individuals with higher
+    education qualifications such as an associate's degree, bachelor's
+    degree, master's degree, doctoral degree, or professional degree
+    beyond a bachelor's, representing university-level education or
+    higher. Each individual is assigned to one of these categories based
+    on their reported education level.
+
+**Household Size:** The household size is a measure of the respondent's
+"own family" living in the household, including themselves.
+
+-   "Lives Alone" is defined as a household size of 1.
+
+-   "Lives with Child" refers to respondents who report one of their
+    household members as one of their children.
+
+**Married:** The US Census status classification identifies four major
+categories: never married, married, widowed, and divorced. These terms
+refer to the marital status at the time of the enumeration. The
+"married" category is defined as those who responded "married, spouse
+present," implying that the spouse lives in the household.
+
+In the International samples, we include those who responded in the
+following ways as "married."
+
+-   "married, formally"
+
+-   "married, civil"
+
+-   "married or consensual union
+
+-   "married, religious"
+
+-   "married, civil and religious"
+
+-   "consensual union"
+
+**Citizen:** U.S. citizen by naturalization.
+
+**Hispanic:** People of Hispanic origin, according to the ACS, were
+those who indicated that their origin was Mexican, Puerto Rican, Cuban,
+Central or South American, or some other Hispanic origin. For this
+paper, we excluded anyone not born in Latin America from the "Hispanic"
+category.
+
+**Latin America and Caribbean Countries:** Any country in Latin
+American, including north, central, and south america, as well as
+countries in the Caribbean that speak primarily Spanish.
+
+\newpage
 \section*{Acknowledgments}
 \addcontentsline{toc}{section}{Acknowledgments}
-The authors wish to acknowledge the statistical offices that provided the underlying data making this research possible: National Administrative Department of Statistics, Colombia; Office of National Statistics, Cuba; National Statistics Office, Dominican Republic; Department of Statistics and Censuses, El Salvador; National Institute of Statistics, Guatemala; National Institute of Statistics, Honduras; National Institute of Statistics, Geography, and Informatics, Mexico; U.S. Bureau of the Census, Puerto Rico; and Bureau of the Census, United States.
+
+The authors wish to acknowledge the statistical offices that provided
+the underlying data making this research possible: National
+Administrative Department of Statistics, Colombia; Office of National
+Statistics, Cuba; National Statistics Office, Dominican Republic;
+Department of Statistics and Censuses, El Salvador; National Institute
+of Statistics, Guatemala; National Institute of Statistics, Honduras;
+National Institute of Statistics, Geography, and Informatics, Mexico;
+U.S. Bureau of the Census, Puerto Rico; and Bureau of the Census, United
+States.
 
 \newpage
 
 \newpage
 
 # References
-
-[//]: # quarto render carib_hisp_immigrant_comp.qmd --to docx

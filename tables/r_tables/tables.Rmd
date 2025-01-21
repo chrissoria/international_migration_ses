@@ -271,24 +271,30 @@ adjust_latex_rows <- function(latex_code, adjustments) {
 }
 ```
 
-## table on background features
+# table on background features
 ```{r}
+#mexico first
+#add lines to differentiate the types of countries 
 background_data <- read.csv(paste0(data_dir,"hispanic_immigrant_count.csv")) 
 
 background_table <- background_data %>% 
-  select(bpld_string, GDPpercapita, e60, IMR_1950, IMR_2019) %>% 
+  select(bpld_string, count, percent, GDPpercapita, e60, IMR_1950, IMR_2019) %>% 
+  mutate(percent = percent*100) %>% 
   rename(Country = bpld_string,
          `GDP` = GDPpercapita,
+         Total = count,
+         `Percent of Migrants` = percent,
          `Life Expectancy at 60` = e60,
          `Infant Mortality Rate (1950)` = IMR_1950,
          `Infant Mortality Rate (2019)` = IMR_2019
-  )
+  ) %>% 
+  add_row(Country = "Mexico and Carribean Countries", .before = 1)
 
 print(background_table)
 
 background_table_code <- xtable(background_table, 
                                    caption = "Latin American Development Indicators", 
-                                   align = "ll|cccc")
+                                   align = "ll|cccccc")
 
 latex_code <- capture.output(print(background_table_code, 
                                    type = "latex", 
@@ -2220,10 +2226,11 @@ in_df <- in_df %>%
   mutate(birth_year = year - age)
 
 us_df_2010 <- us_df_2010 %>% 
-  mutate(birth_year = year - age)
+  mutate(birth_year = year - age) 
 
-us_df_2020 <- us_df_2020 %>% 
-  mutate(birth_year = year - age)
+us_df_2020_immig_filtered <- us_df_2020 %>% 
+  mutate(birth_year = year - age) %>% 
+  filter(yrimmig < 2011)
   
 create_table_for_sex <- function(df, sex_value) {
   df %>%
@@ -2260,10 +2267,10 @@ table_prop_education_mexico_us_2010_sex1 <- create_table_for_sex(us_df_2010, 1) 
 table_prop_education_mexico_us_2010_sex2 <- create_table_for_sex(us_df_2010, 2) %>% 
   select(mexico_2010)
 
-table_prop_education_mexico_us_2020_sex1 <- create_table_for_sex(us_df_2020, 1) %>% 
+table_prop_education_mexico_us_2020_sex1 <- create_table_for_sex(us_df_2020_immig_filtered, 1) %>% 
   select(mexico_2020)
 
-table_prop_education_mexico_us_2020_sex2 <- create_table_for_sex(us_df_2020, 2) %>% 
+table_prop_education_mexico_us_2020_sex2 <- create_table_for_sex(us_df_2020_immig_filtered, 2) %>% 
   select(mexico_2020)
 
 table_prop_education_mexico1 <- bind_rows(
@@ -2294,7 +2301,7 @@ table_prop_education_mexico <- table_prop_education_mexico %>%
          ) %>%
   rename(Demographics = variable) %>% 
   add_row(Demographics = "Education Completed", .before = 1) %>% 
-  add_row(Demographics = "Education Completed", .before = 8) %>% 
+  add_row(Demographics = "Education Completed", .before = 7) %>% 
   mutate(Gender = ifelse(row_number() == 1, "Female", 
                          ifelse(row_number() == 7, "Male", ""))) %>%
   select(Gender, everything())

@@ -14,8 +14,6 @@ else {
 }
 keep if age > 59
 
-gen birth_year = year - age
-
 gen HispanicCategory = .
 *identify hispanics from central america
 replace HispanicCategory = 3 if bpl == 210 & hispan ~= 0
@@ -203,11 +201,10 @@ if "`data'" == "2020" {
     replace less_than_primary_completed = 1 if inlist(edattain_string, "grade 1", "grade 2", "grade 3", "grade 4", "grade 5", ///
         "kindergarten", "no schooling completed", "nursery school, preschool")
     
-    replace primary_completed = 1 if inlist(edattain_string, "grade 6", "grade 7", "grade 8")
+    replace primary_completed = 1 if inlist(edattain_string, "grade 6", "grade 7", "grade 8", "grade 9", "grade 10", "grade 11")
     
-    replace secondary_completed = 1 if inlist(edattain_string, "grade 9", "grade 10", "grade 11", "12th grade, no diploma", ///
-        "ged or alternative credential", "regular high school diploma", ///
-        "1 or more years of college credit, no degree", "some college, but less than 1 year")
+    replace secondary_completed = 1 if inlist(edattain_string, "regular high school diploma", ///
+        "1 or more years of college credit, no degree", "some college, but less than 1 year", "12th grade, no diploma")
     
     replace university_completed = 1 if inlist(edattain_string, "associate's degree, type not specified", "bachelor's degree", ///
         "master's degree", "doctoral degree", "professional degree beyond a bachelor's degree")
@@ -216,10 +213,9 @@ else {
     replace less_than_primary_completed = 1 if inlist(edattain_string, "nursery school to grade 4", "grade 5 or 6", ///
         "no schooling completed")
     
-    replace primary_completed = 1 if inlist(edattain_string, "grade 7 or 8")
+    replace primary_completed = 1 if inlist(edattain_string, "grade 7 or 8", "grade 9", "grade 10", "grade 11")
     
-    replace secondary_completed = 1 if inlist(edattain_string, "grade 9", "grade 10", "grade 11", "12th grade, no diploma", ///
-        "high school graduate or ged", "1 or more years of college credit, no degree", "some college, but less than 1 year")
+    replace secondary_completed = 1 if inlist(edattain_string, "high school graduate or ged", "1 or more years of college credit, no degree", "some college, but less than 1 year", "12th grade, no diploma")
     
     replace university_completed = 1 if inlist(edattain_string, "associate's degree, type not specified", "bachelor's degree", ///
         "master's degree", "doctoral degree", "professional degree beyond a bachelor's degree")	
@@ -270,8 +266,6 @@ use data/ipumsi_00002_US_2010.dta
 
 keep if age > 59
 
-gen birth_year = year - age
-
 /*
 central america
 22050 Honduras
@@ -285,19 +279,21 @@ central america
 
 gen HispanicCategory = .
 *identify hispanics from central america
-replace HispanicCategory = 3 if bplcountry >= 22010 & bplcountry <= 22050 & hispan ~= 0
+replace HispanicCategory = 3 if (bplcountry >= 22010 & bplcountry <= 22050) & hispan ~= 0
 *identify hispanics from outside europe, asia, central america
-replace HispanicCategory = 2 if hispan ~= 0 & HispanicCategory != 3
+replace HispanicCategory = 2 if hispan ~= 0 & HispanicCategory ~= 3
 *identify hispanic-europeans and hispanic-asians
-replace HispanicCategory = 1 if HispanicCategory != 3 & HispanicCategory != 2
+replace HispanicCategory = 1 if HispanicCategory ~= 3 & HispanicCategory ~= 2
 *identify non-hispanics
-replace HispanicCategory = 0 if hispan ~= 0
+replace HispanicCategory = 0 if hispan == 0
 
 label define HispanicCategory_labels 3 "Central-American Latino" 2 "Other Latino" 1 "Hispanic Non-Latino" 0 "Not Latino"
 label values HispanicCategory HispanicCategory_labels
 label variable HispanicCategory "Hispanic Category"
 
 decode HispanicCategory, gen(HispanicCategoryString)
+
+tab HispanicCategory
 
 gen lives_alone = (famsize == 1 & famsize != .)
 gen child_in_household = 0
@@ -460,6 +456,23 @@ gen female = (sex == 2)
 
 gen english_speaker = (speakeng == 1)
 
+*realigning to match with years of education:
+
+decode edattain, gen(edattain_string)
+
+gen less_than_primary_completed = (edattain_string == "less than primary completed")
+gen primary_completed = (edattain_string == "primary completed")
+gen secondary_completed = (edattain_string == "secondary completed")
+gen university_completed = (edattain_string == "university completed")
+
+drop edattain_string
+
+replace edattain = 2 if yrschool < 12 & secondary_completed == 1
+replace edattain = 3 if yrschool > 12 & primary_completed == 1
+replace edattain = 4 if yrschool > 15 & secondary_completed == 1
+
+drop less_than_primary_completed primary_completed secondary_completed university_completed
+
 decode edattain, gen(edattain_string)
 
 gen less_than_primary_completed = (edattain_string == "less than primary completed")
@@ -505,8 +518,6 @@ capture append using data/ipumsi_00002_US_2010.dta
 decode country, gen(country_string)
 
 keep if age > 59
-
-gen birth_year = year - age
 
 gen lives_alone = (famsize == 1 & famsize != .)
 gen child_in_household = 0

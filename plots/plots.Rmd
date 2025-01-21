@@ -586,6 +586,79 @@ ggsave(filename = paste0(out_dir,"age_at_immig_english_panels.jpg"),
        plot = combined_plot_age_at_immig, 
        width = 12, height = 9, dpi = 300)
 ```
+## are people who migrate at earlier ages more likely to be citizens
+```{r}
+countries <- c("mexico", "dominican republic", "cuba")
+result_list <- list()
+
+for (country in countries) {
+  prop_cohort_citizen_country <- us_df_2020 %>% 
+    filter(country_string == country) %>%
+    group_by(age_at_immig_groups_string) %>% 
+    summarise(
+      mean_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE)
+    )
+  
+  result_list[[country]] <- prop_cohort_citizen_country$mean_citizen
+}
+
+prop_cohort_citizen_country <- data.frame(
+  age_at_immig_groups = prop_cohort_citizen_country$age_at_immig_groups_string,
+  do.call(cbind, result_list)
+) %>%
+  mutate(age_at_immig_groups = factor(age_at_immig_groups, 
+                                      levels = c("Under 15", "15-24", "25-49" ,"50 and above")))
+
+prop_cohort_citizen_country_long <- prop_cohort_citizen_country %>%
+  pivot_longer(cols = -age_at_immig_groups, 
+               names_to = "country", 
+               values_to = "proportion") %>%
+  mutate(country = str_to_title(country))
+
+create_country_plot <- function(country_data) {
+  ggplot(country_data, aes(x = proportion, y = age_at_immig_groups, fill = age_at_immig_groups)) +
+    geom_bar(stat = "identity") +
+    geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+              hjust = -0.1, size = 3) +
+    scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+    scale_fill_manual(name = "Age at Immigration",
+      values = c("Under 15" = "#66c2a5", 
+                 "15-24" = "#fc8d62",
+                 "25-49" = "pink",
+                 "50 and above" = "#8da0cb")) +
+    labs(title = unique(country_data$country),
+         x = "Proportion",
+         y = "Age at Immigration") +
+    theme_cowplot() +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = "none",
+          axis.title.x = element_blank())
+}
+
+country_plots <- prop_cohort_citizen_country_long %>%
+  split(.$country) %>%
+  map(create_country_plot)
+
+combined_plot <- wrap_plots(country_plots, ncol = 2) +
+  plot_annotation(
+    title = "Proportion of Naturalized Citizens by Age at Immigration and Country of Origin",
+    subtitle = "Based on 2020 dataset",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 14),
+                  plot.subtitle = element_text(hjust = 0.5, size = 12))
+  ) &
+  theme(legend.position = "bottom")
+
+combined_plot_age_at_immig <- combined_plot + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+print(combined_plot_age_at_immig)
+
+ggsave(filename = paste0(out_dir,"age_at_immig_citizen_panels.jpg"), 
+       plot = combined_plot_age_at_immig, 
+       width = 12, height = 9, dpi = 300)
+```
+
 # what proportion of country migrants come from these cohorts?
 ```{r}
 countries <- c("mexico", "puerto rico", "dominican republic", "cuba")
