@@ -277,18 +277,31 @@ adjust_latex_rows <- function(latex_code, adjustments) {
 #add lines to differentiate the types of countries 
 background_data <- read.csv(paste0(data_dir,"hispanic_immigrant_count.csv")) 
 
+table1_order <- c("Mexico", "Cuba", "Dominican Republic", "Puerto Rico", 
+                   "Belize/British Honduras", "Costa Rica", "El Salvador", 
+                   "Guatemala", "Honduras", "Nicaragua", "Panama", 
+                   "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", 
+                   "Ecuador", "Guyana/British Guiana", "Haiti", "Jamaica", 
+                   "Paraguay", "Peru", "Trinidad and Tobago", "Uruguay", 
+                   "Venezuela")
+
 background_table <- background_data %>% 
+  filter(bpld_string != "Canada") %>% 
   select(bpld_string, count, percent, GDPpercapita, e60, IMR_1950, IMR_2019) %>% 
   mutate(percent = percent*100) %>% 
   rename(Country = bpld_string,
-         `GDP` = GDPpercapita,
+         `GDP Per Capita` = GDPpercapita,
          Total = count,
          `Percent of Migrants` = percent,
          `Life Expectancy at 60` = e60,
          `Infant Mortality Rate (1950)` = IMR_1950,
          `Infant Mortality Rate (2019)` = IMR_2019
   ) %>% 
-  add_row(Country = "Mexico and Carribean Countries", .before = 1)
+  mutate(Country = factor(Country, levels = table1_order)) %>% 
+  arrange(Country) %>% 
+  add_row(Country = "Mexico and Carribean Countries", .before = 1) %>% 
+  add_row(Country = "Central American Countries", .before = 6) %>% 
+  add_row(Country = "South American Countries", .before = 14)
 
 print(background_table)
 write_xlsx(background_table, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table1.xlsx")
