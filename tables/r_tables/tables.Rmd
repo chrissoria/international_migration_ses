@@ -291,6 +291,7 @@ background_table <- background_data %>%
   add_row(Country = "Mexico and Carribean Countries", .before = 1)
 
 print(background_table)
+write_xlsx(background_table, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table1.xlsx")
 
 background_table_code <- xtable(background_table, 
                                    caption = "Latin American Development Indicators", 
@@ -524,6 +525,7 @@ table1 <- table1 %>%
   add_row(Demographics = "Acculturation", .before = 26)
 
 print(table1)
+write_xlsx(table1, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table2.xlsx")
 
 table1_code <- xtable(table1, 
                                    caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS)", 
@@ -719,6 +721,7 @@ table2 <- cbind(combined_table2, combined_table2_2) %>%
   select(Gender, everything())
 
 print(table2)
+write_xlsx(table2, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table3.xlsx")
 
 table2_code <- xtable(table2, 
                                    caption = "Summary Statistics by Country and Sex For Hispanics in Their Native Countries", 
@@ -772,7 +775,7 @@ writeLines(latex_code, "/Users/chrissoria/Documents/Research/us_international_se
 ```
 
 
-## append table 2, preoportion that speak english
+## append table 2, preoportion age groups that speak english
 ```{r}
 countries <- c("mexico", "puerto rico", "dominican republic", "cuba")
 
@@ -802,7 +805,7 @@ prop_cohort_speaks_english <- data.frame(
 
 print(prop_cohort_speaks_english)
 ```
-## append table 3, proportion of cohort that speak english
+## append table 3, proportion of migration cohort that speak english
 ```{r}
 result_list <- list()
 
@@ -1050,6 +1053,7 @@ table1_2010 <- table1_2010 %>%
   add_row(Demographics = "Acculturation", .before = 26)
 
 print(table1_2010)
+write_xlsx(table1_2010, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table6.xlsx")
 
 table1_2010_code <- xtable(table1_2010, 
                                    caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2006-10 ACS)", 
@@ -1328,6 +1332,7 @@ table1_female <- table1_female %>%
   add_row(Demographics = "Acculturation", .before = 26)
 
 print(table1_female)
+write_xlsx(table1_female, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table4.xlsx")
 
 table1_female_code <- xtable(table1_female, 
                                    caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS): Females", 
@@ -1605,6 +1610,7 @@ table1_male <- table1_male %>%
   add_row(Demographics = "Acculturation", .before = 26)
 
 print(table1_male)
+write_xlsx(table1_male, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table5.xlsx")
 
 table1_male_code <- xtable(table1_male, 
                                    caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS): Males", 
@@ -1873,6 +1879,7 @@ table1_25_plus <- table1_25_plus %>%
   add_row(Demographics = "Acculturation", .before = 24)
 
 print(table1_25_plus)
+write_xlsx(table1_25_plus, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table7.xlsx")
 
 table1_25_plus_code <- xtable(table1_25_plus, 
                                    caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS): Migrated After Age 24", 
@@ -2068,6 +2075,7 @@ table1_standardized <- cbind(combined_table1, combined_table2) %>%
   select(Gender, everything())
 
 print(table1_standardized)
+write_xlsx(table1_standardized, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table8.xlsx")
 
 table1_code <- xtable(table1_standardized, 
                                    caption = "Summary Statistics by Country and Sex For Hispanics in Their Native Countries (Age Standardized)", 
@@ -2199,6 +2207,7 @@ table2_2010_2020 <- table2_2010_2020 %>%
   select(Gender, everything())
 
 print(table2_2010_2020)
+write_xlsx(table2_2010_2020, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table9.xlsx")
 
 table2_2010_2020_code <- xtable(table2_2010_2020, 
                                    caption = "Summary Statistics by Country and Sex For Hispanics in Their Native Countries (2010 and 2020)", 
@@ -2307,6 +2316,7 @@ table_prop_education_mexico <- table_prop_education_mexico %>%
   select(Gender, everything())
 
 print(table_prop_education_mexico)
+write_xlsx(table_prop_education_mexico, "/Users/chrissoria/Documents/Research/us_international_ses/tables/table10.xlsx")
 
 table_prop_education_mexico_code <- xtable(table_prop_education_mexico, 
                                    caption = "Educational Attainment of Mexican-Born Individuals by Gender and Location (2010-2020)", 
