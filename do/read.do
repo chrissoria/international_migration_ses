@@ -5,12 +5,14 @@ clear all
 capture log close
 
 foreach data in "2020" "2010" {
-use "data/usa_00003.dta", clear
+
 if "`data'" == "2020" {
-    keep if sample == 202003
+	use "data/usa_00003.dta", clear
+	keep if sample == 202003
 }
 else {
-	keep if sample == 201005
+	use "data/usa_00006.dta", clear
+	keep if sample == 201003
 }
 keep if age > 59
 
@@ -94,12 +96,13 @@ replace nativity_string = "foreign-born" if contains_us_state == 0
 replace nativity_string = "native-born" if contains_us_state == 1
 
 decode race, gen(race_string)
+replace race_string = lower(race_string)
 replace race_string = "black" if race_string == "black/african american"
 
 decode hispan, gen(hispan_string)
 
-replace hispan_string = "hispanic" if hispan_string != "not hispanic"
 replace hispan_string = lower(hispan_string)
+replace hispan_string = "hispanic" if hispan_string != "not hispanic"
 
 *a weird thing in the data, dominicans are often classified as not hispanic. changing to hispanic. 
 replace hispan_string = "hispanic" if bpld == 26010
@@ -150,7 +153,8 @@ label values race_native_category category_labels
 tab native_foreign_race
 tab race_native_category, miss
 
-gen married_cohab = (marst == 1) if marst != .
+gen married_cohab = (marst == 1 | marst == 2) if marst != .
+gen married_not_cohab = (marst == 2) if marst != .
 
 gen years_in_us = yrsusa1
 
@@ -180,6 +184,7 @@ gen male = (sex == 1)
 gen female = (sex == 2)
 
 decode speakeng, gen(speakeng_string)
+replace speakeng_string = lower(speakeng_string)
 
 gen english_speaker = 0
 replace english_speaker = 1 if speakeng_string != "does not speak english"
@@ -191,35 +196,23 @@ gen english_speaker_well = 0
 replace english_speaker_well = 1 if (english_speaker == 1 & english_speaker_not_well == 0)
 
 decode educd, gen(edattain_string)
+replace edattain_string = lower(edattain_string)
 
 generate less_than_primary_completed = 0
 generate primary_completed = 0
 generate secondary_completed = 0
 generate university_completed = 0
 
-if "`data'" == "2020" {
-    replace less_than_primary_completed = 1 if inlist(edattain_string, "grade 1", "grade 2", "grade 3", "grade 4", "grade 5", ///
+ replace less_than_primary_completed = 1 if inlist(edattain_string, "grade 1", "grade 2", "grade 3", "grade 4", "grade 5", ///
         "kindergarten", "no schooling completed", "nursery school, preschool")
     
-    replace primary_completed = 1 if inlist(edattain_string, "grade 6", "grade 7", "grade 8", "grade 9", "grade 10", "grade 11")
+ replace primary_completed = 1 if inlist(edattain_string, "grade 6", "grade 7", "grade 8", "grade 9", "grade 10", "grade 11")
     
-    replace secondary_completed = 1 if inlist(edattain_string, "regular high school diploma", ///
-        "1 or more years of college credit, no degree", "some college, but less than 1 year", "12th grade, no diploma")
+ replace secondary_completed = 1 if inlist(edattain_string, "regular high school diploma", ///
+        "1 or more years of college credit, no degree", "some college, but less than 1 year", "12th grade, no diploma", "associate's degree, type not specified")
     
-    replace university_completed = 1 if inlist(edattain_string, "associate's degree, type not specified", "bachelor's degree", ///
+ replace university_completed = 1 if inlist(edattain_string, "bachelor's degree", ///
         "master's degree", "doctoral degree", "professional degree beyond a bachelor's degree")
-}
-else {
-    replace less_than_primary_completed = 1 if inlist(edattain_string, "nursery school to grade 4", "grade 5 or 6", ///
-        "no schooling completed")
-    
-    replace primary_completed = 1 if inlist(edattain_string, "grade 7 or 8", "grade 9", "grade 10", "grade 11")
-    
-    replace secondary_completed = 1 if inlist(edattain_string, "high school graduate or ged", "1 or more years of college credit, no degree", "some college, but less than 1 year", "12th grade, no diploma")
-    
-    replace university_completed = 1 if inlist(edattain_string, "associate's degree, type not specified", "bachelor's degree", ///
-        "master's degree", "doctoral degree", "professional degree beyond a bachelor's degree")	
-}
 
 
 tab less_than_primary_completed
@@ -543,6 +536,7 @@ gen male = (sex == 1)
 gen female = (sex == 2)
 
 decode edattain, gen(edattain_string)
+decode edattaind, gen(edattaind_string)
 
 gen less_than_primary_completed = (edattain_string == "less than primary completed")
 gen primary_completed = (edattain_string == "primary completed")

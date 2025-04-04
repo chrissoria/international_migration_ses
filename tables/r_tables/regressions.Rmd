@@ -8,6 +8,10 @@ output: html_document
 ```{r}
 library(emmeans)
 library(tidyverse)
+library(broom)
+library(cowplot)
+library(writexl)
+library(scales)
 ```
 
 ```{r}
@@ -17,7 +21,7 @@ current_dir <- normalizePath(getwd())
 if (current_dir == target_dir) {
   out_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/")
   data_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/")
-  plot_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses//plots/")
+  plot_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/plots/")
 
 } else {
   out_dir <- file.path("C:/Users/Ty/Desktop/ses_international/tables/r_tables//")
@@ -30,11 +34,11 @@ print(getwd())
 ```
 ## migrant regressions
 ```{r}
-dvs <- c("married_cohab", "age_at_immigration_under15", "age_at_immigration_15to49", "age_at_immigration_50plus", "secondary_or_above", "less_than_primary_completed", "primary_completed", "secondary_completed", "university_completed", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "is_naturalized_citizen", "female", "english_speaker")
+dvs <- c("married_cohab", "primary_or_above", "secondary_or_above", "is_naturalized_citizen", "english_speaker", "lives_alone")
 
-ivs <- c("country_string", "age_70to79", "age_80to89")
+ivs <- c("age_at_immigration_under15", "age_at_immigration_25to49", "age_at_immigration_50plus", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "female", "country_string", "country_string")
 
-us_df_2020_filtered <- us_df_2020 %>% 
+us_df_2010_filtered <- us_df_2010 %>% 
    filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
    mutate(country_string = fct_relevel(country_string, "mexico"))
 
@@ -46,8 +50,7 @@ for (dv in dvs) {
 
   print(formula)
 
-  model <- glm(formula, data = us_df_2020_filtered, 
-               family = binomial(),
+  model <- lm(formula, data = us_df_2010_filtered, 
                weights = perwt)
 
   results_list[[dv]] <- model
@@ -79,7 +82,61 @@ if (length(excel_data) > 0) {
   cat("No valid data to write to Excel.\n")
 }
 ```
-## migrant regressions
+## overall DV emmeans
+```{r}
+emm_results <- map(results_list, ~ emmeans(.x, specs = "country_string"))
+
+# Convert to tidy data frames with CIs
+emm_tables <- map(emm_results, ~ summary(.x, infer = TRUE) %>% 
+                  as.data.frame() %>%
+                  select(country_string, emmean, SE, lower.CL, upper.CL))
+
+for (dv in dvs) {
+  p <- ggplot(emm_tables[[dv]], 
+              aes(x = reorder(country_string, emmean), 
+                  y = emmean)) +
+    geom_col(fill = "#1f78b4", width = 0.7) +
+    geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
+                  width = 0.2, color = "black") +
+    # Add percentage labels above bars
+    geom_text(
+      aes(label = percent(emmean, accuracy = 1)),
+      vjust = -1.5, 
+      color = "black",
+      size = 3.5,
+      fontface = "bold"
+    ) +
+    # Convert y-axis to percentage format
+    scale_y_continuous(
+      labels = percent_format(accuracy = 1),
+      expand = expansion(mult = c(0, 0.1))
+    ) +
+    ylim(0,1) +
+    labs(
+      title = element_blank(),
+      x = element_blank(),
+      y = "Estimated Percent"
+    ) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          axis.text.y = element_blank())
+  
+  print(p)
+  
+  ggsave(
+    filename = file.path("/Users/chrissoria/Documents/Research/us_international_ses/plots", 
+                        paste0(dv, "_emm_plot.png")),
+    plot = p,
+    device = "png",
+    width = 8,
+    height = 6,
+    dpi = 300
+  )
+}
+```
+
+
+# migrant-specific regressions
 ```{r}
 dvs <- c("married_cohab", "age_at_immigration_under15", "age_at_immigration_15to49", "age_at_immigration_50plus", "secondary_or_above", "less_than_primary_completed", "primary_completed", "secondary_completed", "university_completed", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "is_naturalized_citizen", "female", "english_speaker")
 
@@ -233,7 +290,7 @@ ggsave(paste0(plot_dir, "predicted_citizen_by_immigration_age_and_country.png"),
 run_education_model <- function(data, dv, country) {
   model <- data %>%
     filter(country_string == country) %>%
-    glm(as.formula(paste(dv, "~ age + as.factor(female) + race_string + as.factor(is_naturalized_citizen) + married_cohab + year_of_immig_groups_string + age_at_immig_groups_string")), 
+    glm(as.formula(paste(dv, "~ age + as.factor(female) + race_string + as.factor(is_naturalized_citizen) + married_cohab + year_of_immig_groups_string + age_at_immig_groups_string" + "country_string")), 
         data = ., 
         family = binomial(),
         weights = perwt)
