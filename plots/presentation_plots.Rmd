@@ -182,7 +182,7 @@ create_combined_faceted_age_plot <- function(data,
                                            var_labels = c("Less than 15", "15 to 49", "50 and above"),
                                            country_var = "country_string",
                                            title = element_blank(),
-                                           y_limits = c(0, .7)) {
+                                           y_limits = c(0, 1)) {
   
   country_colors <- c(
     "Mexico" = "#E69F00",
@@ -206,18 +206,22 @@ create_combined_faceted_age_plot <- function(data,
   
   print(data_long)
   
-  plot_list <- lapply(unique(data_long[[country_var]]), function(country) {
+  countries <- unique(data_long[[country_var]])
+  
+  plot_list <- lapply(seq_along(countries), function(i) {
+    country <- countries[i]
     # Get the specific color for this country
     country_color <- country_colors[country]
     
-    ggplot(data_long[data_long[[country_var]] == country, ], 
+    # Base plot
+    p <- ggplot(data_long[data_long[[country_var]] == country, ], 
            aes(x = age_group, y = mean_age)) +
       geom_bar(stat = "identity", position = "dodge", width = 0.7, 
                color = "black", fill = country_color) +
       geom_text(aes(label = round(mean_age, 2)), 
                 position = position_dodge(width = 0.7),
                 vjust = -0.5,
-                size = 3) +
+                size = 6) +
       labs(title = country,
            x = element_blank(),
            y = element_blank()) +
@@ -225,9 +229,22 @@ create_combined_faceted_age_plot <- function(data,
       ylim(y_limits) + 
       theme(
         legend.position = "none",
-        axis.text.x = element_text(size = 8, angle = 45, hjust = 1),
-        plot.title = element_text(size = 10, face = "bold", hjust = 0.5)
+        axis.text.x = element_text(size = 10, angle = 40, hjust = 1, face = "bold"),
+        plot.title = element_text(size = 13, face = "bold", hjust = 0.5)
       )
+    
+    # Only remove y-axis text for non-first plots when columns=1
+    if (columns == 4 && i > 1) {
+  p <- p + theme(
+    axis.text.y = element_blank(),
+    panel.border = element_blank(),
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.line.x = element_line(color = "black")
+  )
+}
+    
+    return(p)
   })
   
   combined_plot <- cowplot::plot_grid(plotlist = plot_list, ncol = columns)
@@ -243,6 +260,7 @@ create_combined_faceted_age_plot <- function(data,
   
   return(combined_plot)
 }
+
 
 
 # simpler age at migration plot function (age groups grouped and country colors)
@@ -637,12 +655,6 @@ create_combined_faceted_age_plot_1 <- create_combined_faceted_age_plot(table1, c
 create_combined_faceted_age_plot_2 <- create_combined_faceted_age_plot(table1, columns = 4, y_limits = c(0, 1))
 age_migration_plot_same_axis <- create_grouped_age_plot(table1, cbPalette = cbPalette, y_limits = c(0, 1))
 
-age_migration_plot
-age_migration_plot_alt
-create_combined_faceted_age_plot_1
-create_combined_faceted_age_plot_2
-age_migration_plot_same_axis
-
 plot_list <- list(
   v1 = age_migration_plot,
   v2 = age_migration_plot_alt,
@@ -653,6 +665,7 @@ plot_list <- list(
 
 # Loop through the list and save each plot
 for (i in names(plot_list)) {
+  print(plot_list[[i]])
   ggsave(
     filename = file.path(plot_dir, paste0(i, "_mean_age_migration_2020.png")),
     plot = plot_list[[i]],

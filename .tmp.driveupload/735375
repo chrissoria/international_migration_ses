@@ -1,3 +1,4 @@
+"0","age_migration_plot_same_axis <- create_grouped_age_plot(table1, cbPalette = cbPalette, y_limits = c(0, 1))"
 "0",""
 "0","plot_list <- list("
 "0","  v1 = age_migration_plot,"
@@ -9,6 +10,7 @@
 "0",""
 "0","# Loop through the list and save each plot"
 "0","for (i in names(plot_list)) {"
+"0","  print(plot_list[[i]])"
 "0","  ggsave("
 "0","    filename = file.path(plot_dir, paste0(i, ""_mean_age_migration_2020.png"")),"
 "0","    plot = plot_list[[i]],"
