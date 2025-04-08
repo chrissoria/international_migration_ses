@@ -1,0 +1,1 @@
+"0","create_combined_faceted_age_plot_2 <- create_combined_faceted_age_plot(table1, columns = 4, y_limits = c(0, 1))"

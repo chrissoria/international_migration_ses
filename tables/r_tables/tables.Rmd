@@ -2913,7 +2913,8 @@ table1<- us_df_2020 %>%
          ),
          country_string = fct_relevel(country_string, 
                                       "Mexico", "Puerto Rico", "Dominican Republic", "Cuba"),
-         mean_age_at_immigration_15to49 = mean_age_at_immigration_15to24 + mean_age_at_immigration_15to24) 
+         mean_age_at_immigration_15to49 = mean_age_at_immigration_15to24 + mean_age_at_immigration_25to49,
+         mean_yrimm_1980_plus = mean_yrimm_1980_1999 + mean_yrimm_2000plus) 
 
 table1
 ```

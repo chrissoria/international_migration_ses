@@ -11,14 +11,22 @@ library(tidyverse)
 library(ggridges)
 library(ggpattern)
 ```
-# defining age at migration plots
+# defining grouped plots
 ```{r}
-# age at migration plots
 create_faceted_age_plot <- function(data, 
                                    age_vars = c("mean_age_at_immigration_15", "mean_age_at_immigration_15to49", "mean_age_at_immigration_50plus"),
+                                   var_labels = c("Less than 15", "15 to 49", "50 and above"),
                                    country_var = "country_string",
                                    title = element_blank(),
                                    y_limits = c(0, .7)) {
+  
+  # Validate inputs
+  stopifnot(
+    is.data.frame(data),
+    all(age_vars %in% names(data)),
+    country_var %in% names(data),
+    length(var_labels) == length(age_vars)
+  )
   
   country_colors <- c(
     "Mexico" = "#E69F00",
@@ -35,8 +43,9 @@ create_faceted_age_plot <- function(data,
     ) %>%
     mutate(age_group = factor(age_group, 
                              levels = age_vars,
-                             labels = c("Less than 15", "15 to 49", "50 and above")))
+                             labels = var_labels))
   
+  # Create color mapping
   all_colors <- c()
   for (country in unique(data[[country_var]])) {
     for (j in 1:length(age_vars)) {
@@ -85,9 +94,11 @@ create_faceted_age_plot <- function(data,
     )
 }
 
+
 # alternate version of facets where the country is the column
 create_faceted_age_plot_alt <- function(data, 
                                    age_vars = c("mean_age_at_immigration_15", "mean_age_at_immigration_15to49", "mean_age_at_immigration_50plus"),
+                                   var_labels = c("Less than 15", "15 to 49", "50 and above"),
                                    country_var = "country_string",
                                    title = element_blank(),
                                    y_limits = c(0, .7)) {
@@ -109,7 +120,7 @@ create_faceted_age_plot_alt <- function(data,
     ) %>%
     mutate(age_group = factor(age_group, 
                              levels = age_vars,
-                             labels = c("Less than 15", "15 to 49", "50 and above")))
+                             labels = var_labels))
   
   # Add a combined group for fill mapping
   data_long <- data_long %>%
@@ -168,6 +179,7 @@ create_combined_faceted_age_plot <- function(data,
                                            age_vars = c("mean_age_at_immigration_15", 
                                                        "mean_age_at_immigration_15to49", 
                                                        "mean_age_at_immigration_50plus"),
+                                           var_labels = c("Less than 15", "15 to 49", "50 and above"),
                                            country_var = "country_string",
                                            title = element_blank(),
                                            y_limits = c(0, .7)) {
@@ -187,7 +199,7 @@ create_combined_faceted_age_plot <- function(data,
     ) %>%
     mutate(age_group = factor(age_group, 
                              levels = age_vars,
-                             labels = c("Less than 15", "15 to 49", "50 and above"))) %>%
+                             labels = var_labels)) %>%
     mutate(!!sym(country_var) := factor(!!sym(country_var), 
                            levels = c("Mexico", "Puerto Rico", "Dominican Republic", "Cuba"))) %>% 
     arrange(!!sym(country_var))
@@ -236,6 +248,7 @@ create_combined_faceted_age_plot <- function(data,
 # simpler age at migration plot function (age groups grouped and country colors)
 create_grouped_age_plot <- function(data, 
                                    age_vars = c("mean_age_at_immigration_15", "mean_age_at_immigration_15to49", "mean_age_at_immigration_50plus"),
+                                   var_labels = c("Less than 15", "15 to 49", "50 and above"),
                                    country_var = "country_string",
                                    cbPalette, 
                                    title = element_blank(),
@@ -250,7 +263,7 @@ create_grouped_age_plot <- function(data,
     ) %>%
     mutate(age_group = factor(age_group, 
                              levels = age_vars,
-                             labels = c("Less than 15", "15-49", "50 and above")))
+                             labels = var_labels))
   
   # Create the plot with grouped bars
   ggplot(data_long, aes(x = age_group, y = mean_age, fill = .data[[country_var]], group = .data[[country_var]])) +
@@ -616,27 +629,95 @@ dot_plot
 ```
 # age at migration plots
 ```{r}
-age_migration_plot <- create_faceted_age_plot(table1)
-age_migration_plot_alt <- create_faceted_age_plot_alt(table1)
-create_combined_faceted_age_plot <- create_combined_faceted_age_plot(table1)
-create_combined_faceted_age_plot_single_row <- create_combined_faceted_age_plot(table1)
-age_migration_plot_same_axis <- create_grouped_age_plot(table1, cbPalette = cbPalette)
+age_migration_plot <- create_faceted_age_plot(table1,
+                                              y_limits = c(0, 1))
+
+age_migration_plot_alt <- create_faceted_age_plot_alt(table1, y_limits = c(0, 1))
+create_combined_faceted_age_plot_1 <- create_combined_faceted_age_plot(table1, columns = 2, y_limits = c(0, 1))
+create_combined_faceted_age_plot_2 <- create_combined_faceted_age_plot(table1, columns = 4, y_limits = c(0, 1))
+age_migration_plot_same_axis <- create_grouped_age_plot(table1, cbPalette = cbPalette, y_limits = c(0, 1))
 
 age_migration_plot
 age_migration_plot_alt
-create_combined_faceted_age_plot
-create_combined_faceted_age_plot_single_row
+create_combined_faceted_age_plot_1
+create_combined_faceted_age_plot_2
 age_migration_plot_same_axis
 
-ggsave(
-    filename = file.path(plot_dir, "mean_age_migration_2020.png"),
-    plot = age_migration_plot,
+plot_list <- list(
+  v1 = age_migration_plot,
+  v2 = age_migration_plot_alt,
+  v3 = create_combined_faceted_age_plot_1,
+  v4 = create_combined_faceted_age_plot_2,
+  v5 = age_migration_plot_same_axis
+)
+
+# Loop through the list and save each plot
+for (i in names(plot_list)) {
+  ggsave(
+    filename = file.path(plot_dir, paste0(i, "_mean_age_migration_2020.png")),
+    plot = plot_list[[i]],
     device = "png",
     width = 12,
     height = 6,
     dpi = 300
   )
+}
 ```
+# period of immigration plots
+```{r}
+period_vars <- c("mean_yrimm_before1965", "mean_yrimm_1965_1979", "mean_yrimm_1980_plus")
+period_var_labels <- c("Before 1965", "Between 1965 and 1979", "1980 and After")
+
+period_migration_plot <- create_faceted_age_plot(table1,
+                                                 age_vars = period_vars,
+                                                 var_labels = period_var_labels,
+                                              y_limits = c(0, 1))
+
+period_migration_plot_alt <- create_faceted_age_plot_alt(table1, 
+                                                         age_vars = period_vars,
+                                                         var_labels = period_var_labels,
+                                                         y_limits = c(0, 1))
+
+create_combined_faceted_period_plot_1 <- create_combined_faceted_age_plot(table1, 
+                                                                          age_vars = period_vars,
+                                                                          var_labels = period_var_labels,
+                                                                          columns = 2, 
+                                                                          y_limits = c(0, 1))
+
+create_combined_faceted_period_plot_2 <- create_combined_faceted_age_plot(table1, 
+                                                                          age_vars = period_vars,
+                                                                          var_labels = period_var_labels,
+                                                                          columns = 4, 
+                                                                          y_limits = c(0, 1))
+
+period_migration_plot_same_axis <- create_grouped_age_plot(table1, 
+                                                           age_vars = period_vars,
+                                                           var_labels = period_var_labels,
+                                                           cbPalette = cbPalette, 
+                                                           y_limits = c(0, 1))
+
+plot_list <- list(
+  v1 = period_migration_plot,
+  v2 = period_migration_plot_alt,
+  v3 = create_combined_faceted_period_plot_1,
+  v4 = create_combined_faceted_period_plot_2,
+  v5 = period_migration_plot_same_axis
+)
+
+# Loop through the list and save each plot
+for (i in names(plot_list)) {
+  print(plot_list[[i]])
+  ggsave(
+    filename = file.path(plot_dir, paste0(i, "_mean_period_migration_2020.png")),
+    plot = plot_list[[i]],
+    device = "png",
+    width = 12,
+    height = 6,
+    dpi = 300
+  )
+}
+```
+
 # source of migrants
 ```{r}
 background_table <- background_table %>% 
