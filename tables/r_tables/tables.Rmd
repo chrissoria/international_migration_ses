@@ -2823,7 +2823,9 @@ total_education_2010_migrant_international <- rbind(total_education_2010, total_
     country_string == "cuba" ~ "Cuba",
     country_string == "dominican republic" ~ "Dominican Republic",
     country_string == "puerto rico" ~ "Puerto Rico"
-  ))
+  ),
+         country_string = fct_relevel(country_string, 
+                                      "Mexico", "Puerto Rico", "Dominican Republic", "Cuba")) 
 
 total_education_2010_migrant_international
 
@@ -2910,7 +2912,8 @@ table1<- us_df_2020 %>%
            TRUE ~ mean_is_citizen
          ),
          country_string = fct_relevel(country_string, 
-                                      "Mexico", "Puerto Rico", "Dominican Republic", "Cuba")) 
+                                      "Mexico", "Puerto Rico", "Dominican Republic", "Cuba"),
+         mean_age_at_immigration_15to49 = mean_age_at_immigration_15to24 + mean_age_at_immigration_15to24) 
 
 table1
 ```
