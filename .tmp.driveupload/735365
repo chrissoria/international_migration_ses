@@ -1,5 +1,0 @@
-"0","age_migration_plot <- create_faceted_age_plot(table1,"
-"0","                                              y_limits = c(0, 1))"
-"0",""
-"0","age_migration_plot_alt <- create_faceted_age_plot_alt(table1, y_limits = c(0, 1))"
-"0","create_combined_faceted_age_plot_1 <- create_combined_faceted_age_plot(table1, columns = 2, y_limits = c(0, 1))"

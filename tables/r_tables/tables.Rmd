@@ -2916,6 +2916,56 @@ table1<- us_df_2020 %>%
          mean_age_at_immigration_15to49 = mean_age_at_immigration_15to24 + mean_age_at_immigration_25to49,
          mean_yrimm_1980_plus = mean_yrimm_1980_1999 + mean_yrimm_2000plus) 
 
+table1_25_plus <- us_df_2020 %>%
+    filter(country_string == "mexico" | 
+       country_string == "puerto rico" | 
+       country_string == "dominican republic" |
+       country_string == "cuba",
+       age_at_immigration_under15 == 0,
+       age_at_immigration_15to24 == 0) %>% 
+    group_by(country_string) %>%
+    summarise(
+      mean_age_60_69 = weighted.mean(age_60to69, perwt, na.rm = TRUE),
+      mean_age_70_79 = weighted.mean(age_70to79, perwt, na.rm = TRUE),
+      mean_age_80_89 = weighted.mean(age_80to89, perwt, na.rm = TRUE),
+      mean_age_90plus = weighted.mean(age_90plus, perwt, na.rm = TRUE), 
+      mean_educ = weighted.mean(secondary_or_above, perwt, na.rm = TRUE),
+      mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, perwt, na.rm = TRUE),
+      mean_primary_completed = weighted.mean(primary_completed, perwt, na.rm = TRUE),
+      mean_secondary_completed = weighted.mean(secondary_completed, perwt, na.rm = TRUE),
+      mean_university_completed = weighted.mean(university_completed, perwt, na.rm = TRUE),
+      mean_hhsize = weighted.mean(famsize, perwt, na.rm = TRUE),
+      mean_lives_alone = weighted.mean(lives_alone, perwt, na.rm = TRUE),
+      mean_has_child_in_hh = weighted.mean(child_in_household, perwt, na.rm = TRUE),
+      mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
+      mean_age_at_immigration_25to49 = weighted.mean(age_at_immigration_25to49, perwt, na.rm = TRUE),
+      mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, perwt, na.rm = TRUE),
+      mean_yrimm_before1965 = weighted.mean(yrimm_before1965, perwt, na.rm = TRUE),
+      mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, perwt, na.rm = TRUE),
+      mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, perwt, na.rm = TRUE),
+      mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, perwt, na.rm = TRUE),
+      mean_is_citizen = weighted.mean(is_naturalized_citizen, perwt, na.rm = TRUE),
+      mean_english_speaker = weighted.mean(english_speaker, perwt, na.rm = TRUE),
+      N = n()
+    ) %>% 
+  mutate(
+         country_string = case_when(
+         country_string == "mexico" ~ "Mexico",
+         country_string == "cuba" ~ "Cuba",
+         country_string == "dominican republic" ~ "Dominican Republic",
+         country_string == "puerto rico" ~ "Puerto Rico"),
+         mean_is_citizen = case_when(
+           country_string == "Puerto Rico" ~ 1,
+           TRUE ~ mean_is_citizen
+         ),
+         country_string = fct_relevel(country_string, 
+                                      "Mexico", "Puerto Rico", "Dominican Republic", "Cuba"))
+
+print(table1_25_plus)
+
+table1 <- table1 %>% 
+  mutate(mean_educ_24_plus = table1_25_plus$mean_educ)
+
 table1
 ```
 # table 3 wide
@@ -2942,9 +2992,15 @@ table2_international <-
     mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
     N = n()
     ) %>% 
-  mutate(group = "Native Country Residents")
+  filter(country_string != "US") %>% 
+  mutate(country_string = case_when(
+    country_string %in% c('Cuba', "cuba") ~ "Cuba",
+    country_string %in% c('DR', "dominican republic") ~ "Dominican Republic",
+    country_string %in% c('Mexico', "mexico") ~ "Mexico",
+    country_string %in% c('PR', "puerto rico") ~ "Puerto Rico"
+  ))
 
-table2_domestic <- us_df_2010 %>%
+table2 <- us_df_2010 %>%
     filter(country_string %in% c("mexico", "dominican republic", "cuba", "puerto rico")) %>% 
     group_by(country_string) %>%
     summarise(
@@ -2963,21 +3019,23 @@ table2_domestic <- us_df_2010 %>%
     mean_married_cohab = weighted.mean(married_cohab, perwt, na.rm = TRUE),
     N = n()
     ) %>% 
-  mutate(group = "US Migrants")
-
-combined_table2 <- rbind(
-  table2_international, #females first
-  table2_domestic #males second
-) %>% 
   filter(country_string != "US") %>% 
   mutate(country_string = case_when(
     country_string %in% c('Cuba', "cuba") ~ "Cuba",
     country_string %in% c('DR', "dominican republic") ~ "Dominican Republic",
     country_string %in% c('Mexico', "mexico") ~ "Mexico",
     country_string %in% c('PR', "puerto rico") ~ "Puerto Rico"
-  ))
+  ),
+  country_string = fct_relevel(country_string, 
+                                      "Mexico", "Puerto Rico", "Dominican Republic", "Cuba"))
 
-combined_table2
+table2 <- table2 %>% 
+  mutate(mean_educ_international = table2_international$mean_educ,
+         mean_educ_2020 = table1$mean_educ,
+         mean_lives_alone_international = table2_international$mean_lives_alone,
+         mean_married_cohab_international = table2_international$mean_married_cohab)
+
+table2
 
 rm(table2_international, table2_domestic)
 ```

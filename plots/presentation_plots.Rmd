@@ -230,7 +230,8 @@ create_combined_faceted_age_plot <- function(data,
       theme(
         legend.position = "none",
         axis.text.x = element_text(size = 10, angle = 40, hjust = 1, face = "bold"),
-        plot.title = element_text(size = 13, face = "bold", hjust = 0.5)
+        plot.title = element_text(size = 13, face = "bold", hjust = 0.5),
+        panel.grid.major.y = element_line(color = "grey90", size = 0.5)
       )
     
     # Only remove y-axis text for non-first plots when columns=1
@@ -319,23 +320,24 @@ create_migrant_plot <- function(data, y_var,
                                 title = "Proportion of Migrants with at Least a Secondary Degree by Country of Birth",
                                 y_limits = c(0,1)) {
   ggplot(data, aes(x = country_string, y = .data[[y_var]], fill = country_string)) +
-    geom_bar(stat = "identity", position = "dodge") +
+    geom_bar(stat = "identity", position = "dodge", color = "black", width = 0.7) +
     geom_text(aes(label = round(.data[[y_var]], 2)), # Add labels dynamically
               position = position_dodge(width = 0.9), # Adjust for dodged bars
               vjust = -0.5, # Move text slightly above the bar
-              size = 5) + # Adjust text size
+              size = 6) + # Adjust text size
     scale_fill_manual(values = cbPalette) +
     labs(
       title = title,
       x = element_blank(),
-      y = "Proportion",
+      y = element_blank(),
       fill = "Country of Origin"
     ) +
     theme_cowplot() +
     ylim(y_limits) + 
     theme(
-      axis.text.x = element_text(angle = 40, hjust = 1, size = 13, face = "bold"),
-      legend.position = "none"
+      axis.text.x = element_text(angle = 40, hjust = 1, size = 14, face = "bold"),
+      legend.position = "none",
+      panel.grid.major.y = element_line(color = "grey90", size = 0.5)
     )
 }
 
@@ -481,95 +483,8 @@ ggsave(
     dpi = 300
 )
 ```
-# education, migrants, natives
-```{r}
-total_education_2010_plot <- ggplot(total_education_2010_migrant_international, 
-                                   aes(x = country_string, 
-                                       y = mean_educ, 
-                                       fill = country_string)) +  # Remove pattern mapping
-  geom_bar(stat = "identity", 
-           position = "dodge") +  # Use standard geom_bar
-  scale_fill_manual(values = cbPalette) +
-  geom_text(aes(label = scales::percent(mean_educ, accuracy = 1)), 
-            position = position_dodge(width = 0.9), 
-            vjust = -0.5, 
-            size = 5) +
-  labs(
-    title = element_blank(),
-    x = "Country of Origin",
-    y = "Proportion",
-    fill = "Category"  # Remove pattern from labs
-  ) +
-  theme_cowplot() +
-  scale_y_continuous(limits = c(0, 1),
-                    labels = scales::percent_format()) +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom",
-    legend.direction = "horizontal",
-    legend.box = "horizontal"
-  )
 
-
-  
-total_education_2010_plot
-
-ggsave(
-    filename = file.path(plot_dir, "total_education_2010_migrant_international.png"),
-    plot = total_education_2010_plot,
-    device = "png",
-    width = 11,
-    height = 6,
-    dpi = 300
-)
-```
-#education, migrants, 2010/2020
-```{r}
-total_education_2010_2020_plot <-  ggplot(total_education_2010_2020_migrants, 
-                                   aes(x = country_string, 
-                                       y = mean_educ, 
-                                       fill = country_string,
-                                       pattern = group)) +
-  geom_bar_pattern(stat = "identity", 
-                  position = "dodge",
-                  pattern_fill = "black",
-                  pattern_angle = 45,
-                  pattern_density = 0.1,
-                  pattern_spacing = 0.025) +
-  geom_text(aes(label = round(mean_educ, 2)), # Add labels above bars
-            position = position_dodge(width = 0.9), # Adjust for dodged bars
-            vjust = -0.5, # Move text slightly above the bar
-            size = 5) + # Adjust text size
-  scale_fill_manual(values = cbPalette) +
-  scale_pattern_manual(values = c("none", "crosshatch")) +
-  labs(
-    title = element_blank(),
-    x = element_blank(),
-    y = "Proportion",
-    fill = "Country",
-    pattern = "Year"
-  ) +
-  theme_cowplot() +
-  ylim(0, 1) + 
-  theme(
-    axis.text.x = element_text(angle = 40, hjust = 1, size = 13, face = "bold"),
-    legend.position = "bottom",
-    legend.direction = "horizontal",
-    legend.box = "horizontal"
-  )
-
-total_education_2010_2020_plot
-  
-ggsave(
-    filename = file.path(plot_dir, "total_education_2010_2020_migrants.png"),
-    plot = total_education_2010_2020_plot,
-    device = "png",
-    width = 12,
-    height = 6,
-    dpi = 300
-)
-```
-#education, migrants 2020
+#all plots, migrants 2020
 ```{r}
 # with .7 y axis
 vars_to_highlight <- c("mean_educ", "mean_lives_alone", "mean_married_cohab", "mean_age_at_immigration_15", "mean_age_at_immigration_25to49")
@@ -588,7 +503,7 @@ for (var in vars_to_highlight) {
     plot = current_plot,
     device = "png",
     width = 9,
-    height = 6,
+    height = 7,
     dpi = 300
   )
 }
@@ -609,7 +524,7 @@ for (var in vars_to_highlight) {
     filename = file.path(plot_dir, paste0(var, "_2020_migrants.png")),
     plot = current_plot,
     device = "png",
-    width = 9,
+    width = 12,
     height = 6,
     dpi = 300
   )
@@ -722,6 +637,276 @@ for (i in names(plot_list)) {
   print(plot_list[[i]])
   ggsave(
     filename = file.path(plot_dir, paste0(i, "_mean_period_migration_2020.png")),
+    plot = plot_list[[i]],
+    device = "png",
+    width = 12,
+    height = 6,
+    dpi = 300
+  )
+}
+```
+# education migrated after 24
+```{r}
+educ_vars <- c("mean_educ", "mean_educ_24_plus")
+educ_var_labels <- c("All Ages", "After Age 24")
+
+educ_24_plus_plot <- create_faceted_age_plot(table1,
+                                                 age_vars = educ_vars,
+                                                 var_labels = educ_var_labels,
+                                              y_limits = c(0, 1))
+
+educ_24_plus_plot_alt <- create_faceted_age_plot_alt(table1, 
+                                                         age_vars = educ_vars,
+                                                         var_labels = educ_var_labels,
+                                                         y_limits = c(0, 1))
+
+create_combined_faceted_educ_24_plus_plot_1 <- create_combined_faceted_age_plot(table1, 
+                                                                          age_vars = educ_vars,
+                                                         var_labels = educ_var_labels,
+                                                                          columns = 2, 
+                                                                          y_limits = c(0, 1))
+
+create_combined_faceted_educ_24_plus_plot_2 <- create_combined_faceted_age_plot(table1, 
+                                                                          age_vars = educ_vars,
+                                                         var_labels = educ_var_labels,
+                                                                          columns = 4, 
+                                                                          y_limits = c(0, 1))
+
+educ_24_plus_plot_same_axis <- create_grouped_age_plot(table1, 
+                                                           age_vars = educ_vars,
+                                                         var_labels = educ_var_labels,
+                                                           cbPalette = cbPalette, 
+                                                           y_limits = c(0, 1))
+
+plot_list <- list(
+  v1 = educ_24_plus_plot,
+  v2 = educ_24_plus_plot_alt,
+  v3 = create_combined_faceted_educ_24_plus_plot_1,
+  v4 = create_combined_faceted_educ_24_plus_plot_2,
+  v5 = educ_24_plus_plot_same_axis
+)
+
+# Loop through the list and save each plot
+for (i in names(plot_list)) {
+  print(plot_list[[i]])
+  ggsave(
+    filename = file.path(plot_dir, paste0(i, "_educ_24_plus_2020.png")),
+    plot = plot_list[[i]],
+    device = "png",
+    width = 12,
+    height = 6,
+    dpi = 300
+  )
+}
+```
+#education, international
+```{r}
+educ_vars <- c("mean_educ", "mean_educ_international")
+educ_var_labels <- c("US Migrants", "Native Country Residents")
+
+educ_international_plot <- create_faceted_age_plot(table2,
+                                                 age_vars = educ_vars,
+                                                 var_labels = educ_var_labels,
+                                              y_limits = c(0, 1))
+
+educ_international_plot_alt <- create_faceted_age_plot_alt(table2, 
+                                                         age_vars = educ_vars,
+                                                         var_labels = educ_var_labels,
+                                                         y_limits = c(0, 1))
+
+create_combined_faceted_educ_international_plot_1 <- create_combined_faceted_age_plot(table2, 
+                                                                          age_vars = educ_vars,
+                                                         var_labels = educ_var_labels,
+                                                                          columns = 2, 
+                                                                          y_limits = c(0, 1))
+
+create_combined_faceted_educ_international_plot_2 <- create_combined_faceted_age_plot(table2, 
+                                                                          age_vars = educ_vars,
+                                                         var_labels = educ_var_labels,
+                                                                          columns = 4, 
+                                                                          y_limits = c(0, 1))
+
+educ_international_plot_same_axis <- create_grouped_age_plot(table2, 
+                                                           age_vars = educ_vars,
+                                                         var_labels = educ_var_labels,
+                                                           cbPalette = cbPalette, 
+                                                           y_limits = c(0, 1))
+
+plot_list <- list(
+  v1 = educ_international_plot,
+  v2 = educ_international_plot_alt,
+  v3 = create_combined_faceted_educ_international_plot_1,
+  v4 = create_combined_faceted_educ_international_plot_2,
+  v5 = educ_international_plot_same_axis
+)
+
+# Loop through the list and save each plot
+for (i in names(plot_list)) {
+  print(plot_list[[i]])
+  ggsave(
+    filename = file.path(plot_dir, paste0(i, "_educ_international_comp_2010.png")),
+    plot = plot_list[[i]],
+    device = "png",
+    width = 12,
+    height = 6,
+    dpi = 300
+  )
+}
+```
+#lives_alone, international
+```{r}
+lives_alone_vars <- c("mean_lives_alone", "mean_lives_alone_international")
+lives_alone_var_labels <- c("US Migrants", "Native Country Residents")
+
+lives_alone_international_plot <- create_faceted_age_plot(table2,
+                                                 age_vars = lives_alone_vars,
+                                                 var_labels = lives_alone_var_labels,
+                                              y_limits = c(0, .5))
+
+lives_alone_international_plot_alt <- create_faceted_age_plot_alt(table2, 
+                                                         age_vars = lives_alone_vars,
+                                                         var_labels = lives_alone_var_labels,
+                                                         y_limits = c(0, .5))
+
+create_combined_faceted_lives_alone_international_plot_1 <- create_combined_faceted_age_plot(table2, 
+                                                                          age_vars = lives_alone_vars,
+                                                         var_labels = lives_alone_var_labels,
+                                                                          columns = 2, 
+                                                                          y_limits = c(0, .5))
+
+create_combined_faceted_lives_alone_international_plot_2 <- create_combined_faceted_age_plot(table2, 
+                                                                          age_vars = lives_alone_vars,
+                                                         var_labels = lives_alone_var_labels,
+                                                                          columns = 4, 
+                                                                          y_limits = c(0, .5))
+
+lives_alone_international_plot_same_axis <- create_grouped_age_plot(table2, 
+                                                           age_vars = lives_alone_vars,
+                                                         var_labels = lives_alone_var_labels,
+                                                           cbPalette = cbPalette, 
+                                                           y_limits = c(0, .5))
+
+plot_list <- list(
+  v1 = lives_alone_international_plot,
+  v2 = lives_alone_international_plot_alt,
+  v3 = create_combined_faceted_lives_alone_international_plot_1,
+  v4 = create_combined_faceted_lives_alone_international_plot_2,
+  v5 = lives_alone_international_plot_same_axis
+)
+
+# Loop through the list and save each plot
+for (i in names(plot_list)) {
+  print(plot_list[[i]])
+  ggsave(
+    filename = file.path(plot_dir, paste0(i, "_lives_alone_international_comp_2010.png")),
+    plot = plot_list[[i]],
+    device = "png",
+    width = 12,
+    height = 6,
+    dpi = 300
+  )
+}
+```
+#marr_cohab, international
+```{r}
+married_cohab_vars <- c("mean_married_cohab", "mean_married_cohab_international")
+married_cohab_var_labels <- c("US Migrants", "Native Country Residents")
+
+married_cohab_international_plot <- create_faceted_age_plot(table2,
+                                                 age_vars = married_cohab_vars,
+                                                 var_labels = married_cohab_var_labels,
+                                              y_limits = c(0, 1))
+
+married_cohab_international_plot_alt <- create_faceted_age_plot_alt(table2, 
+                                                         age_vars = married_cohab_vars,
+                                                         var_labels = married_cohab_var_labels,
+                                                         y_limits = c(0, 1))
+
+create_combined_faceted_married_cohab_international_plot_1 <- create_combined_faceted_age_plot(table2, 
+                                                                          age_vars = married_cohab_vars,
+                                                         var_labels = married_cohab_var_labels,
+                                                                          columns = 2, 
+                                                                          y_limits = c(0, 1))
+
+create_combined_faceted_married_cohab_international_plot_2 <- create_combined_faceted_age_plot(table2, 
+                                                                          age_vars = married_cohab_vars,
+                                                         var_labels = married_cohab_var_labels,
+                                                                          columns = 4, 
+                                                                          y_limits = c(0, 1))
+
+married_cohab_international_plot_same_axis <- create_grouped_age_plot(table2, 
+                                                           age_vars = married_cohab_vars,
+                                                         var_labels = married_cohab_var_labels,
+                                                           cbPalette = cbPalette, 
+                                                           y_limits = c(0, 1))
+
+plot_list <- list(
+  v1 = married_cohab_international_plot,
+  v2 = married_cohab_international_plot_alt,
+  v3 = create_combined_faceted_married_cohab_international_plot_1,
+  v4 = create_combined_faceted_married_cohab_international_plot_2,
+  v5 = married_cohab_international_plot_same_axis
+)
+
+# Loop through the list and save each plot
+for (i in names(plot_list)) {
+  print(plot_list[[i]])
+  ggsave(
+    filename = file.path(plot_dir, paste0(i, "_married_cohab_international_comp_2010.png")),
+    plot = plot_list[[i]],
+    device = "png",
+    width = 12,
+    height = 6,
+    dpi = 300
+  )
+}
+```
+#education, migrants, 2010/2020
+```{r}
+educ_vars <- c("mean_educ", "mean_educ_2020")
+educ_var_labels <- c("2010", "2020")
+
+educ_2010_2020_plot <- create_faceted_age_plot(table2,
+                                                 age_vars = educ_vars,
+                                                 var_labels = educ_var_labels,
+                                              y_limits = c(0, 1))
+
+educ_2010_2020_plot_alt <- create_faceted_age_plot_alt(table2, 
+                                                         age_vars = educ_vars,
+                                                 var_labels = educ_var_labels,
+                                                         y_limits = c(0, 1))
+
+create_combined_faceted_educ_2010_2020_plot_1 <- create_combined_faceted_age_plot(table2, 
+                                                                          age_vars = educ_vars,
+                                                 var_labels = educ_var_labels,
+                                                                          columns = 2, 
+                                                                          y_limits = c(0, 1))
+
+create_combined_faceted_educ_2010_2020_plot_2 <- create_combined_faceted_age_plot(table2, 
+                                                                          age_vars = educ_vars,
+                                                 var_labels = educ_var_labels,
+                                                                          columns = 4, 
+                                                                          y_limits = c(0, 1))
+
+educ_2010_2020_plot_same_axis <- create_grouped_age_plot(table2, 
+                                                           age_vars = educ_vars,
+                                                 var_labels = educ_var_labels,
+                                                           cbPalette = cbPalette, 
+                                                           y_limits = c(0, 1))
+
+plot_list <- list(
+  v1 = educ_2010_2020_plot,
+  v2 = educ_2010_2020_plot_alt,
+  v3 = create_combined_faceted_educ_2010_2020_plot_1,
+  v4 = create_combined_faceted_educ_2010_2020_plot_2,
+  v5 = educ_2010_2020_plot_same_axis
+)
+
+# Loop through the list and save each plot
+for (i in names(plot_list)) {
+  print(plot_list[[i]])
+  ggsave(
+    filename = file.path(plot_dir, paste0(i, "_educ_comp_2010_2020.png")),
     plot = plot_list[[i]],
     device = "png",
     width = 12,
