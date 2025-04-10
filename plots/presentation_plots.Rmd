@@ -229,7 +229,7 @@ create_combined_faceted_age_plot <- function(data,
       ylim(y_limits) + 
       theme(
         legend.position = "none",
-        axis.text.x = element_text(size = 10, angle = 40, hjust = 1, face = "bold"),
+        axis.text.x = element_text(size = 12, angle = 40, hjust = 1, face = "bold"),
         plot.title = element_text(size = 13, face = "bold", hjust = 0.5),
         panel.grid.major.y = element_line(color = "grey90", size = 0.5)
       )
@@ -442,10 +442,10 @@ create_migrant_dotplot <- function(data,
 # defining parameters
 ```{r}
 countries_of_interest <- c(
-  "Puerto Rico",
   "Mexico",
-  "Cuba",
-  "Dominican Republic"
+  "Puerto Rico",
+  "Dominican Republic",
+  "Cuba"
 )
 
 IMR <- read.csv(paste0(data_dir, "UNdata_Export_20250327_063538285.csv")) %>%
@@ -457,6 +457,11 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73","#CC79A7")
 ```
 #plot for IMR
 ```{r}
+IMR <- IMR %>% 
+  mutate(
+         Country.or.Area = fct_relevel(Country.or.Area, 
+                                      "Mexico", "Puerto Rico", "Dominican Republic", "Cuba"))
+
 
 IMR_plot <- ggplot(IMR, aes(x = Year.s., y = Value, group = Country.or.Area, color = Country.or.Area)) +
   geom_line(size = 1) +  # Adds lines for each country
@@ -466,10 +471,17 @@ IMR_plot <- ggplot(IMR, aes(x = Year.s., y = Value, group = Country.or.Area, col
     y = "Infant Mortality Rate (per 1,000 births)",
     color = "Country"
   ) +
+  scale_fill_manual(values = c(
+    "Mexico" = "#E69F00",
+    "Puerto Rico" = "#56B4E9",
+    "Dominican Republic" = "#009E73",
+    "Cuba" = "#CC79A7"
+  )) +
   theme_cowplot() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
     legend.position = c(0.90, 0.90),
+    legend.text = element_text(face = "bold"),
     legend.justification = c("right", "top")
   ) +
   scale_color_manual(values = cbPalette)
@@ -478,10 +490,12 @@ ggsave(
     filename = file.path(plot_dir, "IMR_over_time.png"),
     plot = IMR_plot,
     device = "png",
-    width = 8,
+    width = 12,
     height = 6,
     dpi = 300
 )
+
+IMR_plot
 ```
 
 #all plots, migrants 2020
@@ -594,7 +608,7 @@ for (i in names(plot_list)) {
 # period of immigration plots
 ```{r}
 period_vars <- c("mean_yrimm_before1965", "mean_yrimm_1965_1979", "mean_yrimm_1980_plus")
-period_var_labels <- c("Before 1965", "Between 1965 and 1979", "1980 and After")
+period_var_labels <- c("Before 1965", "1965 to 1979", "1980 and After")
 
 period_migration_plot <- create_faceted_age_plot(table1,
                                                  age_vars = period_vars,
@@ -815,30 +829,30 @@ married_cohab_var_labels <- c("US Migrants", "Native Country Residents")
 married_cohab_international_plot <- create_faceted_age_plot(table2,
                                                  age_vars = married_cohab_vars,
                                                  var_labels = married_cohab_var_labels,
-                                              y_limits = c(0, 1))
+                                              y_limits = c(0, .75))
 
 married_cohab_international_plot_alt <- create_faceted_age_plot_alt(table2, 
                                                          age_vars = married_cohab_vars,
                                                          var_labels = married_cohab_var_labels,
-                                                         y_limits = c(0, 1))
+                                                         y_limits = c(0, .75))
 
 create_combined_faceted_married_cohab_international_plot_1 <- create_combined_faceted_age_plot(table2, 
                                                                           age_vars = married_cohab_vars,
                                                          var_labels = married_cohab_var_labels,
                                                                           columns = 2, 
-                                                                          y_limits = c(0, 1))
+                                                                          y_limits = c(0, .75))
 
 create_combined_faceted_married_cohab_international_plot_2 <- create_combined_faceted_age_plot(table2, 
                                                                           age_vars = married_cohab_vars,
                                                          var_labels = married_cohab_var_labels,
                                                                           columns = 4, 
-                                                                          y_limits = c(0, 1))
+                                                                          y_limits = c(0, .75))
 
 married_cohab_international_plot_same_axis <- create_grouped_age_plot(table2, 
                                                            age_vars = married_cohab_vars,
                                                          var_labels = married_cohab_var_labels,
                                                            cbPalette = cbPalette, 
-                                                           y_limits = c(0, 1))
+                                                           y_limits = c(0, .75))
 
 plot_list <- list(
   v1 = married_cohab_international_plot,
@@ -919,18 +933,29 @@ for (i in names(plot_list)) {
 # source of migrants
 ```{r}
 background_table <- background_table %>% 
-  filter(Country %in% c("Mexico", "Puerto Rico", "Cuba", "Dominican Republic"))
+  filter(Country %in% c("Mexico", "Puerto Rico", "Cuba", "Dominican Republic")) %>% 
+  mutate(Country = fct_relevel(Country, 
+                                      "Mexico", "Puerto Rico", "Dominican Republic", "Cuba"))
 
-percent_migration <- ggplot(background_table, aes(x = reorder(Country, -`Percent of Migrants`), y = `Percent of Migrants`, fill = Country)) +
-  geom_bar(stat = "identity") +
+percent_migration <- ggplot(background_table, aes(x = (Country), y = `Percent of Migrants`/100, fill = Country)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black") +
   labs(
     title = "Percent of Older Hispanic Migrants (60+) to the US by Country of Origin",
     x = element_blank(),
     y = element_blank()
   ) +
+  scale_fill_manual(values = c(
+    "Mexico" = "#E69F00",
+    "Puerto Rico" = "#56B4E9",
+    "Dominican Republic" = "#009E73",
+    "Cuba" = "#CC79A7"
+  )) +
   theme_cowplot() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.x = element_text(angle = 40, hjust = 1, size = 15, face = "bold"),
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+    panel.grid.major.y = element_line(color = "grey90", size = 0.5),
+    axis.text.y = element_text(size = 13),
     legend.position = "none"
   ) +
   scale_x_discrete(labels = function(x) ifelse(seq_along(x) <= 4, x, ""))
@@ -943,6 +968,8 @@ ggsave(
     height = 6,
     dpi = 300
   )
+
+percent_migration
 ```
 # stress data (from Cervantez et al.)
 ```{r}
