@@ -1,0 +1,187 @@
+---
+title: "municipalities"
+author: "Chris Soria"
+date: "2025-06-04"
+output: html_document
+---
+```{r}
+library(ipumsr)
+library(tidyverse)
+library(labelled)
+library(dplyr)
+setwd('/Users/chrissoria/Documents/Research/us_international_ses/data')
+ddi <- read_ipums_ddi("ipumsi_00003.xml")
+dr_pr_ho_municipals <- read_ipums_micro(ddi)
+rm(ddi)
+setwd('/Users/chrissoria/Documents/Research/us_international_ses/')
+```
+
+
+```{r}
+in_df_cu_municipals <- read_dta(paste0(data_dir,"rural_urban.dta")) %>% 
+  filter(country_string == "Cuba")
+```
+
+```{r}
+in_df_cu_municipals <- in_df_cu_municipals %>%
+  mutate(
+    muni = as_factor(geo2_cu2012),
+    female = case_when(
+      sex_string == "female" ~ 1L,
+      sex_string == "male" ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_65_69 = case_when(
+      age >= 65 & age <= 69 ~ 1L,
+      age < 65 | age > 69 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_70_74 = case_when(
+      age >= 70 & age <= 74 ~ 1L,
+      age < 70 | age > 74 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_75_79 = case_when(
+      age >= 75 & age <= 79 ~ 1L,
+      age < 75 | age > 79 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_80_84 = case_when(
+      age >= 80 & age <= 84 ~ 1L,
+      age < 80 | age > 84 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_85plus = case_when(
+      age >= 85 ~ 1L,
+      age < 85 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    muni2 = case_when(
+      geo2_cu2012 == 3508 ~ "Caimanera",
+      geo2_cu2012 == 3510 ~ "Niceto P√É¬©rez",
+      geo2_cu2012 == 3507 ~ "San Antonio del Sur",
+      geo2_cu2012 == 3503 ~ "Yateras",
+      geo2_cu2012 == 3302 ~ "Cauto Cristo",
+      geo2_cu2012 == 3303 ~ "Jiguan√É¬≠",
+      geo2_cu2012 == 3203 ~ "Banes",
+      geo2_cu2012 == 3204 ~ "Antilla",
+      geo2_cu2012 == 3012 ~ "Najasa",
+      geo2_cu2012 == 3010 ~ "Vertientes",
+      geo2_cu2012 == 3004 ~ "Minas",
+      geo2_cu2012 == 3003 ~ "Sierra de Cubitas",
+      geo2_cu2012 == 2906 ~ "Florencia",
+      geo2_cu2012 == 2901 ~ "Chambas",
+      geo2_cu2012 == 2903 ~ "Bolivia",
+      geo2_cu2012 == 2902 ~ "Mor√É¬≥n",
+      geo2_cu2012 == 2808 ~ "La Sierpe",
+      geo2_cu2012 == 2802 ~ "Jatibonico",
+      geo2_cu2012 == 2509 ~ "Uni√É¬≥n de Reyes",
+      geo2_cu2012 == 2510 ~ "Ci√É¬©naga de Zapata",
+      geo2_cu2012 == 2408 ~ "G√É¬ºines",
+      geo2_cu2012 == 2409 ~ "Melena del Sur",
+      geo2_cu2012 == 21009 ~ "San Luis (Pinar del R√≠o)",
+      geo2_cu2012 == 34003 ~ "San Luis (Santiago de Cuba)",
+      TRUE ~ muni
+    )
+  )
+
+cu_munis <- in_df_cu_municipals %>% 
+  filter(age > 64) %>% 
+  group_by(muni2, female) %>% 
+  summarise(
+    mean_age_65_69 = weighted.mean(age_65_69, perwt, na.rm = TRUE),
+    mean_age_70_74 = weighted.mean(age_70_74, perwt, na.rm = TRUE),
+    mean_age_75_79 = weighted.mean(age_75_79, perwt, na.rm = TRUE),
+    mean_age_80_84 = weighted.mean(age_80_84, perwt, na.rm = TRUE),
+    mean_age_85plus = weighted.mean(age_85plus, perwt, na.rm = TRUE), 
+    N = sum(perwt, na.rm = TRUE)
+  )
+
+cu_munis
+
+write.csv(cu_munis, file.path(data_dir,"cu_muni_tables_denom_65_above.csv"))
+```
+
+```{r}
+rm(cu_munis, in_df_cu_municipals)
+```
+
+```{r}
+in_df_cu_municipals <- read_dta(paste0(data_dir,"rural_urban.dta")) %>% 
+  filter(country_string == "Cuba")
+```
+#next let's do the DR
+```{r}
+dr_pr_ho_municipals <- dr_pr_ho_municipals %>% 
+  #filter(COUNTRY == 214) %>% 
+  mutate(GEO2_DO2010_string = to_factor(GEO2_DO2010, levels = "labels"),
+         GEO1_PR2020_string = to_factor(GEO1_PR2020, levels = "labels"),
+         GEO1_MX_string = to_factor(GEO1_MX, levels = "labels"),
+         GEO2_PE2017_string = to_factor(GEO2_PE2017, levels = "labels"),
+         female = case_when(
+           SEX == 2 ~ 1L,
+           SEX == 1 ~ 0L,
+           TRUE ~ NA_integer_
+           ),
+    age_65_69 = case_when(
+      AGE >= 65 & AGE <= 69 ~ 1L,
+      AGE < 65 | AGE > 69 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_70_74 = case_when(
+      AGE >= 70 & AGE <= 74 ~ 1L,
+      AGE < 70 | AGE > 74 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_75_79 = case_when(
+      AGE >= 75 & AGE <= 79 ~ 1L,
+      AGE < 75 | AGE > 79 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_80_84 = case_when(
+      AGE >= 80 & AGE <= 84 ~ 1L,
+      AGE < 80 | AGE > 84 ~ 0L,
+      TRUE ~ NA_integer_
+    ),
+    age_85plus = case_when(
+      AGE >= 85 ~ 1L,
+      AGE < 85 ~ 0L,
+      TRUE ~ NA_integer_
+    )
+         )
+```
+# DR
+```{r}
+country_codes <- c(214, 630, 484, 604)
+munis <- c("GEO2_DO2010_string", "GEO1_PR2020_string", "GEO1_MX_string", "GEO2_PE2017_string")
+
+results_list <- list()
+
+# iterate through indices to access elements in parallel
+for (idx in seq_along(country_codes)) {
+  i <- country_codes[idx]
+  j <- munis[idx]
+  
+  dr_munis <- dr_pr_ho_municipals %>% 
+    filter(COUNTRY == i) %>% 
+    filter(AGE > 64) %>% 
+    group_by(across(all_of(j)), female) %>% 
+    summarise(
+      mean_age_65_69 = weighted.mean(age_65_69, PERWT, na.rm = TRUE),
+      mean_age_70_74 = weighted.mean(age_70_74, PERWT, na.rm = TRUE),
+      mean_age_75_79 = weighted.mean(age_75_79, PERWT, na.rm = TRUE),
+      mean_age_80_84 = weighted.mean(age_80_84, PERWT, na.rm = TRUE),
+      mean_age_85plus = weighted.mean(age_85plus, PERWT, na.rm = TRUE), 
+      N = sum(PERWT, na.rm = TRUE),
+      .groups = "drop"
+    )
+  
+  # store results with unique key
+  results_list[[paste(i, j, sep = "_")]] <- dr_munis
+  
+  # write csv for each combination
+  filename <- paste0("country_", i, "_", j, "_muni_tables_denom_65_above.csv")
+  write.csv(dr_munis, file.path(data_dir, filename), row.names = FALSE)
+}
+```
+

@@ -1,0 +1,73 @@
+0000000000000000000000000000000000000000 0c339e6df3e6f57cb0f7f537270320f961333831 Christopher Soria <chrissoria@berkeley.edu> 1735255542 -0800	commit (initial): reinitialzing corrupted git.
+0c339e6df3e6f57cb0f7f537270320f961333831 fe4208ef597b1c4bcfe56c095405084c89fe45dd Christopher Soria <chrissoria@berkeley.edu> 1735279643 -0800	commit: completed the initial draft of the literature review
+fe4208ef597b1c4bcfe56c095405084c89fe45dd 86c70dfd99727ac813266afb5bca6463acbc2735 Christopher Soria <chrissoria@berkeley.edu> 1735328852 -0800	commit: finished version 1 of lit review
+86c70dfd99727ac813266afb5bca6463acbc2735 d3a4b2d56682a27271011790c5e209efa01f6ea5 Christopher Soria <chrissoria@berkeley.edu> 1735329570 -0800	commit: minor adjustments
+d3a4b2d56682a27271011790c5e209efa01f6ea5 4fd7592a9bc83c8333cb54e64f78cf22f091feba Christopher Soria <chrissoria@berkeley.edu> 1735874595 -0800	commit: expanding do file to add new vars, age groups below 65, and adding weights.
+4fd7592a9bc83c8333cb54e64f78cf22f091feba 0b4c2adcd83785438ba40e07beaaa0fa851fde32 Christopher Soria <chrissoria@berkeley.edu> 1735884799 -0800	commit: adding vars, updating tables with new vars
+0b4c2adcd83785438ba40e07beaaa0fa851fde32 9866702b0c09ad671ce234116dccc0a3f1ad0fb8 Christopher Soria <chrissoria@berkeley.edu> 1735963590 -0800	commit: added in new data for table 1
+9866702b0c09ad671ce234116dccc0a3f1ad0fb8 1006a863f0fae068737eaaca7cb338c07bf078c7 Christopher Soria <chrissoria@berkeley.edu> 1735968849 -0800	commit: updated table 1 and table 2
+1006a863f0fae068737eaaca7cb338c07bf078c7 8527077bb8f3b159e39663dc4699d2064aadefab Christopher Soria <chrissoria@berkeley.edu> 1736025044 -0800	commit: added extra rows to table 2, still not aligned properly
+8527077bb8f3b159e39663dc4699d2064aadefab e2a25f5edcaa2795b0e383c5fc424ec6ef64b0d0 Christopher Soria <chrissoria@berkeley.edu> 1736037057 -0800	commit: fully aligned table 2, generated teh correct variable git status
+e2a25f5edcaa2795b0e383c5fc424ec6ef64b0d0 1e055b5d60d908691546abf6f99c3e72ac3ba7e0 Christopher Soria <chrissoria@berkeley.edu> 1736037080 -0800	commit: read do file added new var for race and migrant status hispanic.
+1e055b5d60d908691546abf6f99c3e72ac3ba7e0 268146d599e779a429911527e9dd4a124ab5440f Christopher Soria <chrissoria@berkeley.edu> 1736229182 -0800	commit: adding 2020 census data to do file
+268146d599e779a429911527e9dd4a124ab5440f bec5f509709b5b3580ec0f67d1234adcad2aca69 Christopher Soria <chrissoria@berkeley.edu> 1736280202 -0800	commit: updated variables in table 2, cleaned up incorrect categorizations of hispanic and married
+bec5f509709b5b3580ec0f67d1234adcad2aca69 c1894ba638a1f70825257b84d16623a577a61b47 Christopher Soria <chrissoria@berkeley.edu> 1736287306 -0800	commit: added logit model loops for us migrants in specific countries
+c1894ba638a1f70825257b84d16623a577a61b47 6059be50bb517d362e5b446f4b669395ec258dcb Christopher Soria <chrissoria@berkeley.edu> 1736297693 -0800	commit: adding plots for table 1 education levels
+6059be50bb517d362e5b446f4b669395ec258dcb 706569fe530e9867b9314d0d39a3af22b8bf9d0b Christopher Soria <chrissoria@berkeley.edu> 1736314574 -0800	commit: adding plots and tables for proportion speaking english by different groups
+706569fe530e9867b9314d0d39a3af22b8bf9d0b cddd8a1649ca29da4d6497efd48553a7e2f3b6e6 Christopher Soria <chrissoria@berkeley.edu> 1736375913 -0800	commit: adding two more plots for education and married
+cddd8a1649ca29da4d6497efd48553a7e2f3b6e6 d9d53fdc9a02637600eb2fbfaeaebb7bf00fa948 Christopher Soria <chrissoria@berkeley.edu> 1736377581 -0800	commit: fixing plots to incorporate both men and women, adding age group plots for natives and migrant groups
+d9d53fdc9a02637600eb2fbfaeaebb7bf00fa948 1ca392342121f7bb0e1a21aabd4a9f52706351f3 Christopher Soria <chrissoria@berkeley.edu> 1736384945 -0800	commit: seperated out regressions to a seperate doc, prepped data for background data
+1ca392342121f7bb0e1a21aabd4a9f52706351f3 52bfc45e10a062e5446e2d4e646cde0350eb9580 Christopher Soria <chrissoria@berkeley.edu> 1736445777 -0800	commit: added more plots and revised regression to see if those who migrate at a younger age are more likely to get an education.
+52bfc45e10a062e5446e2d4e646cde0350eb9580 c6040929c3689a5c171d71656b805b5c5dbb49b4 Christopher Soria <chrissoria@berkeley.edu> 1736733428 -0800	commit: added new variables indo file and tables
+c6040929c3689a5c171d71656b805b5c5dbb49b4 a5c12c7812e3ad1e7e2384691f0a250d1d32b8e5 Christopher Soria <chrissoria@berkeley.edu> 1736833804 -0800	commit: added tables for hispanic immigrant count countries, revised tables 1 and 2 to add new vars
+a5c12c7812e3ad1e7e2384691f0a250d1d32b8e5 4c8610931168fcd2414a6fd30f7ede5c2a6fb40f Christopher Soria <chrissoria@berkeley.edu> 1736835767 -0800	commit: resolved issue in table two not replacing string values in latex table
+4c8610931168fcd2414a6fd30f7ede5c2a6fb40f a2be51e2969c2b9665201f9d500bd2b51dc537e7 Christopher Soria <chrissoria@berkeley.edu> 1736919252 -0800	commit: updating 2010 census with 2010 acs in do file, small tweaks to table 1
+a2be51e2969c2b9665201f9d500bd2b51dc537e7 9693c8c40e01ae696bef415e49bc59dd004d7cf8 Christopher Soria <chrissoria@berkeley.edu> 1736923539 -0800	commit: updated table 2
+9693c8c40e01ae696bef415e49bc59dd004d7cf8 163953d376137ffa336efd00fb0c7854d6c8f787 Christopher Soria <chrissoria@berkeley.edu> 1736977101 -0800	commit: updated table 1 with different filters, including 2010 ACS
+163953d376137ffa336efd00fb0c7854d6c8f787 43b1f4b0a80c2be985d4fa8d910e93e7f859ac4d Christopher Soria <chrissoria@berkeley.edu> 1736979040 -0800	commit: added table for background features, made table 1 but only for people who migrated above age 24
+43b1f4b0a80c2be985d4fa8d910e93e7f859ac4d 1900aa816224facb64b36953bab5dc268624a461 Christopher Soria <chrissoria@berkeley.edu> 1737005496 -0800	commit: adding table with 2010 and 2020 international censuses
+1900aa816224facb64b36953bab5dc268624a461 e1cb817d70e321c9547b2db89ada4426d3919b1f Christopher Soria <chrissoria@berkeley.edu> 1737005580 -0800	commit: push
+e1cb817d70e321c9547b2db89ada4426d3919b1f 43b1f4b0a80c2be985d4fa8d910e93e7f859ac4d Christopher Soria <chrissoria@berkeley.edu> 1737005726 -0800	reset: moving to HEAD~2
+43b1f4b0a80c2be985d4fa8d910e93e7f859ac4d 1900aa816224facb64b36953bab5dc268624a461 Christopher Soria <chrissoria@berkeley.edu> 1737005836 -0800	reset: moving to 1900aa8
+1900aa816224facb64b36953bab5dc268624a461 43b1f4b0a80c2be985d4fa8d910e93e7f859ac4d Christopher Soria <chrissoria@berkeley.edu> 1737005910 -0800	reset: moving to HEAD~1
+43b1f4b0a80c2be985d4fa8d910e93e7f859ac4d 1a27874303f43a665cc7f6b9483d2dd05f405f4e Christopher Soria <chrissoria@berkeley.edu> 1737005935 -0800	commit: what it do
+1a27874303f43a665cc7f6b9483d2dd05f405f4e e1cb817d70e321c9547b2db89ada4426d3919b1f Christopher Soria <chrissoria@berkeley.edu> 1737006219 -0800	reset: moving to e1cb817
+e1cb817d70e321c9547b2db89ada4426d3919b1f 43b1f4b0a80c2be985d4fa8d910e93e7f859ac4d Christopher Soria <chrissoria@berkeley.edu> 1737006289 -0800	reset: moving to HEAD~2
+43b1f4b0a80c2be985d4fa8d910e93e7f859ac4d 2e22d5bb46f535a30f014e4533c9fbf3d110297a Christopher Soria <chrissoria@berkeley.edu> 1737006352 -0800	commit: hello again
+2e22d5bb46f535a30f014e4533c9fbf3d110297a 72d112fafcff2cc8724bce04fd1ce8684065228b Christopher Soria <chrissoria@berkeley.edu> 1737051783 -0800	commit: added table for proportion educated in 1930-1950 cohort mexico
+72d112fafcff2cc8724bce04fd1ce8684065228b 9b37fd92585f0cd5d785e25c7546b25fe1c2633b Christopher Soria <chrissoria@berkeley.edu> 1737092306 -0800	commit: reverted all 2010 tables to census (away from ACS)
+9b37fd92585f0cd5d785e25c7546b25fe1c2633b 1fb1b3f292cb03bdbe29626b5e3dfc3e59ba4b43 Christopher Soria <chrissoria@berkeley.edu> 1737093227 -0800	commit: added birth year
+1fb1b3f292cb03bdbe29626b5e3dfc3e59ba4b43 7059e00bfc8330ab3736def943f44db92b212178 Christopher Soria <chrissoria@berkeley.edu> 1737170438 -0800	commit: fixed issue with age-standardization not being produced for people in mexico with age unknown
+7059e00bfc8330ab3736def943f44db92b212178 abc3890ed81f1340eb81964bce4563314e6eba85 Christopher Soria <chrissoria@berkeley.edu> 1737174213 -0800	commit: added plots for education by cohort within country
+abc3890ed81f1340eb81964bce4563314e6eba85 a718181b8aba6ed10e551bf389cb590dbcd74763 Christopher Soria <chrissoria@berkeley.edu> 1737178075 -0800	commit: added plots for education probabilties with controls
+a718181b8aba6ed10e551bf389cb590dbcd74763 685c1d4ef3e503577aa76bd41d10f2651a970038 Christopher Soria <chrissoria@berkeley.edu> 1737495630 -0800	commit: updated education categories, added definitions to paper
+685c1d4ef3e503577aa76bd41d10f2651a970038 14e3a047161933b899d92b7315e8da71dea97155 Christopher Soria <chrissoria@berkeley.edu> 1737498719 -0800	commit: updated paper methods and added outline for results section
+14e3a047161933b899d92b7315e8da71dea97155 b2e6afa74fb30e3c9de5d89dddc47d92c1a070b0 Christopher Soria <chrissoria@berkeley.edu> 1737499409 -0800	commit: added line to export the paper to docx.
+b2e6afa74fb30e3c9de5d89dddc47d92c1a070b0 006f2f15eeeac82882ac03ba63410ee0c22e9e03 Christopher Soria <chrissoria@berkeley.edu> 1738874118 -0800	commit: outputting all tables to excel
+006f2f15eeeac82882ac03ba63410ee0c22e9e03 03d938430b164c9ba852cb67ea69bb266d99b990 Christopher Soria <chrissoria@berkeley.edu> 1738877443 -0800	commit: reordering table 1 countries
+03d938430b164c9ba852cb67ea69bb266d99b990 d580f3b570311f57d81fc2f5af25970d0df23492 Christopher Soria <chrissoria@berkeley.edu> 1743439751 -0700	commit: updating to all latest tables and plots
+d580f3b570311f57d81fc2f5af25970d0df23492 255d91ee43607f6730c4e4ef6eaaf6c9e25a1dea Christopher Soria <chrissoria@berkeley.edu> 1743443454 -0700	commit: deleted temp data
+255d91ee43607f6730c4e4ef6eaaf6c9e25a1dea 03d938430b164c9ba852cb67ea69bb266d99b990 Christopher Soria <chrissoria@berkeley.edu> 1743443661 -0700	reset: moving to HEAD~2
+03d938430b164c9ba852cb67ea69bb266d99b990 da986885b28c23d26b5c49fa436283a5073dd7b9 Christopher Soria <chrissoria@berkeley.edu> 1743443679 -0700	commit: all changes from Will
+da986885b28c23d26b5c49fa436283a5073dd7b9 03d938430b164c9ba852cb67ea69bb266d99b990 Christopher Soria <chrissoria@berkeley.edu> 1743553418 -0700	reset: moving to HEAD~1
+03d938430b164c9ba852cb67ea69bb266d99b990 4d8dafb99386f1311fb1df88e7aa48418b2306b9 Christopher Soria <chrissoria@berkeley.edu> 1743553746 -0700	commit: all of latest changes to paper and plots
+4d8dafb99386f1311fb1df88e7aa48418b2306b9 03d938430b164c9ba852cb67ea69bb266d99b990 Christopher Soria <chrissoria@berkeley.edu> 1743553842 -0700	reset: moving to HEAD~1
+03d938430b164c9ba852cb67ea69bb266d99b990 071af34dfae3c28b7c54d8e4cebc6051d533ca51 Christopher Soria <chrissoria@berkeley.edu> 1743553892 -0700	commit: all of latest changes to paper and plots
+071af34dfae3c28b7c54d8e4cebc6051d533ca51 ba6e843ad63ef74c4f91c9f3fd56c94922e2c71a Christopher Soria <chrissoria@berkeley.edu> 1743628229 -0700	commit: all latest changes
+ba6e843ad63ef74c4f91c9f3fd56c94922e2c71a 03d938430b164c9ba852cb67ea69bb266d99b990 Christopher Soria <chrissoria@berkeley.edu> 1743628507 -0700	reset: moving to HEAD~2
+03d938430b164c9ba852cb67ea69bb266d99b990 ba6e843ad63ef74c4f91c9f3fd56c94922e2c71a Christopher Soria <chrissoria@berkeley.edu> 1743628718 -0700	reset: moving to ba6e843
+ba6e843ad63ef74c4f91c9f3fd56c94922e2c71a c7eaedcce6b0234ad84f5eadcd9f36766aedc421 Christopher Soria <chrissoria@berkeley.edu> 1743644733 -0700	commit: latest things
+c7eaedcce6b0234ad84f5eadcd9f36766aedc421 e6732a319aa679143076a5112ebdfc39caa667ec Christopher Soria <chrissoria@berkeley.edu> 1743648907 -0700	commit: Remove large .RDataTmp file
+e6732a319aa679143076a5112ebdfc39caa667ec 8cdda46689161ec659d6d2d01bad14f9a1a1f2f4 Christopher Soria <chrissoria@berkeley.edu> 1743706512 -0700	commit: new plot adjustments and new plot on age at migration
+8cdda46689161ec659d6d2d01bad14f9a1a1f2f4 cb70a803429d7bdf0622818f5c224bbad6654669 Christopher Soria <chrissoria@berkeley.edu> 1743800359 -0700	commit: updating everything
+cb70a803429d7bdf0622818f5c224bbad6654669 03d938430b164c9ba852cb67ea69bb266d99b990 Christopher Soria <chrissoria@berkeley.edu> 1743802403 -0700	reset: moving to origin/main
+03d938430b164c9ba852cb67ea69bb266d99b990 4020f4b487c4869453d064b99ec97a5fcfec119b Christopher Soria <chrissoria@berkeley.edu> 1743802470 -0700	commit: updating all the things
+4020f4b487c4869453d064b99ec97a5fcfec119b 0f1e9a866edeeac32da4db9480f0a1a4ef51583a Christopher Soria <chrissoria@berkeley.edu> 1743802701 -0700	commit: Remove paper and lit folders from Git tracking
+0f1e9a866edeeac32da4db9480f0a1a4ef51583a c5384a97a7ba50bce5556e96784ed2d47c08c5a1 Christopher Soria <chrissoria@berkeley.edu> 1744136184 -0700	commit: playing around with different versions of age at migration plot
+c5384a97a7ba50bce5556e96784ed2d47c08c5a1 aae7b7704181782f35fe2700ff5bfeac9095814a Christopher Soria <chrissoria@berkeley.edu> 1744145245 -0700	commit: updated the plotting function so it works with other kinds of vars
+aae7b7704181782f35fe2700ff5bfeac9095814a a32f9c795da479b047fd1fad1080fa35e231db9a Christopher Soria <chrissoria@berkeley.edu> 1744147745 -0700	commit: visually updating the facet plot
+a32f9c795da479b047fd1fad1080fa35e231db9a a1810f338588cf9b7dcecc3e56896a64f9a0e7ca Christopher Soria <chrissoria@berkeley.edu> 1744171945 -0700	commit: all plots created
+a1810f338588cf9b7dcecc3e56896a64f9a0e7ca f7128376ceba6a61e4c3b6924a3945a7e4798369 Christopher Soria <chrissoria@berkeley.edu> 1744308330 -0600	commit: updated plots and udating presentation for PAA
+f7128376ceba6a61e4c3b6924a3945a7e4798369 3744a0490c6fe0fc65bb31588548d226472362e0 Christopher Soria <chrissoria@berkeley.edu> 1751050030 -0700	commit: updating all the code to latest
+3744a0490c6fe0fc65bb31588548d226472362e0 d35b3b09bdb0ed2794884d0656c7874e0523eedc Christopher Soria <chrissoria@berkeley.edu> 1751050155 -0700	commit: latest code
+d35b3b09bdb0ed2794884d0656c7874e0523eedc f7128376ceba6a61e4c3b6924a3945a7e4798369 Christopher Soria <chrissoria@berkeley.edu> 1751050761 -0700	reset: moving to HEAD~2
