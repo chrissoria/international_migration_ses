@@ -4,7 +4,7 @@ author: "Chris Soria"
 date: "2025-01-08"
 output: html_document
 ---
-
+#packages
 ```{r}
 library(emmeans)
 library(tidyverse)
@@ -13,7 +13,7 @@ library(cowplot)
 library(writexl)
 library(scales)
 ```
-
+#prep
 ```{r}
 target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables")
 current_dir <- normalizePath(getwd())
@@ -31,40 +31,225 @@ if (current_dir == target_dir) {
 }
 
 print(getwd())
-```
-## migrant regressions
-```{r}
-dvs <- c("married_cohab", "primary_or_above", "secondary_or_above", "is_naturalized_citizen", "english_speaker", "lives_alone")
-
-ivs <- c("age_at_immigration_under15", "age_at_immigration_25to49", "age_at_immigration_50plus", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "yrimm_2000plus", "female", "country_string", "country_string")
 
 us_df_2010_filtered <- us_df_2010 %>% 
    filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
-   mutate(country_string = fct_relevel(country_string, "mexico"))
+   mutate(country_string = fct_relevel(country_string, "mexico"),
+          year = haven::as_factor(year)) %>% 
+  select(married_cohab, age_at_immigration_15to24, age_at_immigration_25to49, age_at_immigration_50plus, 
+         yrimm_before1965, yrimm_1965to1980, yrimm_1980to1999, female,  
+         country_string, lives_alone, english_speaker, secondary_or_above, 
+         age_70to79, age_80to89, age_90plus, perwt, year, is_naturalized_citizen, less_than_primary_completed)
 
+us_df_2020_filtered <- us_df_2020 %>% 
+   filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
+   mutate(country_string = fct_relevel(country_string, "mexico"),
+          year = haven::as_factor(year)) %>% 
+  select(married_cohab, age_at_immigration_15to24, age_at_immigration_25to49, age_at_immigration_50plus, 
+         yrimm_before1965, yrimm_1965to1980, yrimm_1980to1999, female,  
+         country_string, lives_alone, english_speaker, secondary_or_above, 
+         age_70to79, age_80to89, age_90plus, perwt, year, is_naturalized_citizen, less_than_primary_completed)
+
+us_df_all <- rbind(us_df_2010_filtered, us_df_2020_filtered)
+```
+## outcome specific regressions (just for migrants)
+## no controls
+```{r}
+dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", "is_naturalized_citizen", "less_than_primary_completed")
+ivs <- c("country_string")
 results_list <- list()
 
-# running the models
 for (dv in dvs) {
+  current_countries <- if (dv == "is_naturalized_citizen") {
+    c("mexico", "dominican republic", "cuba")  # exclude when pr when dv is citizen
+  } else {
+    c("mexico", "puerto rico", "dominican republic", "cuba")
+  }
+  
+  us_df_2020_filtered <- us_df_2020 %>% 
+    filter(country_string %in% current_countries) %>% 
+    mutate(country_string = fct_relevel(country_string, "mexico"))
+    
   formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
-
   print(formula)
-
-  model <- lm(formula, data = us_df_2010_filtered, 
+  model <- lm(formula, data = us_df_2020_filtered,  # corrected: use 2020 version
                weights = perwt)
-
   results_list[[dv]] <- model
 }
 
 summaries <- map(results_list, summary)
-
 for (reason in names(summaries)) {
   cat("\n\n", "Summary for", reason, ":\n")
   print(summaries[[reason]])
 }
 
 excel_data <- list()
+for (reason in names(results_list)) {
+  if (!is.null(results_list[[reason]])) {
+    model_summary <- tidy(results_list[[reason]])
+    excel_data[[reason]] <- model_summary
+  } else {
+    cat("\n\n", "No valid model for", reason, "\n")
+  }
+}
 
+if (length(excel_data) > 0) {
+  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/2020_US_model_summaries_no_controls.xlsx"))
+} else {
+  cat("No valid data to write to Excel.\n")
+}
+```
+## full multivariate
+```{r}
+# turn model creation into a function
+create_country_coefs <- function(data, sex_filter = NULL) {
+  
+  # apply sex filter if specified
+  if (!is.null(sex_filter)) {
+    data <- data %>% filter(sex == sex_filter)
+  }
+  
+  dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", 
+           "is_naturalized_citizen", "less_than_primary_completed")
+  ivs <- c("country_string", "age_at_immigration_15to24","age_at_immigration_25to49", 
+           "age_at_immigration_50plus", "yrimm_before1965", "yrimm_1965to1980", 
+           "yrimm_1980to1999", "female", "english_speaker", "secondary_or_above", 
+           "age_70to79", "age_80to89", "age_90plus")
+  results_list <- list()
+  
+  for (dv in dvs) {
+    current_countries <- if (dv == "is_naturalized_citizen") {
+      c("mexico", "dominican republic", "cuba")
+    } else {
+      c("mexico", "puerto rico", "dominican republic", "cuba")
+    }
+    
+    current_ivs <- if (dv == "less_than_primary_completed") {
+      ivs[!ivs %in% "secondary_or_above"]
+    } else {
+      ivs
+    }
+    
+    data_filtered <- data %>% 
+      filter(country_string %in% current_countries) %>% 
+      mutate(country_string = fct_relevel(country_string, "mexico"))
+    
+    formula <- as.formula(paste(dv, "~", paste(current_ivs, collapse = " + ")))
+    model <- lm(formula, data = data_filtered, weights = perwt)
+    results_list[[dv]] <- model
+  }
+  
+  # extract country coefficients
+  country_coefs <- map_dfr(names(results_list), function(dv) {
+    tidy(results_list[[dv]]) %>%
+      filter(str_detect(term, "country_string")) %>%
+      mutate(outcome = dv,
+             term = str_remove(term, "country_string"))
+  }, .id = NULL) %>%
+    pivot_wider(names_from = outcome, values_from = c(estimate, std.error, statistic, p.value)) %>%
+    add_row(term = "mexico", .before = 1) %>%
+    mutate(across(where(is.numeric), ~replace_na(.x, 0))) %>%
+    arrange(match(term, c("cuba", "dominican republic", "mexico", "puerto rico")))
+  
+  return(country_coefs)
+}
+
+# create all three versions
+country_coefs <- create_country_coefs(us_df_2020)
+male_country_coefs <- create_country_coefs(us_df_2020, sex_filter = 1)
+female_country_coefs <- create_country_coefs(us_df_2020, sex_filter = 2)
+```
+
+## year of migration interaction (no controls)
+in model of married, drop lives alone
+in predicting naturalized citizen, drop PR
+```{r}
+dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", "is_naturalized_citizen", "less_than_primary_completed")
+ivs <- c("country_string*year")  # corrected
+results_list <- list()
+
+# running the models
+for (dv in dvs) {
+  current_countries <- if (dv == "is_naturalized_citizen") {
+    c("mexico", "dominican republic", "cuba")  # exclude when pr when dv is citizen
+  } else {
+    c("mexico", "puerto rico", "dominican republic", "cuba")
+  }
+  
+  us_df_all_filtered <- us_df_all %>% 
+    filter(country_string %in% current_countries) %>% 
+    mutate(country_string = fct_relevel(country_string, "mexico"))
+  
+  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
+  print(formula)
+  model <- lm(formula, data = us_df_all_filtered, 
+               weights = perwt)
+  results_list[[dv]] <- model
+}
+
+summaries <- map(results_list, summary)
+for (reason in names(summaries)) {
+  cat("\n\n", "Summary for", reason, ":\n")
+  print(summaries[[reason]])
+}
+
+excel_data <- list()
+for (reason in names(results_list)) {
+  if (!is.null(results_list[[reason]])) {
+    model_summary <- tidy(results_list[[reason]])
+    excel_data[[reason]] <- model_summary
+  } else {
+    cat("\n\n", "No valid model for", reason, "\n")
+  }
+}
+
+if (length(excel_data) > 0) {
+  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/2020_US_model_summaries_no_controls_interaction.xlsx"))
+} else {
+  cat("No valid data to write to Excel.\n")
+}
+```
+# multivariate interaction
+```{r}
+dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", "is_naturalized_citizen", "less_than_primary_completed")
+ivs <- c("age_at_immigration_15to24","age_at_immigration_25to49", "age_at_immigration_50plus", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "female", "country_string", "english_speaker", "secondary_or_above", "age_70to79", "age_80to89", "age_90plus", "country_string*year")
+results_list <- list()
+
+# running the models
+for (dv in dvs) {
+  # conditionally modify countries for filtering
+  current_countries <- if (dv == "is_naturalized_citizen") {
+    c("mexico", "dominican republic", "cuba")  # exclude when pr when dv is citizen
+  } else {
+    c("mexico", "puerto rico", "dominican republic", "cuba")
+  }
+  
+  # conditionally modify ivs
+  current_ivs <- if (dv == "less_than_primary_completed") {
+    ivs[!ivs %in% "secondary_or_above"]
+  } else {
+    ivs
+  }
+  
+  # filter data with conditional countries
+  us_df_all_filtered <- us_df_all %>% 
+    filter(country_string %in% current_countries) %>% 
+    mutate(country_string = fct_relevel(country_string, "mexico"))
+  
+  formula <- as.formula(paste(dv, "~", paste(current_ivs, collapse = " + ")))
+  print(formula)
+  model <- lm(formula, data = us_df_all_filtered, 
+               weights = perwt)
+  results_list[[dv]] <- model
+}
+
+summaries <- map(results_list, summary)
+for (reason in names(summaries)) {
+  cat("\n\n", "Summary for", reason, ":\n")
+  print(summaries[[reason]])
+}
+
+excel_data <- list()
 # Loop through each model in results_list
 for (reason in names(results_list)) {
   if (!is.null(results_list[[reason]])) {
@@ -77,14 +262,81 @@ for (reason in names(results_list)) {
 }
 
 if (length(excel_data) > 0) {
-  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/within_US_model_summaries.xlsx"))
+  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/2020_US_model_summaries_all_controls_interaction.xlsx"))
 } else {
   cat("No valid data to write to Excel.\n")
 }
 ```
+
+## migrant regressions
+```{r}
+dvs <- c("cognitive_difficulty", "independent_living_difficulty")
+ivs <- c("married_cohab", "age_at_immigration_25to49", "age_at_immigration_50plus", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "female",  "country_string", "lives_alone", "english_speaker", "secondary_or_above", "age_70to79", "age_80to89", "age_90plus")
+
+us_df_2020_filtered <- us_df_2020 %>% 
+   filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
+   mutate(country_string = fct_relevel(country_string, "mexico"))
+
+results_list <- list()
+
+# running the models
+for (dv in dvs) {
+  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
+  print(formula)
+  model <- lm(formula, data = us_df_2020_filtered,  # corrected data frame name
+               weights = perwt)
+  results_list[[dv]] <- model
+}
+
+current_ivs <- if (dv == "less_than_primary_completed") {
+    ivs[!ivs %in% "secondary_or_above"]
+  } else {
+    ivs
+  }
+
+summaries <- map(results_list, summary)
+for (reason in names(summaries)) {
+  cat("\n\n", "Summary for", reason, ":\n")
+  print(summaries[[reason]])
+}
+
+excel_data <- list()
+for (reason in names(results_list)) {
+  if (!is.null(results_list[[reason]])) {
+    model_summary <- tidy(results_list[[reason]])
+    excel_data[[reason]] <- model_summary
+  } else {
+    cat("\n\n", "No valid model for", reason, "\n")
+  }
+}
+
+if (length(excel_data) > 0) {
+  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/within_US_model_summaries.xlsx"))
+} else {
+  cat("No valid data to write to Excel.\n")
+}
+
+```
 ## overall DV emmeans
 ```{r}
-emm_results <- map(results_list, ~ emmeans(.x, specs = "country_string"))
+emm_options(rg.limit = 70000)
+
+emm_results <- map(results_list, ~ emmeans(.x, 
+                                          specs = "country_string",
+                                          at = list(married_cohab = 0,
+                                                   age_at_immigration_under15 = 0,
+                                                   age_at_immigration_25to49 = 0,
+                                                   age_at_immigration_50plus = 0,
+                                                   yrimm_before1965 = 0,
+                                                   yrimm_1965to1980 = 0,
+                                                   yrimm_1980to1999 = 0,
+                                                   yrimm_2000plus = 0,
+                                                   female = 0,
+                                                   primary_or_above = 0,
+                                                   is_naturalized_citizen = 0,
+                                                   lives_alone = 0,
+                                                   english_speaker = 0,
+                                                   secondary_or_above = 0)))
 
 # Convert to tidy data frames with CIs
 emm_tables <- map(emm_results, ~ summary(.x, infer = TRUE) %>% 
@@ -93,33 +345,41 @@ emm_tables <- map(emm_results, ~ summary(.x, infer = TRUE) %>%
 
 for (dv in dvs) {
   p <- ggplot(emm_tables[[dv]], 
-              aes(x = reorder(country_string, emmean), 
-                  y = emmean)) +
-    geom_col(fill = "#1f78b4", width = 0.7) +
-    geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
-                  width = 0.2, color = "black") +
-    # Add percentage labels above bars
-    geom_text(
-      aes(label = percent(emmean, accuracy = 1)),
-      vjust = -1.5, 
-      color = "black",
-      size = 3.5,
-      fontface = "bold"
-    ) +
-    # Convert y-axis to percentage format
-    scale_y_continuous(
-      labels = percent_format(accuracy = 1),
-      expand = expansion(mult = c(0, 0.1))
-    ) +
-    ylim(0,1) +
-    labs(
-      title = element_blank(),
-      x = element_blank(),
-      y = "Estimated Percent"
-    ) +
-    theme_cowplot() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1),
-          axis.text.y = element_blank())
+            aes(x = factor(str_to_title(country_string), 
+                          levels = c("Mexico", "Puerto Rico", "Dominican Republic", "Cuba")), 
+                y = emmean,
+                fill = country_string)) +
+  geom_col(width = 0.7) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
+                width = 0.2, color = "black") +
+  scale_fill_manual(values = c(
+    "mexico" = "#E69F00",
+    "puerto rico" = "#56B4E9",
+    "dominican republic" = "#009E73",
+    "cuba" = "#CC79A7"
+  )) +
+  geom_text(
+    aes(label = percent(emmean, accuracy = 1)),
+    vjust = -1.5, 
+    color = "black",
+    size = 3.5,
+    fontface = "bold"
+  ) +
+  scale_y_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = c(0, 0.1))
+  ) +
+  ylim(0,1) +
+  labs(
+    title = str_to_title(str_replace_all(dv, "_", " ")),
+    x = element_blank(),
+    y = "Estimated Percent"
+  ) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.text.y = element_blank(),
+        legend.position = "none")
+
   
   print(p)
   
@@ -134,7 +394,53 @@ for (dv in dvs) {
   )
 }
 ```
-
+# emmeans with only PR and MEX
+```{r}
+for (dv in dvs) {
+  # filter to only mexico and puerto rico
+  filtered_data <- emm_tables[[dv]] %>%
+    filter(country_string %in% c("mexico", "puerto rico"))
+  
+  p <- ggplot(filtered_data, 
+              aes(x = reorder(country_string, emmean), 
+                  y = emmean)) +
+    geom_col(fill = "#1f78b4", width = 0.7) +
+    geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
+                  width = 0.2, color = "black") +
+    geom_text(
+      aes(label = percent(emmean, accuracy = 1)),
+      vjust = -1.5, 
+      color = "black",
+      size = 3.5,
+      fontface = "bold"
+    ) +
+    scale_y_continuous(
+      labels = percent_format(accuracy = 1),
+      expand = expansion(mult = c(0, 0.1))
+    ) +
+    ylim(0,1) +
+    labs(
+      title = str_to_title(str_replace_all(dv, "_", " ")),
+      x = element_blank(),
+      y = "Estimated Percent"
+    ) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          axis.text.y = element_blank())
+  
+  print(p)
+  
+  ggsave(
+    filename = file.path("/Users/chrissoria/Documents/Research/us_international_ses/plots", 
+                        paste0(dv, "_emm_plot_filtered.png")),
+    plot = p,
+    device = "png",
+    width = 8,
+    height = 6,
+    dpi = 300
+  )
+}
+```
 
 # migrant-specific regressions
 ```{r}

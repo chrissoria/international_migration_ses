@@ -173,6 +173,196 @@ create_faceted_age_plot_alt <- function(data,
     )
 }
 
+create_faceted_demo_plot <- function(data, 
+                                     adjusted_vars = c("adjusted_mean_less_than_primary_completed",
+                                                      "adjusted_mean_secondary_or_above",
+                                                      "adjusted_mean_lives_alone",
+                                                      "adjusted_mean_married_cohab",
+                                                      "adjusted_mean_is_naturalized_citizen",
+                                                      "adjusted_mean_english_speaker"),
+                                     unadjusted_vars = c("mean_less_than_primary_completed",
+                                                        "mean_secondary_completed",
+                                                        "mean_lives_alone",
+                                                        "mean_married_cohab",
+                                                        "mean_is_citizen",
+                                                        "mean_english_speaker"),
+                                     var_labels = c("Less than Primary", 
+                                                   "Secondary or Above",
+                                                   "Lives Alone",
+                                                   "Married/Cohabiting",
+                                                   "Naturalized Citizen",
+                                                   "English Speaker"),
+                                     country_var = "country_string",
+                                     title = element_blank(),
+                                     y_limits = c(0, .7)) {
+  
+  country_colors <- c(
+    "Mexico" = "#E69F00",
+    "Puerto Rico" = "#56B4E9",
+    "Dominican Republic" = "#009E73",
+    "Cuba" = "#CC79A7"
+  )
+  
+  data_adj <- data %>%
+    pivot_longer(
+      cols = all_of(adjusted_vars),
+      names_to = "demographic",
+      values_to = "mean_value"
+    ) %>%
+    mutate(type = "Adjusted")
+  
+  data_unadj <- data %>%
+    pivot_longer(
+      cols = all_of(unadjusted_vars),
+      names_to = "demographic",
+      values_to = "mean_value"
+    ) %>%
+    mutate(type = "Unadjusted")
+  
+  data_long <- bind_rows(data_adj, data_unadj) %>%
+    mutate(demographic = case_when(
+    grepl("married", demographic) ~ var_labels[4],
+    grepl("alone", demographic) ~ var_labels[3],
+    grepl("english", demographic) ~ var_labels[6],
+    grepl("secondary", demographic) ~ var_labels[2],
+    grepl("citizen|naturalized", demographic) ~ var_labels[5],
+    grepl("primary", demographic) ~ var_labels[1]
+  )) %>%
+    mutate(demographic = factor(demographic, levels = var_labels),
+           type = factor(type, levels = c("Unadjusted", "Adjusted")))
+  
+  data_long[[country_var]] <- factor(
+    data_long[[country_var]], 
+    levels = names(country_colors)
+  )
+  
+  ggplot(data_long, aes(x = .data[[country_var]], y = mean_value, 
+                        fill = .data[[country_var]], alpha = type)) +
+    geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black") +
+    geom_text(aes(label = round(mean_value, 2)), 
+              position = position_dodge(width = 0.7),
+              vjust = -0.5,
+              size = 3) +
+    facet_wrap(~ demographic, ncol = 2) +
+    scale_fill_manual(values = country_colors) +
+    scale_alpha_manual(name = "Type", 
+                       values = c("Unadjusted" = 1, "Adjusted" = 0.5),
+                       guide = guide_legend(override.aes = list(fill = "gray50"))) +
+    guides(fill = "none") +
+    labs(
+      title = title,
+      x = element_blank(),
+      y = element_blank()
+    ) +
+    theme_cowplot() +
+    ylim(y_limits) + 
+    theme(
+      strip.background = element_blank(),
+      strip.text = element_text(size = 12, face = "bold"),
+      axis.text.x = element_text(size = 11, face = "bold", angle = 45, hjust = 1),
+      panel.spacing = unit(0.5, "lines"),
+      panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+      legend.position = "bottom",
+      axis.ticks.y = element_blank(),
+      axis.text.y = element_blank(),
+      axis.line.y = element_blank(),
+      panel.background = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank()
+    )
+}
+
+create_faceted_demo_plot2 <- function(data, 
+                                     adjusted_vars = c("adjusted_mean_less_than_primary_completed",
+                                                      "adjusted_mean_secondary_or_above",
+                                                      "adjusted_mean_lives_alone",
+                                                      "adjusted_mean_married_cohab",
+                                                      "adjusted_mean_is_naturalized_citizen",
+                                                      "adjusted_mean_english_speaker"),
+                                     unadjusted_vars = c("mean_less_than_primary_completed",
+                                                        "mean_secondary_completed",
+                                                        "mean_lives_alone",
+                                                        "mean_married_cohab",
+                                                        "mean_is_citizen",
+                                                        "mean_english_speaker"),
+                                     var_labels = c("Less than Primary", 
+                                                   "Secondary or Above",
+                                                   "Lives Alone",
+                                                   "Married/Cohabiting",
+                                                   "Naturalized Citizen",
+                                                   "English Speaker"),
+                                     country_var = "country_string",
+                                     title = element_blank(),
+                                     y_limits = c(0, 1.05)) {
+  
+  # Prepare adjusted data
+  data_adj <- data %>%
+    pivot_longer(
+      cols = all_of(adjusted_vars),
+      names_to = "demographic",
+      values_to = "mean_value"
+    ) %>%
+    mutate(type = "Adjusted")
+  
+  # Prepare unadjusted data
+  data_unadj <- data %>%
+    pivot_longer(
+      cols = all_of(unadjusted_vars),
+      names_to = "demographic",
+      values_to = "mean_value"
+    ) %>%
+    mutate(type = "Unadjusted")
+  
+  # Combine and clean
+  data_long <- bind_rows(data_adj, data_unadj) %>%
+    mutate(demographic = case_when(
+    grepl("married", demographic) ~ var_labels[4],
+    grepl("alone", demographic) ~ var_labels[3],
+    grepl("english", demographic) ~ var_labels[6],
+    grepl("secondary", demographic) ~ var_labels[2],
+    grepl("citizen|naturalized", demographic) ~ var_labels[5],
+    grepl("primary", demographic) ~ var_labels[1]
+  )) %>%
+    mutate(demographic = factor(demographic, levels = var_labels),
+           type = factor(type, levels = c("Unadjusted", "Adjusted")))
+  
+  # Create plot with black and white bars
+  ggplot(data_long, aes(x = .data[[country_var]], y = mean_value, 
+                        fill = type)) +
+    geom_bar(stat = "identity", position = "dodge", width = 0.7, 
+             color = "black", linewidth = 0.3) +
+    geom_text(aes(label = sprintf("%.2f", mean_value)), 
+              position = position_dodge(width = 0.7),
+              vjust = -0.5,
+              size = 3) +
+    facet_wrap(~ demographic, ncol = 2) +
+    scale_fill_manual(name = "Type", 
+                      values = c("Unadjusted" = "white", "Adjusted" = "black")) +
+    scale_y_continuous(breaks = seq(0, 1, 0.25), limits = y_limits) +
+    labs(
+      title = title,
+      x = NULL,
+      y = "Proportion"
+    ) +
+    theme_minimal() +
+    theme(
+      strip.background = element_rect(fill = "gray95", color = "black", linewidth = 0.5),
+      strip.text = element_text(size = 11, face = "bold"),
+      axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+      axis.text.y = element_text(size = 9),
+      axis.title.y = element_text(size = 11, face = "bold"),
+      panel.spacing = unit(1, "lines"),
+      panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+      panel.grid.major.y = element_line(color = "gray90", linewidth = 0.3),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor = element_blank(),
+      legend.position = "bottom",
+      legend.title = element_text(size = 10, face = "bold"),
+      legend.text = element_text(size = 9)
+    )
+}
+
+
 # with four panels
 create_combined_faceted_age_plot <- function(data, 
                                            columns = 2,
@@ -543,7 +733,96 @@ for (var in vars_to_highlight) {
     dpi = 300
   )
 }
+
+vars_to_highlight <- c("mean_ind_live_difficulty", "mean_cog_difficulty")
+
+for (var in vars_to_highlight) {
+  current_plot <- create_migrant_plot(
+    data = table1,
+    y_var = var,
+    title = element_blank(),
+    cbPalette = cbPalette,
+    y_limits = c(0, .25) 
+  )
+  
+  ggsave(
+    filename = file.path(plot_dir, paste0(var, "_2020_migrants.png")),
+    plot = current_plot,
+    device = "png",
+    width = 12,
+    height = 7,
+    dpi = 300
+  )
+}
 ```
+# all plots, migrants 2010
+```{r}
+# with .7 y axis
+vars_to_highlight <- c("mean_educ", "mean_lives_alone", "mean_married_cohab", "mean_age_at_immigration_15", "mean_age_at_immigration_25to49")
+
+for (var in vars_to_highlight) {
+  current_plot <- create_migrant_plot(
+    data = table1_5,
+    y_var = var,
+    title = element_blank(),
+    cbPalette = cbPalette,
+    y_limits = c(0, 0.7) 
+  )
+  
+  ggsave(
+    filename = file.path(plot_dir, paste0(var, "_2010_migrants.png")),
+    plot = current_plot,
+    device = "png",
+    width = 9,
+    height = 7,
+    dpi = 300
+  )
+}
+
+# with .8 y axis
+vars_to_highlight <- c("mean_english_speaker", "mean_is_citizen")
+
+for (var in vars_to_highlight) {
+  current_plot <- create_migrant_plot(
+    data = table1_5,
+    y_var = var,
+    title = element_blank(),
+    cbPalette = cbPalette,
+    y_limits = c(0, 1) 
+  )
+  
+  ggsave(
+    filename = file.path(plot_dir, paste0(var, "_2010_migrants.png")),
+    plot = current_plot,
+    device = "png",
+    width = 12,
+    height = 6,
+    dpi = 300
+  )
+}
+
+vars_to_highlight <- c("mean_ind_live_difficulty", "mean_cog_difficulty")
+
+for (var in vars_to_highlight) {
+  current_plot <- create_migrant_plot(
+    data = table1_5,
+    y_var = var,
+    title = element_blank(),
+    cbPalette = cbPalette,
+    y_limits = c(0, .25) 
+  )
+  
+  ggsave(
+    filename = file.path(plot_dir, paste0(var, "_2010_migrants.png")),
+    plot = current_plot,
+    device = "png",
+    width = 12,
+    height = 7,
+    dpi = 300
+  )
+}
+```
+
 #comparing migrants to residents
 ```{r}
 vars_to_highlight <- c("mean_educ", "mean_lives_alone", "mean_married_cohab")
@@ -574,6 +853,160 @@ ggsave(
 
 dot_plot
 ```
+# 6 outcomes of interest by country
+```{r}
+
+create_country_summary <- function(data, 
+                                   countries = c("mexico", "puerto rico", "dominican republic", "cuba"),
+                                   country_coefs,
+                                   gender_filter = NULL,
+                                   weight_var = perwt) {
+  
+  # apply conditional filter using curly braces
+  table1 <- data %>%
+    filter(country_string %in% countries) %>% 
+    { if (!is.null(gender_filter)) filter(., sex == gender_filter) else . } %>%
+    group_by(country_string) %>%
+    summarise(
+      mean_age_60_69 = weighted.mean(age_60to69, {{weight_var}}, na.rm = TRUE),
+      mean_age_70_79 = weighted.mean(age_70to79, {{weight_var}}, na.rm = TRUE),
+      mean_age_80_89 = weighted.mean(age_80to89, {{weight_var}}, na.rm = TRUE),
+      mean_age_90plus = weighted.mean(age_90plus, {{weight_var}}, na.rm = TRUE), 
+      mean_educ = weighted.mean(secondary_or_above, {{weight_var}}, na.rm = TRUE),
+      mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, {{weight_var}}, na.rm = TRUE),
+      mean_primary_completed = weighted.mean(primary_completed, {{weight_var}}, na.rm = TRUE),
+      mean_secondary_completed = weighted.mean(secondary_or_above, {{weight_var}}, na.rm = TRUE),
+      mean_university_completed = weighted.mean(university_completed, {{weight_var}}, na.rm = TRUE),
+      mean_hhsize = weighted.mean(famsize, {{weight_var}}, na.rm = TRUE),
+      mean_lives_alone = weighted.mean(lives_alone, {{weight_var}}, na.rm = TRUE),
+      mean_has_child_in_hh = weighted.mean(child_in_household, {{weight_var}}, na.rm = TRUE),
+      mean_married_cohab = weighted.mean(married_cohab, {{weight_var}}, na.rm = TRUE),
+      mean_age_at_immigration_15 = weighted.mean(age_at_immigration_under15, {{weight_var}}, na.rm = TRUE),
+      mean_age_at_immigration_15to24 = weighted.mean(age_at_immigration_15to24, {{weight_var}}, na.rm = TRUE),
+      mean_age_at_immigration_25to49 = weighted.mean(age_at_immigration_25to49, {{weight_var}}, na.rm = TRUE),
+      mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, {{weight_var}}, na.rm = TRUE),
+      mean_yrimm_before1965 = weighted.mean(yrimm_before1965, {{weight_var}}, na.rm = TRUE),
+      mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, {{weight_var}}, na.rm = TRUE),
+      mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, {{weight_var}}, na.rm = TRUE),
+      mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, {{weight_var}}, na.rm = TRUE),
+      mean_is_citizen = weighted.mean(is_naturalized_citizen, {{weight_var}}, na.rm = TRUE),
+      mean_english_speaker = weighted.mean(english_speaker, {{weight_var}}, na.rm = TRUE),
+      mean_cog_difficulty = weighted.mean(cognitive_difficulty, {{weight_var}}, na.rm = TRUE),
+      mean_ind_live_difficulty = weighted.mean(independent_living_difficulty, {{weight_var}}, na.rm = TRUE),
+      N = n()
+    ) %>% 
+    mutate(
+      country_string = case_when(
+        country_string == "mexico" ~ "Mexico",
+        country_string == "cuba" ~ "Cuba",
+        country_string == "dominican republic" ~ "Dominican Republic",
+        country_string == "puerto rico" ~ "Puerto Rico"
+      ),
+      mean_is_citizen = case_when(
+        country_string == "Puerto Rico" ~ 1,
+        TRUE ~ mean_is_citizen
+      ),
+      country_string = fct_relevel(country_string, 
+                                   "Mexico", "Puerto Rico", "Dominican Republic", "Cuba"),
+      mean_age_at_immigration_15to49 = mean_age_at_immigration_15to24 + mean_age_at_immigration_25to49,
+      mean_yrimm_1980_plus = mean_yrimm_1980_1999 + mean_yrimm_2000plus
+    )
+  
+  table1_select <- table1 %>% 
+    select(country_string, mean_married_cohab, mean_lives_alone, mean_english_speaker, 
+           mean_secondary_completed, mean_is_citizen, mean_less_than_primary_completed)
+  
+  mexico_means <- table1_select %>% 
+    filter(country_string == "Mexico")
+  
+  raw_and_adjusted_df <- cbind(table1_select, country_coefs) %>%
+    mutate(
+      adjusted_mean_married_cohab = mexico_means$mean_married_cohab + estimate_married_cohab,
+      adjusted_mean_lives_alone = mexico_means$mean_lives_alone + estimate_lives_alone,
+      adjusted_mean_english_speaker = mexico_means$mean_english_speaker + estimate_english_speaker,
+      adjusted_mean_secondary_or_above = mexico_means$mean_secondary_completed + estimate_secondary_or_above,
+      adjusted_mean_is_naturalized_citizen = mexico_means$mean_is_citizen + estimate_is_naturalized_citizen,
+      adjusted_mean_less_than_primary_completed = mexico_means$mean_less_than_primary_completed + estimate_less_than_primary_completed
+    ) %>% 
+    select(country_string,
+           adjusted_mean_married_cohab,
+           adjusted_mean_lives_alone,
+           adjusted_mean_english_speaker,
+           adjusted_mean_secondary_or_above,
+           adjusted_mean_is_naturalized_citizen,
+           adjusted_mean_less_than_primary_completed,
+           mean_married_cohab,
+           mean_lives_alone,
+           mean_english_speaker,
+           mean_secondary_completed,
+           mean_is_citizen,
+           mean_less_than_primary_completed,
+           std.error_married_cohab,
+           std.error_lives_alone,
+           std.error_english_speaker,
+           std.error_secondary_or_above,
+           std.error_is_naturalized_citizen,
+           std.error_less_than_primary_completed) %>% 
+    mutate(adjusted_mean_is_naturalized_citizen = case_when(
+      country_string == "Puerto Rico" ~ 1,
+      TRUE ~ adjusted_mean_is_naturalized_citizen
+    ))
+  
+  return(raw_and_adjusted_df)
+}
+
+filters <- list(
+  all = NULL,
+  male = 1,  # assuming male = 1 in your data
+  female = 2  # assuming female = 2
+)
+
+coefs_list <- list(
+  all = country_coefs,
+  male = male_country_coefs,
+  female = female_country_coefs
+)
+
+# iterate over both lists simultaneously
+results <- map2(filters, coefs_list, ~create_country_summary(
+  data = us_df_2020,
+  country_coefs = .y,
+  gender_filter = .x
+))
+
+# access results
+results$all
+results$male
+results$female
+
+raw_and_adjusted_df <- create_country_summary(us_df_2020, country_coefs = country_coefs)
+
+country_levels <- create_faceted_demo_plot(results$all,
+                                           y_limits = c(0, .99))
+
+country_levels_male <- create_faceted_demo_plot(results$male,
+                                           y_limits = c(0, .99))
+
+country_levels_female <- create_faceted_demo_plot(results$female,
+                                           y_limits = c(0, .99))
+country_levels
+country_levels_male
+country_levels_female
+
+country_levels <- create_faceted_demo_plot2(results$all,
+                                           y_limits = c(0, .99))
+
+country_levels_male <- create_faceted_demo_plot2(results$male,
+                                           y_limits = c(0, .99))
+
+country_levels_female <- create_faceted_demo_plot2(results$female,
+                                           y_limits = c(0, .99))
+
+country_levels
+country_levels_male
+country_levels_female
+```
+
 # age at migration plots
 ```{r}
 age_migration_plot <- create_faceted_age_plot(table1,
