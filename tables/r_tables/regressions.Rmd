@@ -12,6 +12,7 @@ library(broom)
 library(cowplot)
 library(writexl)
 library(scales)
+library(haven)
 ```
 #prep
 ```{r}
@@ -39,7 +40,7 @@ us_df_2010_filtered <- us_df_2010 %>%
   select(married_cohab, age_at_immigration_15to24, age_at_immigration_25to49, age_at_immigration_50plus, 
          yrimm_before1965, yrimm_1965to1980, yrimm_1980to1999, female,  
          country_string, lives_alone, english_speaker, secondary_or_above, 
-         age_70to79, age_80to89, age_90plus, perwt, year, is_naturalized_citizen, less_than_primary_completed)
+         age_70to79, age_80to89, age_90plus, perwt, year, is_naturalized_citizen, less_than_primary_completed, sex)
 
 us_df_2020_filtered <- us_df_2020 %>% 
    filter(country_string %in% c("mexico", "puerto rico", "dominican republic", "cuba")) %>% 
@@ -48,56 +49,68 @@ us_df_2020_filtered <- us_df_2020 %>%
   select(married_cohab, age_at_immigration_15to24, age_at_immigration_25to49, age_at_immigration_50plus, 
          yrimm_before1965, yrimm_1965to1980, yrimm_1980to1999, female,  
          country_string, lives_alone, english_speaker, secondary_or_above, 
-         age_70to79, age_80to89, age_90plus, perwt, year, is_naturalized_citizen, less_than_primary_completed)
+         age_70to79, age_80to89, age_90plus, perwt, year, is_naturalized_citizen, less_than_primary_completed, sex)
 
 us_df_all <- rbind(us_df_2010_filtered, us_df_2020_filtered)
 ```
 ## outcome specific regressions (just for migrants)
 ## no controls
 ```{r}
-dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", "is_naturalized_citizen", "less_than_primary_completed")
-ivs <- c("country_string")
-results_list <- list()
-
-for (dv in dvs) {
-  current_countries <- if (dv == "is_naturalized_citizen") {
-    c("mexico", "dominican republic", "cuba")  # exclude when pr when dv is citizen
+# function to create models by sex
+create_models_by_sex <- function(data, sex_filter = NULL) {
+  
+  # apply sex filter if specified
+  if (!is.null(sex_filter)) {
+    data <- data %>% filter(sex == sex_filter)
+    sex_label <- ifelse(sex_filter == 1, "male", "female")
   } else {
-    c("mexico", "puerto rico", "dominican republic", "cuba")
+    sex_label <- "all"
   }
   
-  us_df_2020_filtered <- us_df_2020 %>% 
-    filter(country_string %in% current_countries) %>% 
-    mutate(country_string = fct_relevel(country_string, "mexico"))
+  dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", 
+           "is_naturalized_citizen", "less_than_primary_completed")
+  ivs <- c("country_string")
+  results_list <- list()
+  
+  for (dv in dvs) {
+    current_countries <- if (dv == "is_naturalized_citizen") {
+      c("mexico", "dominican republic", "cuba")
+    } else {
+      c("mexico", "puerto rico", "dominican republic", "cuba")
+    }
     
-  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
-  print(formula)
-  model <- lm(formula, data = us_df_2020_filtered,  # corrected: use 2020 version
-               weights = perwt)
-  results_list[[dv]] <- model
-}
-
-summaries <- map(results_list, summary)
-for (reason in names(summaries)) {
-  cat("\n\n", "Summary for", reason, ":\n")
-  print(summaries[[reason]])
-}
-
-excel_data <- list()
-for (reason in names(results_list)) {
-  if (!is.null(results_list[[reason]])) {
-    model_summary <- tidy(results_list[[reason]])
-    excel_data[[reason]] <- model_summary
-  } else {
-    cat("\n\n", "No valid model for", reason, "\n")
+    data_filtered <- data %>% 
+      filter(country_string %in% current_countries) %>% 
+      mutate(country_string = fct_relevel(country_string, "mexico"))
+    
+    formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
+    model <- lm(formula, data = data_filtered, weights = perwt)
+    results_list[[dv]] <- model
   }
+  
+  # print summaries
+  summaries <- map(results_list, summary)
+  for (reason in names(summaries)) {
+    cat("\n\n", "Summary for", reason, "(", sex_label, "):\n")
+    print(summaries[[reason]])
+  }
+  
+  # create excel data
+  excel_data <- list()
+  for (reason in names(results_list)) {
+    if (!is.null(results_list[[reason]])) {
+      model_summary <- tidy(results_list[[reason]])
+      excel_data[[reason]] <- model_summary
+    }
+  }
+  
+  return(results_list)
 }
 
-if (length(excel_data) > 0) {
-  write_xlsx(excel_data, path = paste0(out_dir, "../regressions/2020_US_model_summaries_no_controls.xlsx"))
-} else {
-  cat("No valid data to write to Excel.\n")
-}
+# create all three versions
+results_all <- create_models_by_sex(us_df_2020)
+results_male <- create_models_by_sex(us_df_2020, sex_filter = 1)
+results_female <- create_models_by_sex(us_df_2020, sex_filter = 2)
 ```
 ## full multivariate
 ```{r}
@@ -113,7 +126,7 @@ create_country_coefs <- function(data, sex_filter = NULL) {
            "is_naturalized_citizen", "less_than_primary_completed")
   ivs <- c("country_string", "age_at_immigration_15to24","age_at_immigration_25to49", 
            "age_at_immigration_50plus", "yrimm_before1965", "yrimm_1965to1980", 
-           "yrimm_1980to1999", "female", "english_speaker", "secondary_or_above", 
+           "yrimm_1980to1999", "female",
            "age_70to79", "age_80to89", "age_90plus")
   results_list <- list()
   
@@ -139,19 +152,13 @@ create_country_coefs <- function(data, sex_filter = NULL) {
     results_list[[dv]] <- model
   }
   
-  # extract country coefficients
-  country_coefs <- map_dfr(names(results_list), function(dv) {
-    tidy(results_list[[dv]]) %>%
-      filter(str_detect(term, "country_string")) %>%
-      mutate(outcome = dv,
-             term = str_remove(term, "country_string"))
-  }, .id = NULL) %>%
-    pivot_wider(names_from = outcome, values_from = c(estimate, std.error, statistic, p.value)) %>%
-    add_row(term = "mexico", .before = 1) %>%
-    mutate(across(where(is.numeric), ~replace_na(.x, 0))) %>%
-    arrange(match(term, c("cuba", "dominican republic", "mexico", "puerto rico")))
+  summaries <- map(results_list, summary)
+  for (reason in names(summaries)) {
+    cat("\n\n", "Summary for", reason, ":\n")
+    print(summaries[[reason]])
+  }
   
-  return(country_coefs)
+  return(results_list)
 }
 
 # create all three versions
@@ -159,113 +166,277 @@ country_coefs <- create_country_coefs(us_df_2020)
 male_country_coefs <- create_country_coefs(us_df_2020, sex_filter = 1)
 female_country_coefs <- create_country_coefs(us_df_2020, sex_filter = 2)
 ```
-
-## year of migration interaction (no controls)
-in model of married, drop lives alone
-in predicting naturalized citizen, drop PR
+## table output
 ```{r}
-dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", "is_naturalized_citizen", "less_than_primary_completed")
-ivs <- c("country_string*year")  # corrected
-results_list <- list()
+# generate excel output for each dv
+dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", 
+         "is_naturalized_citizen", "less_than_primary_completed")
 
-# running the models
+# renaming mapping
+term_labels <- c(
+  country_stringcuba = "Cuba",
+  country_stringdominican.republic = "Dominican Republic",
+  country_stringpuerto.rico = "Puerto Rico",
+  age_at_immigration_15to24 = "Immigrated Age 15-24",
+  age_at_immigration_25to49 = "Immigrated Age 25-49",
+  age_at_immigration_50plus = "Immigrated Age 50+",
+  yrimm_before1965 = "Immigrated Before 1965",
+  yrimm_1965to1980 = "Immigrated 1965-1980",
+  yrimm_1980to1999 = "Immigrated 1980-1999",
+  female = "Female",
+  age_70to79 = "Age 70-79",
+  age_80to89 = "Age 80-89",
+  age_90plus = "Age 90+"
+)
+
 for (dv in dvs) {
-  current_countries <- if (dv == "is_naturalized_citizen") {
-    c("mexico", "dominican republic", "cuba")  # exclude when pr when dv is citizen
-  } else {
-    c("mexico", "puerto rico", "dominican republic", "cuba")
+  m1 <- tidy(results_all[[dv]]) %>% mutate(model = "no_controls_all", n = nobs(results_all[[dv]]))
+  m2 <- tidy(country_coefs[[dv]]) %>% mutate(model = "all_controls_all", n = nobs(results_all[[dv]]))
+  m3 <- tidy(results_female[[dv]]) %>% mutate(model = "no_controls_female", n = nobs(results_all[[dv]]))
+  m4 <- tidy(female_country_coefs[[dv]]) %>% mutate(model = "all_controls_female", n = nobs(results_all[[dv]]))
+  m5 <- tidy(results_male[[dv]]) %>% mutate(model = "no_controls_male", n = nobs(results_all[[dv]]))
+  m6 <- tidy(male_country_coefs[[dv]]) %>% mutate(model = "all_controls_male", n = nobs(results_all[[dv]]))
+  
+  combined <- bind_rows(m1, m2, m3, m4, m5, m6) %>%
+    mutate(
+      term = term_labels[make.names(term)],
+      stars = case_when(
+        p.value < 0.01 ~ "***",
+        p.value < 0.05 ~ "**",
+        p.value < 0.10 ~ "*",
+        TRUE ~ ""
+      ),
+      coef_se = paste0(round(estimate, 3), stars, "\n(", round(std.error, 3), ")")
+    ) %>%
+    select(term, model, coef_se) %>%
+    pivot_wider(names_from = model, values_from = coef_se)
+  
+  write_xlsx(combined, 
+    path = paste0(out_dir, "../regressions/", dv, "_models.xlsx"))
+}
+```
+
+# year of migration interaction
+## univariate
+```{r}
+# turn model creation into a function
+create_country_coefs <- function(data, sex_filter = NULL) {
+  
+  # apply sex filter if specified
+  if (!is.null(sex_filter)) {
+    data <- data %>% filter(sex == sex_filter)
   }
   
-  us_df_all_filtered <- us_df_all %>% 
-    filter(country_string %in% current_countries) %>% 
-    mutate(country_string = fct_relevel(country_string, "mexico"))
+  dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", 
+           "is_naturalized_citizen", "less_than_primary_completed")
+  ivs <- c("country_string*year")
+  results_list <- list()
   
-  formula <- as.formula(paste(dv, "~", paste(ivs, collapse = " + ")))
-  print(formula)
-  model <- lm(formula, data = us_df_all_filtered, 
-               weights = perwt)
-  results_list[[dv]] <- model
-}
-
-summaries <- map(results_list, summary)
+  for (dv in dvs) {
+    current_countries <- if (dv == "is_naturalized_citizen") {
+      c("mexico", "dominican republic", "cuba")
+    } else {
+      c("mexico", "puerto rico", "dominican republic", "cuba")
+    }
+    
+    current_ivs <- if (dv == "less_than_primary_completed") {
+      ivs[!ivs %in% "secondary_or_above"]
+    } else {
+      ivs
+    }
+    
+    data_filtered <- data %>% 
+      filter(country_string %in% current_countries) %>% 
+      mutate(country_string = fct_relevel(country_string, "mexico"))
+    
+    formula <- as.formula(paste(dv, "~", paste(current_ivs, collapse = " + ")))
+    model <- lm(formula, data = data_filtered, weights = perwt)
+    results_list[[dv]] <- model
+  }
+  
+  summaries <- map(results_list, summary)
 for (reason in names(summaries)) {
   cat("\n\n", "Summary for", reason, ":\n")
   print(summaries[[reason]])
 }
-
-excel_data <- list()
-for (reason in names(results_list)) {
-  if (!is.null(results_list[[reason]])) {
-    model_summary <- tidy(results_list[[reason]])
-    excel_data[[reason]] <- model_summary
-  } else {
-    cat("\n\n", "No valid model for", reason, "\n")
-  }
+  
+  # extract country coefficients
+  country_coefs <- map_dfr(names(results_list), function(dv) {
+    tidy(results_list[[dv]]) %>%
+      filter(str_detect(term, "year2020")) %>%
+      mutate(outcome = dv,
+             term = str_remove(term, "country_string"),
+             term = str_remove(term, ":year2020"))
+  }, .id = NULL) %>%
+    pivot_wider(names_from = outcome, values_from = c(estimate, std.error, statistic, p.value)) %>%
+    arrange(match(term, c("country_stringcuba:year2020", "country_stringdominican republic:year2020", "mexico", "country_stringpuerto rico:year2020")))
+  
+  return(country_coefs)
 }
 
-if (length(excel_data) > 0) {
+# check if excel_data exists and is not empty
+if (exists("excel_data") && length(excel_data) > 0) {
   write_xlsx(excel_data, path = paste0(out_dir, "../regressions/2020_US_model_summaries_no_controls_interaction.xlsx"))
 } else {
   cat("No valid data to write to Excel.\n")
 }
+
+# create all three versions
+country_coefs_interaction_no_cont <- create_country_coefs(us_df_all) %>% 
+  mutate(
+    term = case_when(
+      term == "year2020" ~ "mexico",
+      TRUE ~ term
+    )
+  ) %>%
+  mutate(
+    across(
+      starts_with("estimate_"),
+      ~ if_else(term == "mexico", .x, .x + .x[term == "mexico"]),
+      .names = "mean_{.col}"
+    )
+  )
+
+male_country_coefs_interaction_no_cont <- create_country_coefs(us_df_all, sex_filter = 1) %>% 
+  mutate(
+    term = case_when(
+      term == "year2020" ~ "mexico",
+      TRUE ~ term
+    )
+  ) %>%
+  mutate(
+    across(
+      starts_with("estimate_"),
+      ~ if_else(term == "mexico", .x, .x + .x[term == "mexico"]),
+      .names = "mean_{.col}"
+    )
+  )
+
+female_country_coefs_interaction_no_cont <- create_country_coefs(us_df_all, sex_filter = 2) %>% 
+  mutate(
+    term = case_when(
+      term == "year2020" ~ "mexico",
+      TRUE ~ term
+    )
+  ) %>%
+  mutate(
+    across(
+      starts_with("estimate_"),
+      ~ if_else(term == "mexico", .x, .x + .x[term == "mexico"]),
+      .names = "mean_{.col}"
+    )
+  )
 ```
-# multivariate interaction
+## multivariate interaction
 ```{r}
-dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", "is_naturalized_citizen", "less_than_primary_completed")
-ivs <- c("age_at_immigration_15to24","age_at_immigration_25to49", "age_at_immigration_50plus", "yrimm_before1965", "yrimm_1965to1980", "yrimm_1980to1999", "female", "country_string", "english_speaker", "secondary_or_above", "age_70to79", "age_80to89", "age_90plus", "country_string*year")
-results_list <- list()
-
-# running the models
-for (dv in dvs) {
-  # conditionally modify countries for filtering
-  current_countries <- if (dv == "is_naturalized_citizen") {
-    c("mexico", "dominican republic", "cuba")  # exclude when pr when dv is citizen
-  } else {
-    c("mexico", "puerto rico", "dominican republic", "cuba")
+# turn model creation into a function
+create_country_coefs <- function(data, sex_filter = NULL) {
+  
+  # apply sex filter if specified
+  if (!is.null(sex_filter)) {
+    data <- data %>% filter(sex == sex_filter)
   }
   
-  # conditionally modify ivs
-  current_ivs <- if (dv == "less_than_primary_completed") {
-    ivs[!ivs %in% "secondary_or_above"]
-  } else {
-    ivs
+  dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", 
+           "is_naturalized_citizen", "less_than_primary_completed")
+  ivs <- c("country_string*year", "age_at_immigration_15to24","age_at_immigration_25to49", 
+           "age_at_immigration_50plus", "yrimm_before1965", "yrimm_1965to1980", 
+           "yrimm_1980to1999", "female",
+           "age_70to79", "age_80to89", "age_90plus")
+  results_list <- list()
+  
+  for (dv in dvs) {
+    current_countries <- if (dv == "is_naturalized_citizen") {
+      c("mexico", "dominican republic", "cuba")
+    } else {
+      c("mexico", "puerto rico", "dominican republic", "cuba")
+    }
+    
+    current_ivs <- if (dv == "less_than_primary_completed") {
+      ivs[!ivs %in% "secondary_or_above"]
+    } else {
+      ivs
+    }
+    
+    data_filtered <- data %>% 
+      filter(country_string %in% current_countries) %>% 
+      mutate(country_string = fct_relevel(country_string, "mexico"))
+    
+    formula <- as.formula(paste(dv, "~", paste(current_ivs, collapse = " + ")))
+    model <- lm(formula, data = data_filtered, weights = perwt)
+    results_list[[dv]] <- model
   }
   
-  # filter data with conditional countries
-  us_df_all_filtered <- us_df_all %>% 
-    filter(country_string %in% current_countries) %>% 
-    mutate(country_string = fct_relevel(country_string, "mexico"))
-  
-  formula <- as.formula(paste(dv, "~", paste(current_ivs, collapse = " + ")))
-  print(formula)
-  model <- lm(formula, data = us_df_all_filtered, 
-               weights = perwt)
-  results_list[[dv]] <- model
-}
-
-summaries <- map(results_list, summary)
+  summaries <- map(results_list, summary)
 for (reason in names(summaries)) {
   cat("\n\n", "Summary for", reason, ":\n")
   print(summaries[[reason]])
 }
-
-excel_data <- list()
-# Loop through each model in results_list
-for (reason in names(results_list)) {
-  if (!is.null(results_list[[reason]])) {
-    model_summary <- tidy(results_list[[reason]])
-    
-    excel_data[[reason]] <- model_summary
-  } else {
-    cat("\n\n", "No valid model for", reason, "\n")
-  }
+  
+  # extract country coefficients
+  country_coefs <- map_dfr(names(results_list), function(dv) {
+    tidy(results_list[[dv]]) %>%
+      filter(str_detect(term, "year2020")) %>%
+      mutate(outcome = dv,
+             term = str_remove(term, "country_string"),
+             term = str_remove(term, ":year2020"))
+  }, .id = NULL) %>%
+    pivot_wider(names_from = outcome, values_from = c(estimate, std.error, statistic, p.value)) %>%
+    arrange(match(term, c("country_stringcuba:year2020", "country_stringdominican republic:year2020", "mexico", "country_stringpuerto rico:year2020")))
+  
+  return(country_coefs)
 }
 
-if (length(excel_data) > 0) {
+# check if excel_data exists and is not empty
+if (exists("excel_data") && length(excel_data) > 0) {
   write_xlsx(excel_data, path = paste0(out_dir, "../regressions/2020_US_model_summaries_all_controls_interaction.xlsx"))
 } else {
   cat("No valid data to write to Excel.\n")
 }
+
+# create all three versions
+country_coefs_interaction <- create_country_coefs(us_df_all) %>% 
+  mutate(
+    term = case_when(
+      term == "year2020" ~ "mexico",
+      TRUE ~ term
+    )
+  ) %>%
+  mutate(
+    across(
+      starts_with("estimate_"),
+      ~ if_else(term == "mexico", .x, .x + .x[term == "mexico"]),
+      .names = "adjusted_mean_{.col}"
+    )
+  )
+male_country_coefs_interaction <- create_country_coefs(us_df_all, sex_filter = 1)  %>% 
+  mutate(
+    term = case_when(
+      term == "year2020" ~ "mexico",
+      TRUE ~ term
+    )
+  ) %>%
+  mutate(
+    across(
+      starts_with("estimate_"),
+      ~ if_else(term == "mexico", .x, .x + .x[term == "mexico"]),
+      .names = "adjusted_mean_{.col}"
+    )
+  )
+female_country_coefs_interaction <- create_country_coefs(us_df_all, sex_filter = 2)  %>% 
+  mutate(
+    term = case_when(
+      term == "year2020" ~ "mexico",
+      TRUE ~ term
+    )
+  ) %>%
+  mutate(
+    across(
+      starts_with("estimate_"),
+      ~ if_else(term == "mexico", .x, .x + .x[term == "mexico"]),
+      .names = "adjusted_mean_{.col}"
+    )
+  )
 ```
 
 ## migrant regressions
