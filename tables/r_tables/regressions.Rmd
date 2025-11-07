@@ -15,6 +15,8 @@ library(haven)
 ```
 #prep
 ```{r}
+target_dir <- normalizePath("C:/Users/Ty/Documents/GitHub/international_migration_ses/tables/r_tables")
+current_dir <- "C:/Users/Ty/Documents/GitHub/international_migration_ses/tables/r_tables"
 
 if (current_dir == target_dir) {
   out_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/tables/r_tables/")
@@ -220,6 +222,35 @@ for (dv in dvs) {
   
   write_xlsx(combined, 
     path = paste0(out_dir, "../regressions/", dv, "_models_2020.xlsx"))
+}
+```
+
+###2021
+```{r}
+for (dv in dvs) {
+  m1 <- tidy(results_all_2010[[dv]]) %>% mutate(model = "no_controls_all", n = nobs(results_all_2010[[dv]]))
+  m2 <- tidy(country_coefs_2010[[dv]]) %>% mutate(model = "all_controls_all", n = nobs(country_coefs_2010[[dv]]))
+  m3 <- tidy(results_female_2010[[dv]]) %>% mutate(model = "no_controls_female", n = nobs(results_female_2010[[dv]]))
+  m4 <- tidy(female_country_coefs_2010[[dv]]) %>% mutate(model = "all_controls_female", n = nobs(female_country_coefs_2010[[dv]]))
+  m5 <- tidy(results_male_2010[[dv]]) %>% mutate(model = "no_controls_male", n = nobs(results_male_2010[[dv]]))
+  m6 <- tidy(male_country_coefs_2010[[dv]]) %>% mutate(model = "all_controls_male", n = nobs(male_country_coefs_2010[[dv]]))
+  
+  combined <- bind_rows(m1, m2, m3, m4, m5, m6) %>%
+    mutate(
+      term = term_labels[make.names(term)],
+      stars = case_when(
+        p.value < 0.01 ~ "***",
+        p.value < 0.05 ~ "**",
+        p.value < 0.10 ~ "*",
+        TRUE ~ ""
+      ),
+      coef_se = paste0(round(estimate, 3), stars, "\n(", round(std.error, 3), ")")
+    ) %>%
+    select(term, model, coef_se) %>%
+    pivot_wider(names_from = model, values_from = coef_se)
+  
+  write_xlsx(combined, 
+    path = paste0(out_dir, "../regressions/", dv, "_models_2010.xlsx"))
 }
 ```
 

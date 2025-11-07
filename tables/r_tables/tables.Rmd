@@ -28,9 +28,9 @@ if (current_dir == target_dir) {
   plot_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses//plots/")
 
 } else {
-  out_dir <- file.path("C:\Users\Ty\Documents\GitHub\international_migration_ses\tables")
-  data_dir <- file.path("C:\Users\Ty\Documents\GitHub\international_migration_ses\data")
-  plot_dir <- file.path("C:\Users\Ty\Documents\GitHub\international_migration_ses\plots")
+  out_dir <- file.path("C:\\Users\\Ty\\Documents\\GitHub\\international_migration_ses\\tables")
+  data_dir <- file.path("C:\\Users\\Ty\\Documents\\GitHub\\international_migration_ses\\data")
+  plot_dir <- file.path("C:\\Users\\Ty\\Documents\\GitHub\\international_migration_ses\\plots")
 
 }
 
