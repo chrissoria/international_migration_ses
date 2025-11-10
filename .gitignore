@@ -7,3 +7,5 @@ us_international_ses.Rproj
 /paper/
 .RDataTmp
 /lit/
+.RDataTmp1
+.RData*

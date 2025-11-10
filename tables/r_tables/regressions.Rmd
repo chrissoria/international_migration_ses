@@ -199,12 +199,12 @@ term_labels <- c(
 )
 
 for (dv in dvs) {
-  m1 <- tidy(results_all_2020[[dv]]) %>% mutate(model = "no_controls_all", n = nobs(results_all_2020[[dv]]))
-  m2 <- tidy(country_coefs_2020[[dv]]) %>% mutate(model = "all_controls_all", n = nobs(country_coefs_2020[[dv]]))
-  m3 <- tidy(results_female_2020[[dv]]) %>% mutate(model = "no_controls_female", n = nobs(results_female_2020[[dv]]))
-  m4 <- tidy(female_country_coefs_2020[[dv]]) %>% mutate(model = "all_controls_female", n = nobs(female_country_coefs_2020[[dv]]))
-  m5 <- tidy(results_male_2020[[dv]]) %>% mutate(model = "no_controls_male", n = nobs(results_male_2020[[dv]]))
-  m6 <- tidy(male_country_coefs_2020[[dv]]) %>% mutate(model = "all_controls_male", n = nobs(male_country_coefs_2020[[dv]]))
+  m1 <- tidy(results_all_2020[[dv]]) %>% mutate(model = "Unadjusted")
+  m2 <- tidy(country_coefs_2020[[dv]]) %>% mutate(model = "Adjusted")
+  m3 <- tidy(results_female_2020[[dv]]) %>% mutate(model = "Unadjusted (Females Only)")
+  m4 <- tidy(female_country_coefs_2020[[dv]]) %>% mutate(model = "Adjusted (Females Only)")
+  m5 <- tidy(results_male_2020[[dv]]) %>% mutate(model = "Unadjusted (Males Only)")
+  m6 <- tidy(male_country_coefs_2020[[dv]]) %>% mutate(model = "Adjusted (Males Only)")
   
   combined <- bind_rows(m1, m2, m3, m4, m5, m6) %>%
     mutate(
@@ -219,21 +219,48 @@ for (dv in dvs) {
     ) %>%
     select(term, model, coef_se) %>%
     pivot_wider(names_from = model, values_from = coef_se)
+  
+  # add n and r-squared rows
+  model_stats <- tibble(
+    model = c("Unadjusted", "Adjusted", "Unadjusted (Females Only)", 
+              "Adjusted (Females Only)", "Unadjusted (Males Only)", "Adjusted (Males Only)"),
+    n = c(nobs(results_all_2020[[dv]]), nobs(country_coefs_2020[[dv]]),
+          nobs(results_female_2020[[dv]]), nobs(female_country_coefs_2020[[dv]]),
+          nobs(results_male_2020[[dv]]), nobs(male_country_coefs_2020[[dv]])),
+    r2 = c(glance(results_all_2020[[dv]])$r.squared, glance(country_coefs_2020[[dv]])$r.squared,
+           glance(results_female_2020[[dv]])$r.squared, glance(female_country_coefs_2020[[dv]])$r.squared,
+           glance(results_male_2020[[dv]])$r.squared, glance(male_country_coefs_2020[[dv]])$r.squared)
+  )
+  
+  n_row <- model_stats %>%
+    mutate(stat = as.character(n)) %>%
+    select(model, stat) %>%
+    pivot_wider(names_from = model, values_from = stat) %>%
+    mutate(term = "N", .before = 1)
+  
+  r2_row <- model_stats %>%
+    mutate(stat = as.character(round(r2, 3))) %>%
+    select(model, stat) %>%
+    pivot_wider(names_from = model, values_from = stat) %>%
+    mutate(term = "R-squared", .before = 1)
+  
+  combined <- bind_rows(combined, n_row, r2_row)
   
   write_xlsx(combined, 
     path = paste0(out_dir, "../regressions/", dv, "_models_2020.xlsx"))
 }
+
 ```
 
-###2021
+###2010
 ```{r}
 for (dv in dvs) {
-  m1 <- tidy(results_all_2010[[dv]]) %>% mutate(model = "no_controls_all", n = nobs(results_all_2010[[dv]]))
-  m2 <- tidy(country_coefs_2010[[dv]]) %>% mutate(model = "all_controls_all", n = nobs(country_coefs_2010[[dv]]))
-  m3 <- tidy(results_female_2010[[dv]]) %>% mutate(model = "no_controls_female", n = nobs(results_female_2010[[dv]]))
-  m4 <- tidy(female_country_coefs_2010[[dv]]) %>% mutate(model = "all_controls_female", n = nobs(female_country_coefs_2010[[dv]]))
-  m5 <- tidy(results_male_2010[[dv]]) %>% mutate(model = "no_controls_male", n = nobs(results_male_2010[[dv]]))
-  m6 <- tidy(male_country_coefs_2010[[dv]]) %>% mutate(model = "all_controls_male", n = nobs(male_country_coefs_2010[[dv]]))
+  m1 <- tidy(results_all_2010[[dv]]) %>% mutate(model = "Unadjusted")
+  m2 <- tidy(country_coefs_2010[[dv]]) %>% mutate(model = "Adjusted")
+  m3 <- tidy(results_female_2010[[dv]]) %>% mutate(model = "Unadjusted (Females Only)")
+  m4 <- tidy(female_country_coefs_2010[[dv]]) %>% mutate(model = "Adjusted (Females Only)")
+  m5 <- tidy(results_male_2010[[dv]]) %>% mutate(model = "Unadjusted (Males Only)")
+  m6 <- tidy(male_country_coefs_2010[[dv]]) %>% mutate(model = "Adjusted (Males Only)")
   
   combined <- bind_rows(m1, m2, m3, m4, m5, m6) %>%
     mutate(
@@ -248,6 +275,32 @@ for (dv in dvs) {
     ) %>%
     select(term, model, coef_se) %>%
     pivot_wider(names_from = model, values_from = coef_se)
+  
+  # add n and r-squared rows
+  model_stats <- tibble(
+    model = c("Unadjusted", "Adjusted", "Unadjusted (Females Only)", 
+              "Adjusted (Females Only)", "Unadjusted (Males Only)", "Adjusted (Males Only)"),
+    n = c(nobs(results_all_2010[[dv]]), nobs(country_coefs_2010[[dv]]),
+          nobs(results_female_2010[[dv]]), nobs(female_country_coefs_2010[[dv]]),
+          nobs(results_male_2010[[dv]]), nobs(male_country_coefs_2010[[dv]])),
+    r2 = c(glance(results_all_2010[[dv]])$r.squared, glance(country_coefs_2010[[dv]])$r.squared,
+           glance(results_female_2010[[dv]])$r.squared, glance(female_country_coefs_2010[[dv]])$r.squared,
+           glance(results_male_2010[[dv]])$r.squared, glance(male_country_coefs_2010[[dv]])$r.squared)
+  )
+  
+  n_row <- model_stats %>%
+    mutate(stat = as.character(n)) %>%
+    select(model, stat) %>%
+    pivot_wider(names_from = model, values_from = stat) %>%
+    mutate(term = "N", .before = 1)
+  
+  r2_row <- model_stats %>%
+    mutate(stat = as.character(round(r2, 3))) %>%
+    select(model, stat) %>%
+    pivot_wider(names_from = model, values_from = stat) %>%
+    mutate(term = "R-squared", .before = 1)
+  
+  combined <- bind_rows(combined, n_row, r2_row)
   
   write_xlsx(combined, 
     path = paste0(out_dir, "../regressions/", dv, "_models_2010.xlsx"))
@@ -475,6 +528,95 @@ female_country_coefs_interaction <- create_country_coefs(us_df_all, sex_filter =
       .names = "adjusted_mean_{.col}"
     )
   )
+```
+##table output
+###all interactions
+```{r}
+# function to create interaction model tables
+create_interaction_tables <- function(results_list_unadj, results_list_adj, 
+                                     results_list_female_unadj, results_list_female_adj,
+                                     results_list_male_unadj, results_list_male_adj, 
+                                     dvs, output_prefix) {
+  
+  for (dv in dvs) {
+    m1 <- tidy(results_list_unadj[[dv]]) %>% mutate(model = "Unadjusted")
+    m2 <- tidy(results_list_adj[[dv]]) %>% mutate(model = "Adjusted")
+    m3 <- tidy(results_list_female_unadj[[dv]]) %>% mutate(model = "Unadjusted (Females Only)")
+    m4 <- tidy(results_list_female_adj[[dv]]) %>% mutate(model = "Adjusted (Females Only)")
+    m5 <- tidy(results_list_male_unadj[[dv]]) %>% mutate(model = "Unadjusted (Males Only)")
+    m6 <- tidy(results_list_male_adj[[dv]]) %>% mutate(model = "Adjusted (Males Only)")
+    
+    combined <- bind_rows(m1, m2, m3, m4, m5, m6) %>%
+      filter(str_detect(term, ":year2020")) %>%
+      mutate(
+        term = str_remove(term, "country_string"),
+        term = str_remove(term, ":year2020")
+      ) %>%
+      mutate(
+        term = term_labels_interaction[term],
+        stars = case_when(
+          p.value < 0.01 ~ "***",
+          p.value < 0.05 ~ "**",
+          p.value < 0.10 ~ "*",
+          TRUE ~ ""
+        ),
+        coef_se = paste0(round(estimate, 3), stars, "\n(", round(std.error, 3), ")")
+      ) %>%
+      select(term, model, coef_se) %>%
+      filter(!is.na(term)) %>%
+      pivot_wider(names_from = model, values_from = coef_se)
+    
+    # add n and r-squared rows
+    model_stats <- tibble(
+      model = c("Unadjusted", "Adjusted", "Unadjusted (Females Only)", 
+                "Adjusted (Females Only)", "Unadjusted (Males Only)", "Adjusted (Males Only)"),
+      n = c(nobs(results_list_unadj[[dv]]), nobs(results_list_adj[[dv]]),
+            nobs(results_list_female_unadj[[dv]]), nobs(results_list_female_adj[[dv]]),
+            nobs(results_list_male_unadj[[dv]]), nobs(results_list_male_adj[[dv]])),
+      r2 = c(glance(results_list_unadj[[dv]])$r.squared, glance(results_list_adj[[dv]])$r.squared,
+             glance(results_list_female_unadj[[dv]])$r.squared, glance(results_list_female_adj[[dv]])$r.squared,
+             glance(results_list_male_unadj[[dv]])$r.squared, glance(results_list_male_adj[[dv]])$r.squared)
+    )
+    
+    n_row <- model_stats %>%
+      mutate(stat = as.character(n)) %>%
+      select(model, stat) %>%
+      pivot_wider(names_from = model, values_from = stat) %>%
+      mutate(term = "N", .before = 1)
+    
+    r2_row <- model_stats %>%
+      mutate(stat = as.character(round(r2, 3))) %>%
+      select(model, stat) %>%
+      pivot_wider(names_from = model, values_from = stat) %>%
+      mutate(term = "R-squared", .before = 1)
+    
+    combined <- bind_rows(combined, n_row, r2_row)
+    
+    write_xlsx(combined, 
+      path = paste0(out_dir, "../regressions/", output_prefix, "_", dv, "_interaction.xlsx"))
+  }
+}
+
+results_interaction_unadj <- create_country_coefs_full(us_df_all, include_controls = FALSE)
+results_interaction_adj <- create_country_coefs_full(us_df_all, include_controls = TRUE)
+results_female_interaction_unadj <- create_country_coefs_full(us_df_all, sex_filter = 2, include_controls = FALSE)
+results_female_interaction_adj <- create_country_coefs_full(us_df_all, sex_filter = 2, include_controls = TRUE)
+results_male_interaction_unadj <- create_country_coefs_full(us_df_all, sex_filter = 1, include_controls = FALSE)
+results_male_interaction_adj <- create_country_coefs_full(us_df_all, sex_filter = 1, include_controls = TRUE)
+
+dvs <- c("married_cohab", "lives_alone", "english_speaker", "secondary_or_above", 
+         "is_naturalized_citizen", "less_than_primary_completed")
+
+create_interaction_tables(
+  results_interaction_unadj, 
+  results_interaction_adj,
+  results_female_interaction_unadj, 
+  results_female_interaction_adj,
+  results_male_interaction_unadj, 
+  results_male_interaction_adj,
+  dvs, 
+  "interaction_models"
+)
 ```
 
 ## migrant regressions
