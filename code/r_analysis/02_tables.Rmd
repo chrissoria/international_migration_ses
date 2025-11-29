@@ -355,15 +355,21 @@ export_table(
 ```
 
 # Supplemental Table 5: Age-Standardized Sociodemographic Comparison of Hispanics Ages 60+ by Birth Country (~2010)
-## Note: This table uses age-standardized weights (perwt_age_standardized) for valid cross-country comparisons.
-## Reference population: US 2010 Census Hispanics 60+ (by sex).
-## Age distribution rows reflect the reference population, not the original country distributions.
+## Note: Age groups use original weights; all other variables use age-standardized weights.
+## Reference population for standardization: US 2010 Census Hispanics 60+ (by sex).
 ```{r}
-# Use age-standardized weights for US data to match international data
+# Get age distribution with ORIGINAL weights (not standardized)
+table_age_original <- create_intl_comparison_table(in_df_original, us_df_2010)
+
+# Get all variables with STANDARDIZED weights
 us_df_2010_standardized <- us_df_2010 %>%
   mutate(perwt = perwt_age_standardized)
-
 table_standardized <- create_intl_comparison_table(in_df, us_df_2010_standardized)
+
+# Replace age rows (rows 1-4 for female, rows 13-16 for male after removing headers) with original weights
+# Age rows are: 60-69, 70-79, 80-89, 90 plus (rows 1-4 in each sex section)
+table_standardized[1:4, ] <- table_age_original[1:4, ]
+table_standardized[13:16, ] <- table_age_original[13:16, ]
 
 table_standardized <- table_standardized %>%
   add_row(Demographics = "Age", .before = 1) %>%
