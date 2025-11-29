@@ -1,7 +1,12 @@
 clear all
 capture log close
 
-use "D:\US_2020_v100.dta"
+* Set working directory
+capture cd "/Users/chrissoria/Documents/Research/us_international_ses"
+capture cd "/hdir/0/chrissoria/ses_international"
+capture cd "C:\Users\Ty\Desktop\ses_international"
+
+use "data/US_2020_v100.dta"
 
 *identify hispanics from central america
 gen SALat = 1 if bpl == 210 & hispan ~= 0
@@ -38,24 +43,26 @@ decode bpld, gen(bpld_string)
 drop bpld
 order bpld_string
 
-export delimited using "hispanic_immigrant_count.csv", replace
-save "hispanic_immigrant_count.dta", replace
+export delimited using "data/hispanic_immigrant_count.csv", replace
+save "data/hispanic_immigrant_count.dta", replace
 
-import excel using "D:\gdp_per_capita.xlsx", clear firstrow
+capture import excel using "/Users/chrissoria/Documents/Research/us_international_ses/data/gdp_per_capita.xlsx", clear firstrow
+capture import excel using "data/gdp_per_capita.xlsx", clear firstrow
 
 rename Country bpld_string
 replace bpld_string = "Venezuela" if bpld_string == "Venezuela, RB"
 replace bpld_string = "Belize/British Honduras" if bpld_string == "Belize"
 replace bpld_string = "Guyana/British Guiana" if bpld_string == "Guyana"
-merge 1:1 bpld_string using "hispanic_immigrant_count.dta"
+merge 1:1 bpld_string using "data/hispanic_immigrant_count.dta"
 
 drop if _merge == 1
 drop _merge
 
-export delimited using "hispanic_immigrant_count.csv", replace
-save "hispanic_immigrant_count.dta", replace
+export delimited using "data/hispanic_immigrant_count.csv", replace
+save "data/hispanic_immigrant_count.dta", replace
 
-import delimited using "D:\e60.csv", clear
+capture import delimited using "/Users/chrissoria/Documents/Research/us_international_ses/data/e60.csv", clear
+capture import delimited using "data/e60.csv", clear
 
 keep if period == 2019
 rename location bpld_string
@@ -67,7 +74,7 @@ replace bpld_string = "Belize/British Honduras" if bpld_string == "Belize"
 replace bpld_string = "Guyana/British Guiana" if bpld_string == "Guyana"
 replace bpld_string = "Bolivia" if bpld_string == "Bolivia (Plurinational State of)"
 
-merge 1:1 bpld_string using "hispanic_immigrant_count.dta"
+merge 1:1 bpld_string using "data/hispanic_immigrant_count.dta"
 
 keep if bpld_string == "Dominica" | _merge == 3
 drop _merge
@@ -155,5 +162,5 @@ replace IMR_2010 = 15.84453368 if bpld == "Dominica"
 
 drop indicator* valuetype parent* locationtype spatial period* islatest dim* datasource* *prefix factvalueuom factvaluetranslationid factcomments language datemodified
 
-export delimited using "hispanic_immigrant_count.csv", replace
-save "hispanic_immigrant_count.dta", replace
+export delimited using "data/hispanic_immigrant_count.csv", replace
+save "data/hispanic_immigrant_count.dta", replace

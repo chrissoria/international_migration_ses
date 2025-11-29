@@ -1,0 +1,208 @@
+---
+title: "Background Data"
+author: "Chris Soria"
+date: "2024-09-28"
+output: html_document
+---
+
+# Overview
+This script processes background data for Latin American countries including:
+- GDP per capita
+- Life expectancy at age 60
+- Infant mortality rates (1950, 2010, 2019)
+- Hispanic immigrant counts
+
+Outputs:
+- `background_data.csv` - Combined background indicators
+- `e60.csv` - Life expectancy at 60 data
+- `tables/table1.xlsx` - Background table (Table 1)
+- `tables/r_tables/background_table.tex` - LaTeX version
+
+# Libraries
+```{r}
+library(haven)
+library(tidyverse)
+library(readxl)
+library(writexl)
+library(xtable)
+library(readr)
+```
+
+# Setup
+```{r}
+target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/code")
+current_dir <- normalizePath(getwd())
+
+if (current_dir == target_dir) {
+  out_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/code/")
+  data_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/")
+  table_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/tables/")
+} else {
+  out_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/code")
+  data_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/data")
+  table_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/tables")
+}
+```
+
+# Countries of Interest
+```{r}
+countries_of_interest <- c(
+  "Puerto Rico", "Canada", "Mexico", "Belize", "Costa Rica", "El Salvador",
+  "Guatemala", "Honduras", "Nicaragua", "Panama", "Cuba", "Dominican Republic",
+  "Haiti", "Jamaica", "Dominica", "Trinidad and Tobago", "Argentina", "Bolivia",
+  "Brazil", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Peru",
+  "Uruguay", "Venezuela", "Bolivia (Plurinational State of)",
+  "Venezuela (Bolivarian Republic of)"
+)
+```
+
+# GDP Data
+```{r}
+gdp <- read_excel(paste0(data_dir, "gdp_per_capita.xlsx")) %>%
+  filter(...1 %in% countries_of_interest) %>%
+  mutate(`2023` = if_else(...1 == "Cuba", "7449.68", `2023`)) %>%
+  rename(gdp = `2023`, country = ...1)
+```
+
+# Life Expectancy at 60
+```{r}
+e60 <- read_csv(paste0(data_dir, "e60.csv")) %>%
+  filter(Location %in% countries_of_interest, Dim1 == "Both sexes",
+         Period == 2019, Indicator == "Life expectancy at age 60 (years)") %>%
+  select(Dim1, Value, Location) %>%
+  separate(Value, into = c("e60", "CI_lower", "CI_upper"),
+           sep = " \\[|\\-|\\]", convert = TRUE, extra = "drop") %>%
+  rename(country = Location) %>%
+  mutate(country = case_when(
+    country == "Bolivia (Plurinational State of)" ~ "Bolivia",
+    country == "Venezuela (Bolivarian Republic of)" ~ "Venezuela",
+    TRUE ~ country
+  ))
+
+write.csv(e60, paste0(out_dir, "../e60.csv"))
+```
+
+# Infant Mortality Rates
+```{r}
+ifr_path <- paste0(data_dir, "IMR")
+ifr_files <- list.files(path = ifr_path, pattern = "*.csv", full.names = TRUE, ignore.case = TRUE)
+
+# Country code mapping for IFR files
+ifr_country_map <- c(
+  "CAN" = "Canada", "MEX" = "Mexico", "BLZ" = "Belize", "CRI" = "Costa Rica",
+  "SLV" = "El Salvador", "GTM" = "Guatemala", "HND" = "Honduras",
+  "NIC" = "Nicaragua", "PAN" = "Panama", "CUB" = "Cuba", "DOM" = "Dominican Republic",
+  "HTI" = "Haiti", "JAM" = "Jamaica", "DMA" = "Dominica", "TTO" = "Trinidad and Tobago",
+  "ARG" = "Argentina", "BOL" = "Bolivia", "BRA" = "Brazil", "CHL" = "Chile",
+  "COL" = "Colombia", "ECU" = "Ecuador", "GUY" = "Guyana", "PRY" = "Paraguay",
+  "PER" = "Peru", "URY" = "Uruguay", "VEN" = "Venezuela"
+)
+
+ifr_dfs <- lapply(ifr_files, function(file) {
+  tryCatch({
+    read_csv(file, col_types = cols(.default = "c"))
+  }, error = function(e) NULL)
+})
+names(ifr_dfs) <- basename(ifr_files)
+ifr_dfs <- ifr_dfs[!sapply(ifr_dfs, is.null)]
+
+ifr_dfs <- lapply(names(ifr_dfs), function(name) {
+  tryCatch({
+    df <- ifr_dfs[[name]]
+    country_code <- substr(name, 1, 3)
+    df %>%
+      mutate(
+        country = ifr_country_map[country_code],
+        Int. = as.numeric(ifelse(Int. %in% c("N/A", "-"), NA, Int.)),
+        `Ref. date` = as.numeric(`Ref. date`)
+      ) %>%
+      filter(`Ref. date` %in% c(1950, 2010, 2019))
+  }, error = function(e) NULL)
+})
+
+ifr_df <- bind_rows(ifr_dfs) %>%
+  filter(!is.na(`Std. err`)) %>%
+  filter(!Name %in% c("Census 2010 (Household Deaths)",
+                      "Demographic and Health Survey 2013 (Direct)",
+                      "VR from Oficina Nacional de Estadistica 2021 (VR)",
+                      "Encuesta Nacional de la Dinamica Demografica (ENADID) 2018 (Direct)",
+                      "Vital Registration data from Mexico Ministry of Health 2018 (VR)")) %>%
+  select(Value, `Ref. date`, country) %>%
+  mutate(Value = as.character(Value)) %>%
+  add_row(Value = "6.861", `Ref. date` = 2010, country = "Puerto Rico") %>%
+  add_row(Value = "70.531", `Ref. date` = 1950, country = "Puerto Rico") %>%
+  add_row(Value = "5.309", `Ref. date` = 2019, country = "Puerto Rico") %>%
+  add_row(Value = "87.121", `Ref. date` = 1950, country = "Cuba") %>%
+  rename(ifr = Value, ifr_year = `Ref. date`) %>%
+  slice(-2)
+
+# Pivot IFR by year
+ifr_wide <- ifr_df %>%
+  pivot_wider(names_from = ifr_year, values_from = ifr, names_prefix = "ifr_")
+```
+
+# Merge Background Data
+```{r}
+background_data <- e60 %>%
+  left_join(gdp, by = "country") %>%
+  left_join(ifr_wide, by = "country") %>%
+  arrange(desc(ifr_2010)) %>%
+  distinct(country, .keep_all = TRUE)
+
+counts <- read.csv(paste0(data_dir, "hispanic_immigrant_count.csv")) %>%
+  select(bpld_string, count, percent) %>%
+  mutate(percent = percent * 100) %>%
+  rename(country = bpld_string)
+
+background_data <- left_join(background_data, counts, by = "country") %>%
+  arrange(country)
+
+write.csv(background_data, paste0(out_dir, "../background_data.csv"))
+
+# Clean up intermediate objects
+rm(ifr_path, ifr_files, ifr_dfs, ifr_df, ifr_wide, gdp, e60, counts)
+```
+
+# Table 1: Background Table
+```{r}
+background_data <- read.csv(paste0(data_dir, "hispanic_immigrant_count.csv"))
+
+table1_order <- c("Mexico", "Cuba", "Dominican Republic", "Puerto Rico",
+                  "Belize/British Honduras", "Costa Rica", "El Salvador",
+                  "Guatemala", "Honduras", "Nicaragua", "Panama",
+                  "Argentina", "Bolivia", "Brazil", "Chile", "Colombia",
+                  "Ecuador", "Guyana/British Guiana", "Haiti", "Jamaica",
+                  "Paraguay", "Peru", "Trinidad and Tobago", "Uruguay", "Venezuela")
+
+background_table <- background_data %>%
+  filter(bpld_string != "Canada") %>%
+  select(bpld_string, count, percent, GDPpercapita, e60, IMR_1950, IMR_2019) %>%
+  mutate(percent = percent * 100) %>%
+  rename(
+    Country = bpld_string,
+    `GDP Per Capita` = GDPpercapita,
+    Total = count,
+    `Percent of Migrants` = percent,
+    `Life Expectancy at 60` = e60,
+    `Infant Mortality Rate (1950)` = IMR_1950,
+    `Infant Mortality Rate (2019)` = IMR_2019
+  ) %>%
+  mutate(Country = factor(Country, levels = table1_order)) %>%
+  arrange(Country) %>%
+  add_row(Country = "Mexico and Carribean Countries", .before = 1) %>%
+  add_row(Country = "Central American Countries", .before = 6) %>%
+  add_row(Country = "South American Countries", .before = 14)
+
+# Export to Excel
+write_xlsx(background_table, paste0(table_dir, "table1.xlsx"))
+
+# Export to LaTeX
+tbl <- xtable(background_table,
+              caption = "Latin American Development Indicators",
+              align = "ll|cccccc")
+latex_code <- capture.output(print(tbl, type = "latex", caption.placement = "top",
+                                   size = "\\small", include.rownames = FALSE))
+writeLines(latex_code, paste0(table_dir, "r_tables/background_table.tex"))
+
+print(background_table)
+```

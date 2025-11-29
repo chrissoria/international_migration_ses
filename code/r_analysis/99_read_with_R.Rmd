@@ -1,0 +1,625 @@
+---
+title: "US International SES - Data Preprocessing"
+author: "Chris Soria"
+date: "2025-01-08"
+output: html_document
+---
+
+# Overview
+
+This script processes US Census/ACS data and international census data for comparative analysis of older adult (60+) Hispanic immigrants.
+
+**Outputs:**
+- `data/US_2010_v100.rds` (ACS 2010)
+- `data/US_2020_v100.rds` (ACS 2020)
+- `data/US_2010_v100_census.rds` (Census 2010 - International IPUMS format)
+- `data/CuDrMePrUs_10_12.rds` (Combined international)
+
+# Setup
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(haven)
+library(labelled)
+
+# Set working directory
+target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses")
+current_dir <- normalizePath(getwd())
+
+if (grepl("us_international_ses", current_dir)) {
+  data_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/")
+  weights_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/weights/")
+} else {
+  data_dir <- file.path("C:/Users/Ty/Desktop/ses_international/data/")
+  weights_dir <- file.path("C:/Users/Ty/Desktop/ses_international/data/weights/")
+}
+
+# Create weights directory if it doesn't exist
+dir.create(weights_dir, showWarnings = FALSE, recursive = TRUE)
+```
+
+# Helper Functions
+
+```{r helper_functions}
+# Function: Create age group variables
+create_age_groups <- function(df) {
+  df %>%
+    mutate(
+      age_groups = case_when(
+        age < 70 ~ 1,
+        age >= 70 & age < 80 ~ 2,
+        age >= 80 & age < 90 ~ 3,
+        age >= 90 ~ 4
+      ),
+      age_groups = factor(age_groups, levels = 1:4,
+                          labels = c("60-69", "70-79", "80-89", "90+")),
+      age_60to69 = as.integer(age >= 60 & age < 70),
+      age_70to79 = as.integer(age >= 70 & age < 80),
+      age_80to89 = as.integer(age >= 80 & age < 90),
+      age_90plus = as.integer(age >= 90)
+    )
+}
+
+# Function: Create year of immigration variables
+# yrimm_var should be the name of the year of immigration column
+create_yrimm_vars <- function(df, yrimm_var) {
+  yrimm_sym <- sym(yrimm_var)
+
+  df %>%
+    mutate(
+      year_of_immigration_groups = case_when(
+        !!yrimm_sym < 1965 & !!yrimm_sym != 0 ~ 1,
+        !!yrimm_sym >= 1965 & !!yrimm_sym < 1981 & !!yrimm_sym != 0 ~ 2,
+        !!yrimm_sym >= 1980 & !!yrimm_sym < 2000 & !!yrimm_sym != 0 ~ 3,
+        !!yrimm_sym >= 2000 & !!yrimm_sym != 0 ~ 4
+      ),
+      year_of_immigration_groups = factor(year_of_immigration_groups, levels = 1:4,
+                                          labels = c("Before 1965", "1965 - 1979",
+                                                    "1980 - 1999", "After 1999")),
+      year_of_immig_groups_string = as.character(year_of_immigration_groups),
+      yrimm_before1965 = as.integer(!!yrimm_sym < 1965 & !!yrimm_sym != 0),
+      yrimm_1965to1980 = as.integer(!!yrimm_sym >= 1965 & !!yrimm_sym < 1981 & !!yrimm_sym != 0),
+      yrimm_1980to1999 = as.integer(!!yrimm_sym >= 1980 & !!yrimm_sym < 2000 & !!yrimm_sym != 0),
+      yrimm_2000plus = as.integer(!!yrimm_sym >= 2000 & !!yrimm_sym != 0)
+    )
+}
+
+# Function: Create age at immigration variables
+create_age_at_immig_vars <- function(df) {
+  df %>%
+    mutate(
+      age_at_immigration_groups = case_when(
+        age_at_immigration < 15 ~ 1,
+        age_at_immigration >= 15 & age_at_immigration < 25 ~ 2,
+        age_at_immigration >= 25 & age_at_immigration < 50 ~ 3,
+        age_at_immigration >= 50 ~ 4
+      ),
+      age_at_immigration_groups = factor(age_at_immigration_groups, levels = 1:4,
+                                         labels = c("Under 15", "15-24", "25-49", "50 and above")),
+      age_at_immig_groups_string = as.character(age_at_immigration_groups),
+      age_at_immigration_under15 = as.integer(age_at_immigration < 15),
+      age_at_immigration_15to24 = as.integer(age_at_immigration >= 15 & age_at_immigration < 25),
+      age_at_immigration_25to49 = as.integer(age_at_immigration >= 25 & age_at_immigration < 50),
+      age_at_immigration_50plus = as.integer(age_at_immigration >= 50),
+      age_at_immigration_15to49 = as.integer(age_at_immigration >= 15 & age_at_immigration < 50)
+    )
+}
+
+# Function: Create race/nativity category (12-category classification)
+create_race_nativity_category <- function(df) {
+  df %>%
+    mutate(
+      race_native_category = case_when(
+        native_foreign_race == "foreign-born black hispanic" ~ 1,
+        native_foreign_race == "foreign-born white hispanic" ~ 2,
+        native_foreign_race == "foreign-born other hispanic" ~ 3,
+        native_foreign_race == "foreign-born black not hispanic" ~ 4,
+        native_foreign_race == "foreign-born white not hispanic" ~ 5,
+        native_foreign_race == "foreign-born other not hispanic" ~ 6,
+        native_foreign_race == "native-born black hispanic" ~ 7,
+        native_foreign_race == "native-born white hispanic" ~ 8,
+        native_foreign_race == "native-born other hispanic" ~ 9,
+        native_foreign_race == "native-born black not hispanic" ~ 10,
+        native_foreign_race == "native-born white not hispanic" ~ 11,
+        native_foreign_race == "native-born other not hispanic" ~ 12
+      ),
+      race_native_category = factor(race_native_category, levels = 1:12,
+                                    labels = c("Foreign-Born Black Hispanic",
+                                              "Foreign-Born White Hispanic",
+                                              "Foreign-Born Other Hispanic",
+                                              "Foreign-Born Black Non-Hispanic",
+                                              "Foreign-Born White Non-Hispanic",
+                                              "Foreign-Born Other Non-Hispanic",
+                                              "Native-Born Black Hispanic",
+                                              "Native-Born White Hispanic",
+                                              "Native-Born Other Hispanic",
+                                              "Native-Born Black Non-Hispanic",
+                                              "Native-Born White Non-Hispanic",
+                                              "Native-Born Other Non-Hispanic"))
+    )
+}
+
+# Function: Create education variables (for ACS detailed codes)
+create_education_vars_acs <- function(df) {
+  df %>%
+    mutate(
+      edattain_string = tolower(as.character(as_factor(educd))),
+      less_than_primary_completed = as.integer(edattain_string %in% c(
+        "grade 1", "grade 2", "grade 3", "grade 4", "grade 5",
+        "kindergarten", "no schooling completed", "nursery school, preschool"
+      )),
+      primary_completed = as.integer(edattain_string %in% c(
+        "grade 6", "grade 7", "grade 8", "grade 9", "grade 10", "grade 11"
+      )),
+      secondary_completed = as.integer(edattain_string %in% c(
+        "regular high school diploma", "ged or alternative credential",
+        "1 or more years of college credit, no degree",
+        "some college, but less than 1 year", "12th grade, no diploma",
+        "associate's degree, type not specified"
+      )),
+      university_completed = as.integer(edattain_string %in% c(
+        "bachelor's degree", "master's degree", "doctoral degree",
+        "professional degree beyond a bachelor's degree"
+      )),
+      primary_or_above = as.integer(primary_completed == 1 | secondary_completed == 1 | university_completed == 1),
+      secondary_or_above = as.integer(secondary_completed == 1 | university_completed == 1)
+    )
+}
+
+# Function: Create education variables (for international census)
+create_education_vars_intl <- function(df) {
+  df %>%
+    mutate(
+      edattain_string = as.character(as_factor(edattain)),
+      less_than_primary_completed = as.integer(edattain_string == "less than primary completed"),
+      primary_completed = as.integer(edattain_string == "primary completed"),
+      secondary_completed = as.integer(edattain_string == "secondary completed"),
+      university_completed = as.integer(edattain_string == "university completed"),
+      primary_or_above = as.integer(primary_completed == 1 | secondary_completed == 1 | university_completed == 1),
+      secondary_or_above = as.integer(secondary_completed == 1 | university_completed == 1)
+    )
+}
+
+# Function: Create household variables
+create_household_vars <- function(df) {
+  df %>%
+    mutate(
+      lives_alone = as.integer(famsize == 1 & !is.na(famsize)),
+      child_in_household = as.integer(nchild > 0 & !is.na(nchild))
+    )
+}
+
+# Function: Create sex dummy variables
+create_sex_vars <- function(df) {
+  df %>%
+    mutate(
+      male = as.integer(sex == 1),
+      female = as.integer(sex == 2)
+    )
+}
+
+# US states list for nativity detection
+us_states <- c("alabama", "alaska", "arizona", "arkansas", "california", "colorado",
+               "connecticut", "delaware", "florida", "georgia", "hawaii", "idaho",
+               "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana",
+               "maine", "maryland", "massachusetts", "michigan", "minnesota",
+               "mississippi", "missouri", "montana", "nebraska", "nevada",
+               "new hampshire", "new jersey", "new mexico", "new york",
+               "north carolina", "north dakota", "ohio", "oklahoma", "oregon",
+               "pennsylvania", "rhode island", "south carolina", "south dakota",
+               "tennessee", "texas", "utah", "vermont", "virginia", "washington",
+               "west virginia", "wisconsin", "wyoming", "district of columbia")
+```
+
+# Part 1: Process US ACS Data (2010 and 2020)
+
+```{r process_acs, message=FALSE, warning=FALSE}
+process_acs_data <- function(data_file, sample_code, year_val) {
+
+  df <- read_dta(paste0(data_dir, data_file)) %>%
+    filter(sample == sample_code) %>%
+    filter(age > 59)
+
+  # Hispanic Category Classification
+  df <- df %>%
+    mutate(
+      HispanicCategory = case_when(
+        bpl == 210 & hispan != 0 ~ 3,  # Central American
+        (bpl < 400 | bpl > 599) & hispan != 0 & bpl != 210 ~ 2,  # Other Latino
+        (bpl >= 400 & bpl <= 599) & hispan != 0 ~ 1,  # Hispanic Non-Latino
+        TRUE ~ 0  # Not Latino
+      ),
+      HispanicCategory = factor(HispanicCategory, levels = 0:3,
+                                labels = c("Not Latino", "Hispanic Non-Latino",
+                                          "Other Latino", "Central-American Latino")),
+      HispanicCategoryString = as.character(HispanicCategory)
+    )
+
+  # Create derived variables
+  df <- df %>%
+    create_household_vars() %>%
+    create_age_groups() %>%
+    create_yrimm_vars("yrimmig")
+
+  # Nativity: Identify US-born via state of birth
+  df <- df %>%
+    mutate(
+      bpl_string = tolower(as.character(as_factor(bpl))),
+      contains_us_state = as.integer(sapply(bpl_string, function(x) {
+        any(sapply(us_states, function(state) grepl(state, x, fixed = TRUE)))
+      })),
+      bplcountry = as.character(as_factor(bpld)),
+      bplcountry = if_else(contains_us_state == 1, "united states", tolower(bplcountry)),
+      nativity_string = if_else(contains_us_state == 1, "native-born", "foreign-born")
+    )
+
+  # Race string processing
+  df <- df %>%
+    mutate(
+      race_string = tolower(as.character(as_factor(race))),
+      race_string = case_when(
+        race_string == "black/african american" ~ "black",
+        race_string %in% c("white", "black") ~ race_string,
+        TRUE ~ "other"
+      ),
+      hispan_string = tolower(as.character(as_factor(hispan))),
+      hispan_string = if_else(hispan_string != "not hispanic", "hispanic", hispan_string),
+      # Fix: Dominicans often misclassified
+      hispan_string = if_else(bpld == 26010, "hispanic", hispan_string),
+      race_string = paste(race_string, hispan_string),
+      native_foreign_race = paste(nativity_string, race_string)
+    )
+
+  df <- df %>% create_race_nativity_category()
+
+  # Marital status
+  df <- df %>%
+    mutate(
+      married_cohab = as.integer(marst %in% c(1, 2) & !is.na(marst)),
+      married_not_cohab = as.integer(marst == 2 & !is.na(marst))
+    )
+
+  # Immigration timing
+  df <- df %>%
+    mutate(
+      years_in_us = yrsusa1,
+      age_at_immigration = age - years_in_us,
+      age_at_immigration = if_else(nativity_string == "native-born", NA_real_, age_at_immigration)
+    ) %>%
+    create_age_at_immig_vars()
+
+  # Citizenship
+  df <- df %>%
+    mutate(
+      is_naturalized_citizen = as.integer(citizen == 2),
+      is_born_citizen = as.integer(citizen == 0),
+      is_citizen = as.integer(citizen != 3)
+    )
+
+  df <- df %>% create_sex_vars()
+
+  # English proficiency
+  df <- df %>%
+    mutate(
+      speakeng_string = tolower(as.character(as_factor(speakeng))),
+      english_speaker = as.integer(speakeng_string != "does not speak english"),
+      english_speaker_not_well = as.integer(speakeng_string == "yes, but not well"),
+      english_speaker_well = as.integer(english_speaker == 1 & english_speaker_not_well == 0)
+    )
+
+  df <- df %>% create_education_vars_acs()
+
+  # Country-year identifiers
+  df <- df %>%
+    mutate(
+      year_str = as.character(year),
+      country_string = tolower(bplcountry),
+      country_year = paste0(country_string, "_", year_str),
+      hispanic_migrant_status = paste(nativity_string, hispan_string),
+      hispanic_category_migrant_status = paste(nativity_string, HispanicCategoryString),
+      hispanic_category_migrant_status = if_else(
+        hispanic_category_migrant_status == "foreign-born Hispanic Non-Latino",
+        "foreign-born Not Latino",
+        hispanic_category_migrant_status
+      ),
+      hispanic_migrant_status_race = paste(nativity_string, race_string)
+    )
+
+  # Add cognitive/independence difficulty variables if they exist
+  if ("diffrem" %in% names(df)) {
+    df <- df %>%
+      mutate(
+        cognitive_difficulty = as.integer(diffrem == 2),
+        independent_living_difficulty = as.integer(diffcare == 2)
+      )
+  }
+
+  df
+}
+
+# Process 2020 ACS (both use usa_00007.dta, filtered by sample code)
+us_df_2020 <- process_acs_data("usa_00007.dta", 202003, 2020)
+saveRDS(us_df_2020, paste0(data_dir, "US_2020_v100.rds"))
+write_dta(us_df_2020, paste0(data_dir, "US_2020_v100.dta"))
+cat("Saved US 2020 ACS data:", nrow(us_df_2020), "observations\n")
+
+# Process 2010 ACS
+us_df_2010 <- process_acs_data("usa_00007.dta", 201003, 2010)
+saveRDS(us_df_2010, paste0(data_dir, "US_2010_v100.rds"))
+write_dta(us_df_2010, paste0(data_dir, "US_2010_v100.dta"))
+cat("Saved US 2010 ACS data:", nrow(us_df_2010), "observations\n")
+
+rm(us_df_2010, us_df_2020)
+gc()
+```
+
+# Part 2: Process US Census 2010 (International IPUMS format)
+
+```{r process_census_2010, message=FALSE, warning=FALSE}
+us_census_2010 <- read_dta(paste0(data_dir, "ipumsi_00002_US_2010.dta")) %>%
+  filter(age > 59)
+
+# Hispanic Category (using international bplcountry codes)
+# Central America: 22010-22080 (Belize, Costa Rica, El Salvador, Guatemala, Honduras, Nicaragua, Panama)
+us_census_2010 <- us_census_2010 %>%
+  mutate(
+    HispanicCategory = case_when(
+      (bplcountry >= 22010 & bplcountry <= 22080) & hispan != 0 ~ 3,
+      hispan != 0 & !((bplcountry >= 22010 & bplcountry <= 22080)) ~ 2,
+      TRUE ~ 0
+    ),
+    HispanicCategory = if_else(HispanicCategory == 0 & hispan == 0, 0, HispanicCategory),
+    HispanicCategory = factor(HispanicCategory, levels = 0:3,
+                              labels = c("Not Latino", "Hispanic Non-Latino",
+                                        "Other Latino", "Central-American Latino")),
+    HispanicCategoryString = as.character(HispanicCategory)
+  )
+
+us_census_2010 <- us_census_2010 %>%
+  create_household_vars()
+
+# Latin American identifier
+us_census_2010 <- us_census_2010 %>%
+  mutate(
+    latin_american = as.integer(bpl > 21019 & bpl < 24000),
+    latin_american = if_else(hispan > 0 & bpl == 24040, 1L, latin_american),
+    hispan = if_else(latin_american == 0, 0, hispan)
+  )
+
+# Calculate age standardization weights (by sex)
+us_census_2010 <- us_census_2010 %>%
+  mutate(
+    sex_string = tolower(as.character(as_factor(sex))),
+    age2_string = as.character(as_factor(age2))
+  )
+
+# Calculate US age weights by sex
+us_age_weights <- us_census_2010 %>%
+  group_by(sex_string, age2, age2_string) %>%
+  summarise(perwt_sum = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(sex_string) %>%
+  mutate(
+    total_perwt = sum(perwt_sum),
+    age_weight = perwt_sum / total_perwt,
+    match_var_us = paste0(sex_string, age2_string)
+  ) %>%
+  ungroup() %>%
+  select(sex_string, age2, age2_string, age_weight, match_var_us)
+
+# Save weights
+for (s in c("female", "male")) {
+  us_age_weights %>%
+    filter(sex_string == s) %>%
+    rename(!!paste0("age_weight_", s) := age_weight) %>%
+    write_csv(paste0(weights_dir, "us_age_weights_", s, ".csv"))
+}
+
+# Continue with variable creation
+us_census_2010 <- us_census_2010 %>%
+  mutate(country_string = as.character(as_factor(bplcountry))) %>%
+  create_age_groups() %>%
+  create_yrimm_vars("yrimm")
+
+# Nativity and race
+us_census_2010 <- us_census_2010 %>%
+  mutate(
+    nativity_string = as.character(as_factor(nativity)),
+    race_string = as.character(as_factor(race)),
+    hispan_string = as.character(as_factor(hispan)),
+    hispan_string = if_else(hispan_string != "not hispanic", "hispanic", hispan_string),
+    hispan_string = if_else(bpl == 26010, "hispanic", hispan_string),  # Fix Dominican
+    race_string = if_else(!race_string %in% c("white", "black"), "other", race_string),
+    race_string = paste(race_string, hispan_string),
+    native_foreign_race = paste(nativity_string, race_string)
+  ) %>%
+  create_race_nativity_category()
+
+# Marital status (international coding: 2 = married/cohabiting)
+us_census_2010 <- us_census_2010 %>%
+  mutate(married_cohab = as.integer(marst == 2 & !is.na(marst)))
+
+# Immigration timing
+us_census_2010 <- us_census_2010 %>%
+  mutate(
+    years_in_us = 2010 - yrimm,
+    years_in_us = if_else(years_in_us == 2010, NA_real_, years_in_us),
+    age_at_immigration = age - years_in_us
+  ) %>%
+  create_age_at_immig_vars()
+
+# Citizenship (international coding: 3 = naturalized, 2 = birth citizen)
+us_census_2010 <- us_census_2010 %>%
+  mutate(
+    is_naturalized_citizen = as.integer(citizen == 3),
+    is_birth_citizen = as.integer(citizen == 2)
+  ) %>%
+  create_sex_vars()
+
+# English proficiency
+us_census_2010 <- us_census_2010 %>%
+  mutate(english_speaker = as.integer(speakeng == 1))
+
+# Education with years of schooling correction
+us_census_2010 <- us_census_2010 %>%
+  mutate(edattain_string = as.character(as_factor(edattain)))
+
+# Correct education based on years of schooling
+us_census_2010 <- us_census_2010 %>%
+  mutate(
+    edattain = case_when(
+      yrschool < 12 & edattain_string == "secondary completed" ~ 2,
+      yrschool > 12 & edattain_string == "primary completed" ~ 3,
+      yrschool > 15 & edattain_string == "secondary completed" ~ 4,
+      TRUE ~ edattain
+    )
+  ) %>%
+  select(-edattain_string) %>%
+  create_education_vars_intl()
+
+# Country-year identifiers
+us_census_2010 <- us_census_2010 %>%
+  mutate(
+    year_str = as.character(year),
+    country_year = paste0(country_string, "_", year_str),
+    hispanic_migrant_status = paste(nativity_string, hispan_string),
+    hispanic_category_migrant_status = paste(nativity_string, HispanicCategoryString),
+    hispanic_category_migrant_status = if_else(
+      hispanic_category_migrant_status == "foreign-born Hispanic Non-Latino",
+      "foreign-born Not Latino",
+      hispanic_category_migrant_status
+    ),
+    hispanic_migrant_status_race = paste(nativity_string, race_string)
+  )
+
+saveRDS(us_census_2010, paste0(data_dir, "US_2010_v100_census.rds"))
+write_dta(us_census_2010, paste0(data_dir, "US_2010_v100_census.dta"))
+cat("Saved US Census 2010 data:", nrow(us_census_2010), "observations\n")
+
+rm(us_census_2010)
+gc()
+```
+
+# Part 3: Process International Census Data with Age Standardization
+
+```{r process_international, message=FALSE, warning=FALSE}
+# Load international data
+intl_df <- read_dta(paste0(data_dir, "ses_v2.dta"))
+
+# Append US 2010 census data
+us_census_2010 <- read_dta(paste0(data_dir, "ipumsi_00002_US_2010.dta"))
+intl_df <- bind_rows(intl_df, us_census_2010)
+rm(us_census_2010)
+
+intl_df <- intl_df %>%
+  mutate(country_string = as.character(as_factor(country))) %>%
+  filter(age > 59)
+
+intl_df <- intl_df %>%
+  create_household_vars() %>%
+  create_age_groups() %>%
+  create_sex_vars()
+
+# Education
+intl_df <- intl_df %>%
+  mutate(
+    edattain_string = as.character(as_factor(edattain)),
+    edattaind_string = as.character(as_factor(edattaind)),
+    less_than_primary_completed = as.integer(edattain_string == "less than primary completed"),
+    primary_completed = as.integer(edattain_string == "primary completed"),
+    secondary_completed = as.integer(edattain_string == "secondary completed"),
+    university_completed = as.integer(edattain_string == "university completed"),
+    education_unknown = as.integer(edattain_string == "unknown"),
+    married_cohab = as.integer(marst == 2 & !is.na(marst))
+  )
+
+# Standardize country names
+intl_df <- intl_df %>%
+  mutate(
+    country_string = case_when(
+      tolower(country_string) == "united states" ~ "US",
+      tolower(country_string) == "puerto rico" ~ "PR",
+      tolower(country_string) == "dominican republic" ~ "DR",
+      tolower(country_string) == "el salvador" ~ "ES",
+      tolower(country_string) %in% c("mexico", "honduras", "guatemala", "cuba", "colombia") ~
+        str_to_title(country_string),
+      TRUE ~ country_string
+    ),
+    year_str = as.character(year),
+    country_year = paste0(country_string, "_", year_str),
+    sex_string = tolower(as.character(as_factor(sex))),
+    age2_string = as.character(as_factor(age2))
+  )
+
+# Calculate age weights for each country-year-sex combination
+intl_age_weights <- intl_df %>%
+  group_by(country_year, sex_string, age2, age2_string) %>%
+  summarise(perwt_sum = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(country_year, sex_string) %>%
+  mutate(
+    total_perwt = sum(perwt_sum),
+    age_weight_in = perwt_sum / total_perwt,
+    match_var_in = paste0(country_year, sex_string, age2_string)
+  ) %>%
+  ungroup() %>%
+  select(country_year, sex_string, age2, age2_string, age_weight_in, match_var_in)
+
+# Save international weights
+intl_age_weights %>%
+  write_csv(paste0(weights_dir, "intl_age_weights.csv"))
+
+# Load US age weights
+us_weights_female <- read_csv(paste0(weights_dir, "us_age_weights_female.csv"), show_col_types = FALSE)
+us_weights_male <- read_csv(paste0(weights_dir, "us_age_weights_male.csv"), show_col_types = FALSE)
+
+us_weights <- bind_rows(
+  us_weights_female %>% rename(age_weight_us = age_weight_female),
+  us_weights_male %>% rename(age_weight_us = age_weight_male)
+)
+
+# Create match variables and merge weights
+intl_df <- intl_df %>%
+  mutate(
+    match_var_in = paste0(country_year, sex_string, age2_string),
+    match_var_us = paste0(sex_string, age2_string)
+  )
+
+# Merge US weights
+intl_df <- intl_df %>%
+  left_join(us_weights %>% select(match_var_us, age_weight_us), by = "match_var_us")
+
+# Merge international weights
+intl_df <- intl_df %>%
+  left_join(intl_age_weights %>% select(match_var_in, age_weight_in), by = "match_var_in")
+
+# Calculate age-standardized weights
+intl_df <- intl_df %>%
+  mutate(
+    age_weight_ratio = age_weight_us / age_weight_in,
+    perwt_age_standardized = perwt * age_weight_ratio
+  )
+
+# Keep analysis sample
+intl_df <- intl_df %>%
+  filter(country_year %in% c("Cuba_2012", "DR_2010", "Mexico_2010", "PR_2010", "Mexico_2020", "PR_2020"))
+
+# Add secondary_or_above for consistency
+intl_df <- intl_df %>%
+  mutate(secondary_or_above = as.integer(secondary_completed == 1 | university_completed == 1))
+
+saveRDS(intl_df, paste0(data_dir, "CuDrMePrUs_10_12.rds"))
+write_dta(intl_df, paste0(data_dir, "CuDrMePrUs_10_12.dta"))
+cat("Saved international comparison data:", nrow(intl_df), "observations\n")
+
+cat("\nData preprocessing complete!\n")
+cat("Output files:\n")
+cat("  - US_2010_v100.rds / .dta\n")
+cat("  - US_2020_v100.rds / .dta\n")
+cat("  - US_2010_v100_census.rds / .dta\n")
+cat("  - CuDrMePrUs_10_12.rds / .dta\n")
+```
+
+# Session Info
+
+```{r session_info}
+sessionInfo()
+```

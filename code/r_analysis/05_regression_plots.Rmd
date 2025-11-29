@@ -1,0 +1,718 @@
+---
+title: "Regression Plots"
+author: "Chris Soria"
+date: "2025-01-08"
+output: html_document
+---
+
+# Overview
+This script creates visualizations based on regression model outputs.
+It requires running `03_regressions.Rmd` first to generate the necessary objects.
+
+# Libraries
+```{r}
+library(cowplot)
+library(tidyverse)
+library(haven)
+library(scales)
+```
+
+# Setup
+```{r setup, include=FALSE}
+target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/code")
+current_dir <- normalizePath(getwd())
+
+if (current_dir == target_dir) {
+  out_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/code/")
+  data_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/")
+  plot_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/plots/")
+} else {
+  out_dir <- file.path("C:/Users/Ty/Desktop/ses_international/code/")
+  data_dir <- file.path("C:/Users/Ty/Desktop/ses_international/data/")
+  plot_dir <- file.path("C:/Users/Ty/Desktop/ses_international/plots/")
+}
+```
+
+# Color Palettes and Constants
+```{r}
+# Standard country color palette
+country_colors <- c(
+  "Mexico" = "#E69F00",
+  "Puerto Rico" = "#56B4E9",
+  "Dominican Republic" = "#009E73",
+  "Cuba" = "#CC79A7"
+)
+
+# Darker version for adjusted/unadjusted plots
+country_colors_dark <- c(
+  "Mexico" = "#8B5A00",
+  "Puerto Rico" = "#104E8B",
+  "Dominican Republic" = "#004D40",
+  "Cuba" = "#7A2B56"
+)
+
+# For emmeans plots (lowercase country names)
+country_colors_lower <- c(
+  "mexico" = "#E69F00",
+  "puerto rico" = "#56B4E9",
+  "dominican republic" = "#009E73",
+  "cuba" = "#CC79A7"
+)
+
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#CC79A7")
+
+countries_of_interest <- c("Mexico", "Puerto Rico", "Dominican Republic", "Cuba")
+
+# Common theme elements
+theme_presentation <- function() {
+  theme_cowplot() +
+    theme(
+      strip.background = element_blank(),
+      panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+      panel.background = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank()
+    )
+}
+```
+
+# Core Plotting Functions
+```{r}
+# Generate fill color mapping for country-variable combinations
+generate_fill_colors <- function(countries, n_vars, colors = country_colors) {
+  all_colors <- c()
+  for (country in countries) {
+    for (j in 1:n_vars) {
+      key <- paste0(country, "_", j)
+      all_colors[key] <- colors[country]
+    }
+  }
+  all_colors
+}
+
+# Core faceted bar plot
+create_faceted_bar_plot <- function(data,
+                                    vars,
+                                    var_labels,
+                                    country_var = "country_string",
+                                    facet_by = "country",
+                                    title = element_blank(),
+                                    y_limits = c(0, 0.7)) {
+
+  stopifnot(is.data.frame(data), all(vars %in% names(data)), length(var_labels) == length(vars))
+
+  data_long <- data %>%
+    pivot_longer(cols = all_of(vars), names_to = "group", values_to = "value") %>%
+    mutate(
+      group = factor(group, levels = vars, labels = var_labels),
+      fill_group = paste0(.data[[country_var]], "_", as.numeric(group))
+    )
+
+  data_long[[country_var]] <- factor(data_long[[country_var]], levels = names(country_colors))
+  all_colors <- generate_fill_colors(unique(data[[country_var]]), length(vars))
+
+  if (facet_by == "country") {
+    p <- ggplot(data_long, aes(x = group, y = value, fill = fill_group)) +
+      facet_grid(rows = vars(.data[[country_var]]), switch = "y") +
+      theme(strip.text.y.left = element_text(size = 12, angle = 0, hjust = 1, face = "bold"),
+            axis.text.x = element_text(size = 11, face = "bold"))
+  } else {
+    p <- ggplot(data_long, aes(x = .data[[country_var]], y = value, fill = fill_group)) +
+      facet_grid(rows = vars(group), switch = "y") +
+      theme(strip.text.y.left = element_text(size = 12, angle = 0, hjust = 1, face = "bold"),
+            axis.text.x = element_text(size = 11, face = "bold", angle = 45, hjust = 1))
+  }
+
+  p + geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black") +
+    geom_text(aes(label = round(value, 2)), position = position_dodge(width = 0.7),
+              vjust = -0.5, size = 4) +
+    scale_fill_manual(values = all_colors) +
+    labs(title = title, x = element_blank(), y = element_blank()) +
+    theme_presentation() +
+    ylim(y_limits) +
+    theme(legend.position = "none", axis.ticks.y = element_blank(),
+          axis.text.y = element_blank(), axis.line.y = element_blank())
+}
+
+# Combined multi-panel plot
+create_combined_panel_plot <- function(data,
+                                       vars,
+                                       var_labels,
+                                       country_var = "country_string",
+                                       columns = 2,
+                                       title = element_blank(),
+                                       y_limits = c(0, 1)) {
+
+  data_long <- data %>%
+    pivot_longer(cols = all_of(vars), names_to = "group", values_to = "value") %>%
+    mutate(
+      group = factor(group, levels = vars, labels = var_labels),
+      !!sym(country_var) := factor(!!sym(country_var), levels = names(country_colors))
+    ) %>%
+    arrange(!!sym(country_var))
+
+  countries <- unique(data_long[[country_var]])
+
+  plot_list <- lapply(seq_along(countries), function(i) {
+    country <- countries[i]
+    p <- ggplot(data_long[data_long[[country_var]] == country, ], aes(x = group, y = value)) +
+      geom_bar(stat = "identity", width = 0.7, color = "black", fill = country_colors[country]) +
+      geom_text(aes(label = round(value, 2)), vjust = -0.5, size = 6) +
+      labs(title = country, x = element_blank(), y = element_blank()) +
+      theme_cowplot() +
+      ylim(y_limits) +
+      theme(legend.position = "none",
+            axis.text.x = element_text(size = 12, angle = 40, hjust = 1, face = "bold"),
+            plot.title = element_text(size = 13, face = "bold", hjust = 0.5),
+            panel.grid.major.y = element_line(color = "grey90", size = 0.5))
+
+    if (columns == 4 && i > 1) {
+      p <- p + theme(axis.text.y = element_blank(), panel.border = element_blank(),
+                     axis.line.y = element_blank(), axis.ticks.y = element_blank(),
+                     axis.line.x = element_line(color = "black"))
+    }
+    p
+  })
+
+  cowplot::plot_grid(plotlist = plot_list, ncol = columns)
+}
+
+# Grouped bar plot (all countries side by side)
+create_grouped_bar_plot <- function(data,
+                                    vars,
+                                    var_labels,
+                                    country_var = "country_string",
+                                    title = element_blank(),
+                                    y_limits = c(0, 0.7)) {
+
+  data_long <- data %>%
+    pivot_longer(cols = all_of(vars), names_to = "group", values_to = "value") %>%
+    mutate(group = factor(group, levels = vars, labels = var_labels))
+
+  ggplot(data_long, aes(x = group, y = value, fill = .data[[country_var]], group = .data[[country_var]])) +
+    geom_bar(stat = "identity", position = position_dodge(width = 0.9), width = 0.8, color = "black") +
+    geom_text(aes(label = round(value, 2)), position = position_dodge(width = 0.9),
+              vjust = -0.5, size = 3.5) +
+    scale_fill_manual(values = cbPalette) +
+    labs(title = title, x = element_blank(), y = element_blank(), fill = "Country of Birth") +
+    theme_presentation() +
+    ylim(y_limits) +
+    theme(axis.text.x = element_text(size = 11, face = "bold"),
+          legend.position = "bottom", legend.title = element_text(face = "bold"))
+}
+
+# Simple migrant bar plot
+create_migrant_plot <- function(data, y_var, title = element_blank(), y_limits = c(0, 1)) {
+  ggplot(data, aes(x = country_string, y = .data[[y_var]], fill = country_string)) +
+    geom_bar(stat = "identity", position = "dodge", color = "black", width = 0.7) +
+    geom_text(aes(label = round(.data[[y_var]], 2)), position = position_dodge(width = 0.9),
+              vjust = -0.5, size = 6) +
+    scale_fill_manual(values = cbPalette) +
+    labs(title = title, x = element_blank(), y = element_blank()) +
+    theme_cowplot() +
+    ylim(y_limits) +
+    theme(axis.text.x = element_text(angle = 40, hjust = 1, size = 14, face = "bold"),
+          legend.position = "none",
+          panel.grid.major.y = element_line(color = "grey90", size = 0.5))
+}
+
+# Dot plot for migrant vs non-migrant comparison
+create_migrant_dotplot <- function(data, x_var, group_var, country_var,
+                                   title = element_blank(), x_limits = c(0, 1),
+                                   country_order = NULL) {
+  if (!is.null(country_order)) {
+    data <- data %>% mutate({{country_var}} := fct_relevel(.data[[country_var]], country_order))
+  }
+
+  ggplot(data, aes(x = .data[[x_var]], y = 1, shape = .data[[group_var]], color = .data[[country_var]])) +
+    geom_point(size = 5, position = position_dodge(width = 0.5)) +
+    geom_line(aes(group = .data[[country_var]]), position = position_dodge(width = 0.5), linewidth = 1) +
+    facet_grid(rows = vars(.data[[country_var]]), switch = "y") +
+    scale_shape_manual(values = c(17, 16)) +
+    scale_color_manual(values = cbPalette) +
+    scale_x_continuous(limits = x_limits) +
+    labs(title = title, x = "Proportion Value", y = NULL, shape = "Migration Status", color = "Country of Origin") +
+    theme_cowplot() +
+    theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+          strip.background = element_blank(),
+          strip.text.y.left = element_text(size = 12, angle = 0, hjust = 1, face = "bold"),
+          legend.position = "bottom", legend.direction = "horizontal",
+          panel.spacing = unit(0.5, "lines"),
+          panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5))
+}
+
+# Adjusted vs unadjusted demographic comparison plot
+create_adjusted_demo_plot <- function(data,
+                                      adjusted_vars = c("adjusted_mean_less_than_primary_completed",
+                                                        "adjusted_mean_secondary_or_above",
+                                                        "adjusted_mean_lives_alone",
+                                                        "adjusted_mean_married_cohab",
+                                                        "adjusted_mean_is_naturalized_citizen",
+                                                        "adjusted_mean_english_speaker"),
+                                      unadjusted_vars = c("mean_less_than_primary_completed",
+                                                          "mean_secondary_completed",
+                                                          "mean_lives_alone",
+                                                          "mean_married_cohab",
+                                                          "mean_is_citizen",
+                                                          "mean_english_speaker"),
+                                      var_labels = c("Less than Primary", "Secondary or Above",
+                                                     "Lives Alone", "Married/Cohabiting",
+                                                     "Naturalized Citizen", "English Speaker"),
+                                      country_var = "country_string",
+                                      y_limits = c(0, 0.7),
+                                      text_inside = TRUE) {
+
+  data_adj <- data %>%
+    pivot_longer(cols = all_of(adjusted_vars), names_to = "demographic", values_to = "mean_value") %>%
+    mutate(type = "Adjusted")
+
+  data_unadj <- data %>%
+    pivot_longer(cols = all_of(unadjusted_vars), names_to = "demographic", values_to = "mean_value") %>%
+    mutate(type = "Unadjusted")
+
+  data_long <- bind_rows(data_adj, data_unadj) %>%
+    mutate(
+      demographic = case_when(
+        grepl("married", demographic) ~ var_labels[4],
+        grepl("alone", demographic) ~ var_labels[3],
+        grepl("english", demographic) ~ var_labels[6],
+        grepl("secondary", demographic) ~ var_labels[2],
+        grepl("citizen|naturalized", demographic) ~ var_labels[5],
+        grepl("primary", demographic) ~ var_labels[1]
+      ),
+      demographic = factor(demographic, levels = var_labels),
+      type = factor(type, levels = c("Unadjusted", "Adjusted"))
+    )
+
+  data_long[[country_var]] <- factor(data_long[[country_var]], levels = names(country_colors_dark))
+
+  p <- ggplot(data_long, aes(x = .data[[country_var]], y = mean_value,
+                             fill = .data[[country_var]], alpha = type)) +
+    geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black")
+
+  if (text_inside) {
+    p <- p + geom_text(aes(label = round(mean_value, 2), color = type,
+                           vjust = ifelse(mean_value < 0.05, -0.5, 1.5)),
+                       position = position_dodge(width = 0.7), size = 4, fontface = "bold", alpha = 1) +
+      scale_color_manual(values = c("Unadjusted" = "white", "Adjusted" = "black"), guide = "none")
+  } else {
+    p <- p + geom_text(aes(label = round(mean_value, 2),
+                           vjust = ifelse(mean_value < 0, 1.5, -0.5)),
+                       position = position_dodge(width = 0.7), size = 4, fontface = "bold",
+                       color = "black", alpha = 1)
+  }
+
+  p + facet_wrap(~ demographic, ncol = 2) +
+    scale_fill_manual(values = country_colors_dark) +
+    scale_alpha_manual(name = "Type", values = c("Unadjusted" = 1, "Adjusted" = 0.25),
+                       guide = guide_legend(override.aes = list(fill = "gray50"))) +
+    guides(fill = "none") +
+    labs(x = element_blank(), y = element_blank()) +
+    theme_presentation() +
+    ylim(y_limits) +
+    theme(strip.text = element_text(size = 12, face = "bold"),
+          axis.text.x = element_text(size = 11, face = "bold", angle = 45, hjust = 1),
+          legend.position = "bottom", legend.justification = "center",
+          axis.ticks.y = element_blank(), axis.text.y = element_blank(), axis.line.y = element_blank())
+}
+
+# Helper to create and save all 5 plot versions
+create_and_save_plot_versions <- function(data, vars, var_labels, output_prefix, y_limits = c(0, 1)) {
+
+  plot_list <- list(
+    v1 = create_faceted_bar_plot(data, vars, var_labels, facet_by = "country", y_limits = y_limits),
+    v2 = create_faceted_bar_plot(data, vars, var_labels, facet_by = "variable", y_limits = y_limits),
+    v3 = create_combined_panel_plot(data, vars, var_labels, columns = 2, y_limits = y_limits),
+    v4 = create_combined_panel_plot(data, vars, var_labels, columns = 4, y_limits = y_limits),
+    v5 = create_grouped_bar_plot(data, vars, var_labels, y_limits = y_limits)
+  )
+
+  for (name in names(plot_list)) {
+    print(plot_list[[name]])
+    ggsave(filename = file.path(plot_dir, paste0(name, "_", output_prefix, ".png")),
+           plot = plot_list[[name]], device = "png", width = 12, height = 6, dpi = 300)
+  }
+
+  invisible(plot_list)
+}
+```
+
+# Emmeans Plotting Functions (from regressions.Rmd)
+```{r}
+# Create emmeans bar plot
+create_emmeans_plot <- function(emm_data, dv,
+                                x_var = "age_at_immig_groups_string",
+                                show_all_countries = TRUE,
+                                y_limits = c(0, 1)) {
+
+  if (!show_all_countries) {
+    emm_data <- emm_data %>% filter(country_string %in% c("mexico", "puerto rico"))
+  }
+
+  p <- ggplot(emm_data,
+              aes(x = factor(str_to_title(country_string),
+                            levels = c("Mexico", "Puerto Rico", "Dominican Republic", "Cuba")),
+                  y = emmean,
+                  fill = country_string)) +
+    geom_col(width = 0.7) +
+    geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
+                  width = 0.2, color = "black") +
+    scale_fill_manual(values = country_colors_lower) +
+    geom_text(
+      aes(label = percent(emmean, accuracy = 1)),
+      vjust = -1.5,
+      color = "black",
+      size = 3.5,
+      fontface = "bold"
+    ) +
+    scale_y_continuous(
+      labels = percent_format(accuracy = 1),
+      expand = expansion(mult = c(0, 0.1))
+    ) +
+    ylim(y_limits) +
+    labs(
+      title = str_to_title(str_replace_all(dv, "_", " ")),
+      x = element_blank(),
+      y = "Estimated Percent"
+    ) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          axis.text.y = element_blank(),
+          legend.position = "none")
+
+  p
+}
+
+# Create emmeans line plot by age at immigration
+create_emmeans_line_plot <- function(emm_data, title, y_label = "Probability") {
+  ggplot(emm_data, aes(x = age_at_immig_groups_string, y = prob, color = country, group = country)) +
+    geom_point(position = position_dodge(width = 0.2)) +
+    geom_line(position = position_dodge(width = 0.2)) +
+    geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL),
+                  width = 0.1, position = position_dodge(width = 0.2)) +
+    labs(x = "Age at Immigration", y = y_label, title = title) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_color_brewer(palette = "Set1")
+}
+```
+
+# Country Summary Functions
+```{r}
+# Country summary creation function (used for adjusted vs unadjusted plots)
+create_country_summary <- function(data,
+                                   countries = c("mexico", "puerto rico", "dominican republic", "cuba"),
+                                   country_coefs,
+                                   gender_filter = NULL,
+                                   weight_var = perwt) {
+
+  table1 <- data %>%
+    filter(country_string %in% countries) %>%
+    { if (!is.null(gender_filter)) filter(., sex == gender_filter) else . } %>%
+    group_by(country_string) %>%
+    summarise(
+      mean_age_60_69 = weighted.mean(age_60to69, {{weight_var}}, na.rm = TRUE),
+      mean_age_70_79 = weighted.mean(age_70to79, {{weight_var}}, na.rm = TRUE),
+      mean_age_80_89 = weighted.mean(age_80to89, {{weight_var}}, na.rm = TRUE),
+      mean_age_90plus = weighted.mean(age_90plus, {{weight_var}}, na.rm = TRUE),
+      mean_educ = weighted.mean(secondary_or_above, {{weight_var}}, na.rm = TRUE),
+      mean_less_than_primary_completed = weighted.mean(less_than_primary_completed, {{weight_var}}, na.rm = TRUE),
+      mean_primary_completed = weighted.mean(primary_completed, {{weight_var}}, na.rm = TRUE),
+      mean_secondary_completed = weighted.mean(secondary_or_above, {{weight_var}}, na.rm = TRUE),
+      mean_university_completed = weighted.mean(university_completed, {{weight_var}}, na.rm = TRUE),
+      mean_hhsize = weighted.mean(famsize, {{weight_var}}, na.rm = TRUE),
+      mean_lives_alone = weighted.mean(lives_alone, {{weight_var}}, na.rm = TRUE),
+      mean_has_child_in_hh = weighted.mean(child_in_household, {{weight_var}}, na.rm = TRUE),
+      mean_married_cohab = weighted.mean(married_cohab, {{weight_var}}, na.rm = TRUE),
+      mean_age_at_immigration_15 = weighted.mean(age_at_immigration_under15, {{weight_var}}, na.rm = TRUE),
+      mean_age_at_immigration_15to24 = weighted.mean(age_at_immigration_15to24, {{weight_var}}, na.rm = TRUE),
+      mean_age_at_immigration_25to49 = weighted.mean(age_at_immigration_25to49, {{weight_var}}, na.rm = TRUE),
+      mean_age_at_immigration_50plus = weighted.mean(age_at_immigration_50plus, {{weight_var}}, na.rm = TRUE),
+      mean_yrimm_before1965 = weighted.mean(yrimm_before1965, {{weight_var}}, na.rm = TRUE),
+      mean_yrimm_1965_1979 = weighted.mean(yrimm_1965to1980, {{weight_var}}, na.rm = TRUE),
+      mean_yrimm_1980_1999 = weighted.mean(yrimm_1980to1999, {{weight_var}}, na.rm = TRUE),
+      mean_yrimm_2000plus = weighted.mean(yrimm_2000plus, {{weight_var}}, na.rm = TRUE),
+      mean_is_citizen = weighted.mean(is_naturalized_citizen, {{weight_var}}, na.rm = TRUE),
+      mean_english_speaker = weighted.mean(english_speaker, {{weight_var}}, na.rm = TRUE),
+      mean_cog_difficulty = weighted.mean(cognitive_difficulty, {{weight_var}}, na.rm = TRUE),
+      mean_ind_live_difficulty = weighted.mean(independent_living_difficulty, {{weight_var}}, na.rm = TRUE),
+      N = n(),
+      .groups = "drop"
+    ) %>%
+    mutate(
+      country_string = case_when(
+        country_string == "mexico" ~ "Mexico",
+        country_string == "cuba" ~ "Cuba",
+        country_string == "dominican republic" ~ "Dominican Republic",
+        country_string == "puerto rico" ~ "Puerto Rico"
+      ),
+      mean_is_citizen = if_else(country_string == "Puerto Rico", 1, mean_is_citizen),
+      country_string = fct_relevel(country_string, "Mexico", "Puerto Rico", "Dominican Republic", "Cuba"),
+      mean_age_at_immigration_15to49 = mean_age_at_immigration_15to24 + mean_age_at_immigration_25to49,
+      mean_yrimm_1980_plus = mean_yrimm_1980_1999 + mean_yrimm_2000plus
+    )
+
+  table1_select <- table1 %>%
+    select(country_string, mean_married_cohab, mean_lives_alone, mean_english_speaker,
+           mean_secondary_completed, mean_is_citizen, mean_less_than_primary_completed)
+
+  mexico_means <- table1_select %>% filter(country_string == "Mexico")
+
+  cbind(table1_select, country_coefs) %>%
+    mutate(
+      adjusted_mean_married_cohab = mexico_means$mean_married_cohab + estimate_married_cohab,
+      adjusted_mean_lives_alone = mexico_means$mean_lives_alone + estimate_lives_alone,
+      adjusted_mean_english_speaker = mexico_means$mean_english_speaker + estimate_english_speaker,
+      adjusted_mean_secondary_or_above = mexico_means$mean_secondary_completed + estimate_secondary_or_above,
+      adjusted_mean_is_naturalized_citizen = mexico_means$mean_is_citizen + estimate_is_naturalized_citizen,
+      adjusted_mean_less_than_primary_completed = mexico_means$mean_less_than_primary_completed + estimate_less_than_primary_completed,
+      adjusted_mean_is_naturalized_citizen = if_else(country_string == "Puerto Rico", 1, adjusted_mean_is_naturalized_citizen)
+    ) %>%
+    select(country_string,
+           adjusted_mean_married_cohab, adjusted_mean_lives_alone, adjusted_mean_english_speaker,
+           adjusted_mean_secondary_or_above, adjusted_mean_is_naturalized_citizen, adjusted_mean_less_than_primary_completed,
+           mean_married_cohab, mean_lives_alone, mean_english_speaker,
+           mean_secondary_completed, mean_is_citizen, mean_less_than_primary_completed,
+           starts_with("std.error_"))
+}
+
+# Country summary for change analysis
+create_country_change_summary <- function(raw_data, adjusted_data) {
+  raw_select <- raw_data %>% select(term, starts_with("mean_"))
+  adjusted_select <- adjusted_data %>% select(term, starts_with("adjusted_mean"))
+
+  left_join(raw_select, adjusted_select, by = "term") %>%
+    rename_with(~str_remove(., "_estimate")) %>%
+    mutate(
+      across(starts_with("adjusted_mean_"),
+             ~if_else(term == "mexico", get(str_replace(cur_column(), "adjusted_mean_", "mean_")), .x)),
+      adjusted_mean_is_naturalized_citizen = if_else(term == "puerto rico", NA_real_, adjusted_mean_is_naturalized_citizen),
+      country_string = case_when(
+        term == "mexico" ~ "Mexico",
+        term == "cuba" ~ "Cuba",
+        term == "dominican republic" ~ "Dominican Republic",
+        term == "puerto rico" ~ "Puerto Rico"
+      ),
+      country_string = fct_relevel(country_string, "Mexico", "Puerto Rico", "Dominican Republic", "Cuba")
+    ) %>%
+    rename(mean_secondary_completed = mean_secondary_or_above, mean_is_citizen = mean_is_naturalized_citizen)
+}
+```
+
+# Load Data
+```{r}
+# Load US data
+us_df_2010 <- read_dta(paste0(data_dir, "US_2010_v100.dta"))
+us_df_2020 <- read_dta(paste0(data_dir, "US_2020_v100.dta"))
+```
+
+# Migrant Plots (Requires table1, table1_5 from regressions.Rmd)
+```{r migrant_plots, eval=FALSE}
+# NOTE: These plots require table1 and table1_5 objects from regressions.Rmd
+# Set eval=TRUE after running regressions.Rmd
+
+# 2020 migrants - y_limit 0.7
+for (var in c("mean_educ", "mean_lives_alone", "mean_married_cohab", "mean_age_at_immigration_15", "mean_age_at_immigration_25to49")) {
+  p <- create_migrant_plot(table1, var, y_limits = c(0, 0.7))
+  ggsave(file.path(plot_dir, paste0(var, "_2020_migrants.png")), p, width = 9, height = 7, dpi = 300)
+}
+
+# 2020 migrants - y_limit 1.0
+for (var in c("mean_english_speaker", "mean_is_citizen")) {
+  p <- create_migrant_plot(table1, var, y_limits = c(0, 1))
+  ggsave(file.path(plot_dir, paste0(var, "_2020_migrants.png")), p, width = 12, height = 6, dpi = 300)
+}
+
+# 2020 migrants - y_limit 0.25
+for (var in c("mean_ind_live_difficulty", "mean_cog_difficulty")) {
+  p <- create_migrant_plot(table1, var, y_limits = c(0, 0.25))
+  ggsave(file.path(plot_dir, paste0(var, "_2020_migrants.png")), p, width = 12, height = 7, dpi = 300)
+}
+
+# 2010 migrants - same patterns
+for (var in c("mean_educ", "mean_lives_alone", "mean_married_cohab", "mean_age_at_immigration_15", "mean_age_at_immigration_25to49")) {
+  p <- create_migrant_plot(table1_5, var, y_limits = c(0, 0.7))
+  ggsave(file.path(plot_dir, paste0(var, "_2010_migrants.png")), p, width = 9, height = 7, dpi = 300)
+}
+
+for (var in c("mean_english_speaker", "mean_is_citizen")) {
+  p <- create_migrant_plot(table1_5, var, y_limits = c(0, 1))
+  ggsave(file.path(plot_dir, paste0(var, "_2010_migrants.png")), p, width = 12, height = 6, dpi = 300)
+}
+
+for (var in c("mean_ind_live_difficulty", "mean_cog_difficulty")) {
+  p <- create_migrant_plot(table1_5, var, y_limits = c(0, 0.25))
+  ggsave(file.path(plot_dir, paste0(var, "_2010_migrants.png")), p, width = 12, height = 7, dpi = 300)
+}
+```
+
+# Migrant vs Native Dot Plots (Requires combined_table2)
+```{r dotplots, eval=FALSE}
+for (var in c("mean_educ", "mean_lives_alone", "mean_married_cohab")) {
+  p <- create_migrant_dotplot(combined_table2, var, "group", "country_string",
+                              country_order = countries_of_interest, x_limits = c(0, 0.75))
+  ggsave(file.path(plot_dir, paste0(var, "_2010_migrants_versus_natives.png")), p, width = 12, height = 6, dpi = 300)
+}
+```
+
+# Adjusted vs Unadjusted Country Comparison (Requires country_coefs)
+```{r country_adjusted, eval=FALSE}
+# NOTE: Requires country_coefs, male_country_coefs, female_country_coefs from regressions.Rmd
+
+filters <- list(all = NULL, male = 1, female = 2)
+coefs_list <- list(all = country_coefs, male = male_country_coefs, female = female_country_coefs)
+
+# 2020 results
+results_2020 <- map2(filters, coefs_list, ~create_country_summary(us_df_2020, country_coefs = .y, gender_filter = .x))
+
+for (name in names(results_2020)) {
+  p <- create_adjusted_demo_plot(results_2020[[name]], y_limits = c(0, 0.99))
+  suffix <- if (name == "all") "" else paste0("_", name)
+  ggsave(file.path(plot_dir, paste0("country_levels_colors", suffix, ".pdf")), p, width = 9, height = 10, dpi = 300)
+}
+
+# 2010 results
+results_2010 <- map2(filters, coefs_list, ~create_country_summary(us_df_2010, country_coefs = .y, gender_filter = .x))
+
+for (name in names(results_2010)) {
+  p <- create_adjusted_demo_plot(results_2010[[name]], y_limits = c(0, 0.99))
+  suffix <- if (name == "all") "" else paste0("_", name)
+  ggsave(file.path(plot_dir, paste0("country_levels_colors", suffix, "_2010.pdf")), p, width = 9, height = 10, dpi = 300)
+}
+```
+
+# 2010-2020 Change Plots (Requires interaction coefficients)
+```{r change_plots, eval=FALSE}
+# NOTE: Requires country_coefs_interaction, country_coefs_interaction_no_cont, etc.
+
+results_change <- create_country_change_summary(country_coefs_interaction_no_cont, country_coefs_interaction)
+results_change_male <- create_country_change_summary(male_country_coefs_interaction_no_cont, male_country_coefs_interaction)
+results_change_female <- create_country_change_summary(female_country_coefs_interaction_no_cont, female_country_coefs_interaction)
+
+change_list <- list(
+  "country_levels_colors_change" = results_change,
+  "country_levels_male_colors_change" = results_change_male,
+  "country_levels_female_colors_change" = results_change_female
+)
+
+for (name in names(change_list)) {
+  p <- create_adjusted_demo_plot(change_list[[name]], y_limits = c(-0.1, 0.15), text_inside = FALSE) +
+    geom_hline(yintercept = 0, linetype = "dashed")
+  ggsave(file.path(plot_dir, paste0(name, ".pdf")), p, width = 9, height = 10, dpi = 300)
+}
+```
+
+# Age at Migration Plots (Requires table1)
+```{r age_migration, eval=FALSE}
+age_vars <- c("mean_age_at_immigration_15", "mean_age_at_immigration_15to49", "mean_age_at_immigration_50plus")
+age_labels <- c("Less than 15", "15 to 49", "50 and above")
+
+create_and_save_plot_versions(table1, age_vars, age_labels, "mean_age_migration_2020", y_limits = c(0, 1))
+```
+
+# Period of Immigration Plots (Requires table1)
+```{r period_migration, eval=FALSE}
+period_vars <- c("mean_yrimm_before1965", "mean_yrimm_1965_1979", "mean_yrimm_1980_plus")
+period_labels <- c("Before 1965", "1965 to 1979", "1980 and After")
+
+create_and_save_plot_versions(table1, period_vars, period_labels, "mean_period_migration_2020", y_limits = c(0, 1))
+```
+
+# Education After Age 24 Plots (Requires table1)
+```{r educ_24_plus, eval=FALSE}
+educ_vars <- c("mean_educ", "mean_educ_24_plus")
+educ_labels <- c("All Ages", "After Age 24")
+
+create_and_save_plot_versions(table1, educ_vars, educ_labels, "educ_24_plus_2020", y_limits = c(0, 1))
+```
+
+# International Comparison Plots (Requires table2)
+```{r international_comparison, eval=FALSE}
+# Education
+create_and_save_plot_versions(table2, c("mean_educ", "mean_educ_international"),
+                              c("US Migrants", "Native Country Residents"),
+                              "educ_international_comp_2010", y_limits = c(0, 1))
+
+# Lives Alone
+create_and_save_plot_versions(table2, c("mean_lives_alone", "mean_lives_alone_international"),
+                              c("US Migrants", "Native Country Residents"),
+                              "lives_alone_international_comp_2010", y_limits = c(0, 0.5))
+
+# Married/Cohabiting
+create_and_save_plot_versions(table2, c("mean_married_cohab", "mean_married_cohab_international"),
+                              c("US Migrants", "Native Country Residents"),
+                              "married_cohab_international_comp_2010", y_limits = c(0, 0.75))
+
+# 2010 vs 2020 Education
+create_and_save_plot_versions(table2, c("mean_educ", "mean_educ_2020"),
+                              c("2010", "2020"),
+                              "educ_comp_2010_2020", y_limits = c(0, 1))
+```
+
+# Source of Migrants Plot (Requires background_table)
+```{r source_migrants, eval=FALSE}
+background_table_filtered <- background_table %>%
+  filter(Country %in% countries_of_interest) %>%
+  mutate(Country = fct_relevel(Country, countries_of_interest))
+
+percent_migration <- ggplot(background_table_filtered, aes(x = Country, y = `Percent of Migrants`/100, fill = Country)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7, color = "black") +
+  labs(title = "Percent of Older Hispanic Migrants (60+) to the US by Country of Origin",
+       x = element_blank(), y = element_blank()) +
+  scale_fill_manual(values = country_colors) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 40, hjust = 1, size = 15, face = "bold"),
+        plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+        panel.grid.major.y = element_line(color = "grey90", size = 0.5),
+        axis.text.y = element_text(size = 13),
+        legend.position = "none")
+
+ggsave(file.path(plot_dir, "percent_migration_2020.png"), percent_migration, width = 12, height = 6, dpi = 300)
+```
+
+# Emmeans Plots (Generated from regression models)
+```{r emmeans_plots, eval=FALSE}
+# NOTE: These require emm_tables and other objects from regressions.Rmd
+# The emmeans analysis should be run in regressions.Rmd first
+
+dvs_migrant <- c("cognitive_difficulty", "independent_living_difficulty")
+
+# Generate and save plots
+for (dv in dvs_migrant) {
+  # All countries
+  p <- create_emmeans_plot(emm_tables[[dv]], dv)
+  print(p)
+  ggsave(file.path(plot_dir, paste0(dv, "_emm_plot.png")), p,
+         width = 8, height = 6, dpi = 300)
+
+  # Mexico and Puerto Rico only
+  p_filtered <- create_emmeans_plot(emm_tables[[dv]], dv, show_all_countries = FALSE)
+  print(p_filtered)
+  ggsave(file.path(plot_dir, paste0(dv, "_emm_plot_filtered.png")), p_filtered,
+         width = 8, height = 6, dpi = 300)
+}
+```
+
+# Age at Immigration Analysis Plots
+```{r age_immig_plots, eval=FALSE}
+# Education by age at immigration
+p <- create_emmeans_line_plot(education_emms,
+                              "Probability of Primary Education or Above by Age at Immigration and Country")
+print(p)
+ggsave(paste0(plot_dir, "predicted_primary_education_by_immigration_age_and_country.png"),
+       width = 12, height = 8)
+
+# Citizenship by age at immigration
+p <- create_emmeans_line_plot(citizen_emms,
+                              "Probability of Naturalized Citizen by Age at Immigration and Country")
+print(p)
+ggsave(paste0(plot_dir, "predicted_citizen_by_immigration_age_and_country.png"),
+       width = 12, height = 8)
+
+# English speaking by age at immigration
+p <- create_emmeans_line_plot(all_english_emms,
+                              "Probability of Speaking English by Age at Immigration and Country")
+print(p)
+ggsave(paste0(plot_dir, "predicted_english_speaking_by_immigration_age_and_country.png"),
+       width = 12, height = 8)
+```
