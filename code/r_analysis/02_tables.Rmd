@@ -18,41 +18,28 @@ library(broom)
 library(writexl)
 library(scales)
 library(readr)
+library(here)
 ```
 
 # Setup
 ```{r}
-target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/code")
-current_dir <- normalizePath(getwd())
-
-if (current_dir == target_dir) {
-  out_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/code/")
-  data_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/")
-  plot_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/plots/")
-  table_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/tables/")
-} else {
-  out_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/code")
-  data_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/data")
-  plot_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/plots")
-  table_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/tables")
-}
+# Use here() for portable paths across machines
+data_dir <- here("data")
+plot_dir <- here("plots")
+table_dir <- here("tables")
 
 census_2010 <- "US_2010_v100_census.dta"
 acs_2010 <- "US_2010_v100.dta"
 
 # Source helper functions
-if (current_dir == target_dir) {
-  source("/Users/chrissoria/Documents/Research/us_international_ses/code/helpers/table_functions.R")
-} else {
-  source("C:/Users/Ty/Documents/GitHub/international_migration_ses/code/helpers/table_functions.R")
-}
+source(here("code", "r_analysis", "helpers", "table_functions.R"))
 ```
 
 # Reading in Data
 ```{r}
 # Load US data
-us_df_2010 <- read_dta(paste0(data_dir, acs_2010)) %>% add_us_derived_vars()
-us_df_2020 <- read_dta(paste0(data_dir, "US_2020_v100.dta")) %>%
+us_df_2010 <- read_dta(here("data", acs_2010)) %>% add_us_derived_vars()
+us_df_2020 <- read_dta(here("data", "US_2020_v100.dta")) %>%
   add_us_derived_vars() %>%
   mutate(
     age_at_immig_groups_string = case_when(
@@ -67,7 +54,7 @@ us_df_2020 <- read_dta(paste0(data_dir, "US_2020_v100.dta")) %>%
 
 # Load international data
 # Use perwt_age_standardized for age-adjusted comparisons with US populations
-in_df <- read_dta(paste0(data_dir, "CuDrMePrUs_10_12.dta")) %>%
+in_df <- read_dta(here("data", "CuDrMePrUs_10_12.dta")) %>%
   mutate(
     country_year = as_factor(country_year),
     secondary_or_above = secondary_completed + university_completed,
@@ -75,7 +62,9 @@ in_df <- read_dta(paste0(data_dir, "CuDrMePrUs_10_12.dta")) %>%
   )
 ```
 
-# Table 2: US Hispanics by Birth Country (2020)
+# Table 2: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS)
+## Note: This table uses original person weights (perwt), NOT age-standardized weights.
+## This shows descriptive statistics for the US Hispanic immigrant population.
 ```{r}
 # Main countries
 table2_main <- us_df_2020 %>%
@@ -122,9 +111,9 @@ for (i in seq_along(us_table_headers)) {
 
 export_table(
   table2,
-  excel_path = paste0(table_dir, "table2.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table1.tex"),
-  caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS)",
+  excel_path = here("tables", "table2.xlsx"),
+  latex_path = here("tables", "r_tables", "table2.tex"),
+  caption = "Table 2: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS)",
   align = "ll|ccccccccccc",
   tabular_override = "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lcccccc|cccc}"
 )
@@ -170,17 +159,22 @@ for (i in seq_along(us_table_headers)) {
 
 export_table(
   table11,
-  excel_path = paste0(table_dir, "table11.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table11.tex"),
+  excel_path = here("tables", "table11.xlsx"),
+  latex_path = here("tables", "r_tables", "table11.tex"),
   caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS)",
   align = "ll|ccccccccccc",
   tabular_override = "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lcccccc|cccc}"
 )
 ```
 
-# Table 3: International Comparison by Sex
+# Table 3: Sociodemographic Comparison of Hispanics Ages 60+ by Birth Country: Non-Migrants versus US Immigrants (~2010)
+## Note: This table uses original person weights (perwt), NOT age-standardized weights.
 ```{r}
-table3 <- create_intl_comparison_table(in_df, us_df_2010)
+# Load international data with original weights (not age-standardized)
+in_df_original <- read_dta(here("data", "CuDrMePrUs_10_12.dta")) %>%
+  mutate(country_year = as_factor(country_year))
+
+table3 <- create_intl_comparison_table(in_df_original, us_df_2010)
 
 # Add headers for female and male sections
 table3 <- table3 %>%
@@ -196,9 +190,9 @@ table3 <- table3 %>%
 
 export_table(
   table3,
-  excel_path = paste0(table_dir, "table3.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table3.tex"),
-  caption = "Summary Statistics by Country and Sex For Hispanics in Their Native Countries",
+  excel_path = here("tables", "table3.xlsx"),
+  latex_path = here("tables", "r_tables", "table3.tex"),
+  caption = "Table 3: Sociodemographic Comparison of Hispanics Ages 60+ by Birth Country: Non-Migrants versus US Immigrants (~2010)",
   align = "lll|cccccccc",
   tabular_override = "\\begin{tabular}{l>{\\raggedright\\arraybackslash}p{3.2cm}|ccccccccc}"
 )
@@ -232,7 +226,8 @@ print(prop_english_by_age)
 print(prop_english_by_cohort)
 ```
 
-# Supplemental Table: 2010 ACS Comparison
+# Supplemental Table 3: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2008-10 ACS)
+## Note: This table uses original person weights (perwt), NOT age-standardized weights.
 ```{r}
 # Same structure as Table 2 but for 2010 data
 table_2010_main <- us_df_2010 %>%
@@ -275,9 +270,9 @@ for (i in seq_along(us_table_headers)) {
 
 export_table(
   table_2010,
-  excel_path = paste0(table_dir, "table6.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table1_2010.tex"),
-  caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2006-10 ACS)",
+  excel_path = here("tables", "table6.xlsx"),
+  latex_path = here("tables", "r_tables", "table1_2010.tex"),
+  caption = "Supplemental Table 3: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2008-10 ACS)",
   align = "ll|ccccccccccc",
   tabular_override = "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lcccccc|cccc}"
 )
@@ -323,42 +318,52 @@ for (i in seq_along(us_table_headers)) {
 
 export_table(
   table12,
-  excel_path = paste0(table_dir, "table12.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table12.tex"),
+  excel_path = here("tables", "table12.xlsx"),
+  latex_path = here("tables", "r_tables", "table12.tex"),
   caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2006-10 ACS)",
   align = "ll|ccccccccccc",
   tabular_override = "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lcccccc|cccc}"
 )
 ```
 
-# Supplemental Tables: By Sex (2020)
+# Supplemental Table 1: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS): Females
+## Note: This table uses original person weights (perwt), NOT age-standardized weights.
 ```{r}
-# Female table
 table_female <- create_sex_specific_table(us_df_2020, 2, "2020")
 export_table(
   table_female,
-  excel_path = paste0(table_dir, "table4.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table1_female.tex"),
-  caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS): Females",
-  align = "ll|ccccccccccc",
-  tabular_override = "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lcccccc|cccc}"
-)
-
-# Male table
-table_male <- create_sex_specific_table(us_df_2020, 1, "2020")
-export_table(
-  table_male,
-  excel_path = paste0(table_dir, "table5.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table1_male.tex"),
-  caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS): Males",
+  excel_path = here("tables", "table4.xlsx"),
+  latex_path = here("tables", "r_tables", "table1_female.tex"),
+  caption = "Supplemental Table 1: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS): Females",
   align = "ll|ccccccccccc",
   tabular_override = "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lcccccc|cccc}"
 )
 ```
 
-# Supplemental Table 5: Age-Standardized International Comparison (2010)
+# Supplemental Table 2: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS): Males
+## Note: This table uses original person weights (perwt), NOT age-standardized weights.
 ```{r}
-table_standardized <- create_intl_comparison_table(in_df, us_df_2010)
+table_male <- create_sex_specific_table(us_df_2020, 1, "2020")
+export_table(
+  table_male,
+  excel_path = here("tables", "table5.xlsx"),
+  latex_path = here("tables", "r_tables", "table1_male.tex"),
+  caption = "Supplemental Table 2: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS): Males",
+  align = "ll|ccccccccccc",
+  tabular_override = "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lcccccc|cccc}"
+)
+```
+
+# Supplemental Table 5: Age-Standardized Sociodemographic Comparison of Hispanics Ages 60+ by Birth Country (~2010)
+## Note: This table uses age-standardized weights (perwt_age_standardized) for valid cross-country comparisons.
+## Reference population: US 2010 Census Hispanics 60+ (by sex).
+## Age distribution rows reflect the reference population, not the original country distributions.
+```{r}
+# Use age-standardized weights for US data to match international data
+us_df_2010_standardized <- us_df_2010 %>%
+  mutate(perwt = perwt_age_standardized)
+
+table_standardized <- create_intl_comparison_table(in_df, us_df_2010_standardized)
 
 table_standardized <- table_standardized %>%
   add_row(Demographics = "Age", .before = 1) %>%
@@ -373,29 +378,32 @@ table_standardized <- table_standardized %>%
 
 export_table(
   table_standardized,
-  excel_path = paste0(table_dir, "table8.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table2_standardized.tex"),
-  caption = "Summary Statistics by Country and Sex For Hispanics in Their Native Countries (Age-Standardized)",
+  excel_path = here("tables", "table8.xlsx"),
+  latex_path = here("tables", "r_tables", "table2_standardized.tex"),
+  caption = "Supplemental Table 5: Age-Standardized Sociodemographic Comparison of Hispanics Ages 60+ by Birth Country (~2010)",
   align = "lll|cccccccc",
   tabular_override = "\\begin{tabular}{l>{\\raggedright\\arraybackslash}p{3.2cm}|ccccccccc}"
 )
 ```
 
-# Supplemental Table: 2010 vs 2020 Comparison
+# Supplemental Table 6: Summary Statistics by Country and Sex, Comparing 2010 versus 2020
+## Note: This table uses age-standardized weights (perwt_age_standardized) for valid cross-country comparisons.
 ```{r}
 table_2010_2020 <- create_year_comparison_table(in_df, us_df_2010, us_df_2020)
 
 export_table(
   table_2010_2020,
-  excel_path = paste0(table_dir, "table9.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table2_2010_2020.tex"),
-  caption = "Summary Statistics by Country and Sex For Hispanics in Their Native Countries (2010 and 2020)",
+  excel_path = here("tables", "table9.xlsx"),
+  latex_path = here("tables", "r_tables", "table2_2010_2020.tex"),
+  caption = "Supplemental Table 6: Summary Statistics by Country and Sex, Comparing 2010 versus 2020",
   align = "lll|cccccc",
   tabular_override = "\\begin{tabular}{l>{\\raggedright\\arraybackslash}p{3.2cm}|cccccc}"
 )
 ```
 
-# Supplemental Table: Education by Birth Cohort
+# Supplemental Table 7: Changing Educational Attainment of the 1930-1950 Birth Cohort due to Selection: 2010 versus 2020
+## Note: This table uses original person weights (perwt), NOT age-standardized weights.
+## Compares education levels for the same birth cohort observed in 2010 vs 2020 to show survivorship selection effects.
 ```{r}
 # Add birth year and country_year to US data
 in_df <- in_df %>% mutate(birth_year = year - age)
@@ -435,14 +443,15 @@ table_edu_mexico <- bind_cols(edu_mexico_intl, edu_mexico_us_2010, edu_mexico_us
 
 export_table(
   table_edu_mexico,
-  excel_path = paste0(table_dir, "table10.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table_prop_education_mexico_code.tex"),
-  caption = "Education Levels for 1930-1950 Birth Cohort: Mexico",
+  excel_path = here("tables", "table10.xlsx"),
+  latex_path = here("tables", "r_tables", "table_prop_education_mexico_code.tex"),
+  caption = "Supplemental Table 7: Changing Educational Attainment of the 1930-1950 Birth Cohort due to Selection: 2010 versus 2020",
   align = "ll|cccc"
 )
 ```
 
-# Table 7: Migrants Who Arrived After Age 24
+# Supplemental Table 4: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS): Migrated After Age 24
+## Note: This table uses original person weights (perwt), NOT age-standardized weights.
 ```{r}
 # Filter for migrants who arrived after age 24
 us_25plus <- us_df_2020 %>%
@@ -502,15 +511,17 @@ for (i in seq_along(table7_headers)) {
 
 export_table(
   table7,
-  excel_path = paste0(table_dir, "table7.xlsx"),
-  latex_path = paste0(table_dir, "r_tables/table1_25_plus.tex"),
-  caption = "Sociodemographic Comparison of Hispanics in the U.S. by Birth Country (2016-20 ACS): Migrated After Age 24",
+  excel_path = here("tables", "table7.xlsx"),
+  latex_path = here("tables", "r_tables", "table1_25_plus.tex"),
+  caption = "Supplemental Table 4: Sociodemographic Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS): Migrated After Age 24",
   align = "ll|ccccccccccc",
   tabular_override = "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{3.2cm}|lcccccc|cccc}"
 )
 ```
 
-# Alternative Education Tables (using alt education variables)
+# Supplemental Table 8: Alternative Education Comparison of Hispanics Ages 60+ in the U.S. by Birth Country (2016-20 ACS)
+## Defining Completed Primary as 5+ Years of Education (Instead of 6+)
+## Note: This table uses original person weights (perwt), NOT age-standardized weights.
 ```{r}
 alt_edu_2010 <- create_alt_education_table(us_df_2010)
 alt_edu_2020 <- create_alt_education_table(us_df_2020)
@@ -519,5 +530,5 @@ alt_edu_tables <- bind_rows(alt_edu_2010, alt_edu_2020) %>%
   add_row(Demographics = "2010", .before = 1) %>%
   add_row(Demographics = "2020", .before = 7)
 
-write_xlsx(alt_edu_tables, paste0(table_dir, "alt_education_table.xlsx"))
+write_xlsx(alt_edu_tables, here("tables", "alt_education_table.xlsx"))
 ```

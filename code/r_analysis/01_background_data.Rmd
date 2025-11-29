@@ -26,22 +26,14 @@ library(readxl)
 library(writexl)
 library(xtable)
 library(readr)
+library(here)
 ```
 
 # Setup
 ```{r}
-target_dir <- normalizePath("/Users/chrissoria/Documents/Research/us_international_ses/code")
-current_dir <- normalizePath(getwd())
-
-if (current_dir == target_dir) {
-  out_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/code/")
-  data_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/data/")
-  table_dir <- file.path("/Users/chrissoria/Documents/Research/us_international_ses/tables/")
-} else {
-  out_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/code")
-  data_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/data")
-  table_dir <- file.path("C:/Users/Ty/Documents/GitHub/international_migration_ses/tables")
-}
+# Use here() for portable paths across machines
+data_dir <- here("data")
+table_dir <- here("tables")
 ```
 
 # Countries of Interest
@@ -58,7 +50,7 @@ countries_of_interest <- c(
 
 # GDP Data
 ```{r}
-gdp <- read_excel(paste0(data_dir, "gdp_per_capita.xlsx")) %>%
+gdp <- read_excel(here("data", "gdp_per_capita.xlsx")) %>%
   filter(...1 %in% countries_of_interest) %>%
   mutate(`2023` = if_else(...1 == "Cuba", "7449.68", `2023`)) %>%
   rename(gdp = `2023`, country = ...1)
@@ -66,7 +58,7 @@ gdp <- read_excel(paste0(data_dir, "gdp_per_capita.xlsx")) %>%
 
 # Life Expectancy at 60
 ```{r}
-e60 <- read_csv(paste0(data_dir, "e60.csv")) %>%
+e60 <- read_csv(here("data", "e60.csv")) %>%
   filter(Location %in% countries_of_interest, Dim1 == "Both sexes",
          Period == 2019, Indicator == "Life expectancy at age 60 (years)") %>%
   select(Dim1, Value, Location) %>%
@@ -79,12 +71,12 @@ e60 <- read_csv(paste0(data_dir, "e60.csv")) %>%
     TRUE ~ country
   ))
 
-write.csv(e60, paste0(out_dir, "../e60.csv"))
+write.csv(e60, here("e60.csv"))
 ```
 
 # Infant Mortality Rates
 ```{r}
-ifr_path <- paste0(data_dir, "IMR")
+ifr_path <- here("data", "IMR")
 ifr_files <- list.files(path = ifr_path, pattern = "*.csv", full.names = TRUE, ignore.case = TRUE)
 
 # Country code mapping for IFR files
@@ -149,7 +141,7 @@ background_data <- e60 %>%
   arrange(desc(ifr_2010)) %>%
   distinct(country, .keep_all = TRUE)
 
-counts <- read.csv(paste0(data_dir, "hispanic_immigrant_count.csv")) %>%
+counts <- read.csv(here("data", "hispanic_immigrant_count.csv")) %>%
   select(bpld_string, count, percent) %>%
   mutate(percent = percent * 100) %>%
   rename(country = bpld_string)
@@ -157,15 +149,17 @@ counts <- read.csv(paste0(data_dir, "hispanic_immigrant_count.csv")) %>%
 background_data <- left_join(background_data, counts, by = "country") %>%
   arrange(country)
 
-write.csv(background_data, paste0(out_dir, "../background_data.csv"))
+write.csv(background_data, here("background_data.csv"))
 
 # Clean up intermediate objects
 rm(ifr_path, ifr_files, ifr_dfs, ifr_df, ifr_wide, gdp, e60, counts)
 ```
 
-# Table 1: Background Table
+# Table 1: Hispanic Immigrants Ages 60+ Living in US (2016-2020), and Birth Country Demographic Indicators
+# Note: Immigrant counts use original person weights (perwt), NOT age-standardized weights.
+# This table shows raw population counts by country of origin.
 ```{r}
-background_data <- read.csv(paste0(data_dir, "hispanic_immigrant_count.csv"))
+background_data <- read.csv(here("data", "hispanic_immigrant_count.csv"))
 
 table1_order <- c("Mexico", "Cuba", "Dominican Republic", "Puerto Rico",
                   "Belize/British Honduras", "Costa Rica", "El Salvador",
@@ -194,15 +188,15 @@ background_table <- background_data %>%
   add_row(Country = "South American Countries", .before = 14)
 
 # Export to Excel
-write_xlsx(background_table, paste0(table_dir, "table1.xlsx"))
+write_xlsx(background_table, here("tables", "table1.xlsx"))
 
 # Export to LaTeX
 tbl <- xtable(background_table,
-              caption = "Latin American Development Indicators",
+              caption = "Table 1: Hispanic Immigrants Ages 60+ Living in US (2016-2020), and Birth Country Demographic Indicators",
               align = "ll|cccccc")
 latex_code <- capture.output(print(tbl, type = "latex", caption.placement = "top",
                                    size = "\\small", include.rownames = FALSE))
-writeLines(latex_code, paste0(table_dir, "r_tables/background_table.tex"))
+writeLines(latex_code, here("tables", "r_tables", "background_table.tex"))
 
 print(background_table)
 ```
